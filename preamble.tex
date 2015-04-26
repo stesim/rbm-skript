@@ -1,0 +1,92 @@
+\documentclass[11pt]{article}
+%
+\usepackage{geometry}
+\geometry{a4paper}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage[no-math]{fontspec}
+\defaultfontfeatures{Mapping=tex-text}
+\usepackage{polyglossia}
+\setmainlanguage[spelling=new,babelshorthands=true]{german}
+\usepackage{xltxtra}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{floatflt}
+\usepackage{icomma}
+%\usepackage{comment}
+\usepackage{caption}
+\usepackage{enumerate}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{accents}
+
+\newcommand{\ubar}[1]{\underaccent{\bar}{#1}}
+%
+%\newcommand{\eq}[1]{\begin{align*}#1\end{align*}}
+%\newcommand{\eqt}[1]{\begin{align}#1\end{align}}
+%\newcommand{\mat}[1]{\left (\begin{matrix}#1\end{matrix}\right )}
+\newcommand{\pd}[1]{\frac{\partial}{\partial {#1}}}
+%%\newcommand{\qed}{\begin{flushright}$\square$\end{flushright}}
+%\newcommand{\qed}{\hfill $\square$}
+\newcommand{\dotp}[2]{\langle #1, #2 \rangle}
+\newcommand{\pdot}{\,\cdot\,}
+\newcommand{\norm}[1]{\|#1\|}
+%\newcommand{\mrm}[1]{\mathrm{#1}}
+%\newcommand{\satz}[2]{\paragraph{Satz #1:}#2}
+%\newcommand{\bew}[1]{\paragraph{Beweis:}#1}
+%\newcommand{\defn}[2]{\paragraph{Definition #1:}#2}
+%\newcommand{\bsp}[1]{\paragraph{Beispiel:}#1}
+%\newcommand{\bem}[1]{\paragraph{Bemerkung:}#1}
+%\newcommand{\kor}[2]{\paragraph{Korollar #1:}#2}
+%\newcommand{\lemma}[2]{\paragraph{Lemma #1:}#2}
+%\renewcommand{\O}{\mathcal O}
+%\newcolumntype{M}{>{$}c<{$}}
+%%\renewcommand*\arraystretch{1.5}
+%\newcommand{\C}{\operatorname{C}}
+%\renewcommand{\epsilon}{\varepsilon}
+%\renewcommand{\phi}{\varphi}
+%\renewcommand{\Re}{\operatorname{Re}}
+%\renewcommand{\Im}{\operatorname{Im}}
+%\renewcommand{\d}{\; \mathrm{d}}
+\newcommand{\D}{\mathrm{D}}
+%\newcommand{\supp}{\operatorname{supp}}
+%\newcommand{\diag}{\operatorname{diag}}
+%\newcommand{\Bild}{\operatorname{Bild}}
+%\newcommand{\Span}{\operatorname{Span}}
+%\newcommand{\Kern}{\operatorname{Kern}}
+%\newcommand{\pdef}[1]{\left\{\begin{array}{lc}#1\end{array}\right.}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\p}{\mathcal{P}}
+\newcommand{\LM}{\mathcal{M}}
+\newcommand{\op}{\operatorname}
+\newcommand{\prob}{\big(P(\mu)\big)}
+
+\newcommand{\beginwithlist}{\leavevmode \vspace{-\baselineskip}}
+\newcommand{\beginwithlistbem}{\leavevmode}
+\newcommand{\beginwithlistbew}{\leavevmode}
+
+\renewcommand{\labelenumi}{\roman{enumi}\,)}
+
+\newtheoremstyle{mythmstyle}
+	{\baselineskip}%		space above
+	{\baselineskip}%		space below
+	{}%			body font
+	{}%			indent
+	{\bfseries}%			head font
+	{}%			punctuation after head
+	{\newline}%	space after head
+	{}%			'theorem head spec'
+
+\theoremstyle{mythmstyle}
+
+\newtheorem{satz}{Satz}[section]
+\newtheorem{defn}[satz]{Definition}
+\newtheorem{lemma}[satz]{Lemma}
+\newtheorem{kor}[satz]{Korollar}
+\newtheorem{bsp}[satz]{Beispiel}
+
+\theoremstyle{definition}
+
+\newtheorem*{bem}{Bemerkung}

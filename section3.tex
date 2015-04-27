@@ -1,0 +1,163 @@
+\section{RB-Methoden für lineare koerzive Probleme}
+\label{sec-3}
+
+\subsection{Primales RB-Problem}
+
+\begin{defn}[Reduzierte Basis, RB-Räume]
+	Sei $S_N = \set{\mu_1,\cdots,\mu_N} \subset \p$ Menge von Parametern mit (o.B.d.A.) linear unabhängigen Lösungen $\set{u(\mu_i)}_{i=1}^N$ von $\prob[\mu_i]$.
+	Dann ist $X_N := \spn{\set{u(\mu_i)}_{i=1}^N}$ ein sog.\ \emph{Lagrange-RB-Raum}.\\
+	Sei $\mu^0 \in \p$ und $u(\mu)$ Lösung von $\prob[\mu^0]$ $k$-mal diffbar in Umgebung von $\mu^0$.
+	Dann ist
+	\[
+		X_{k,\mu^0} := \spn{\set{\partial_\sigma u(\mu^0) : \sigma \in \N_0^p, |\sigma| \leq k}}
+	\]
+	ein \emph{Taylor-RB-Raum}.
+	Eine Basis $\Phi_N = \set{\phi_1,\cdots,\phi_N} \subseteq X$ eines RB-Raums ist eine \emph{reduzierte Basis}.
+\end{defn}
+
+\begin{bem} \beginwithlistbem
+	\begin{itemize}
+		\item $\Phi_N$ kann direkt aus Snapshots $u(\mu^i)$ oder, für numerische Stabilität (siehe \ref{sec-3.7}), auch orthonormiert sein.
+		\item Wahl der Parameter $\set{\mu^i}$ ist entscheidend für Güte des RB-Modells:\\
+			Hier: zufällige oder äquidistante Menge ausreichend\\
+			Später: intelligente Wahl durch a-priori Analysis oder Greedy-Verfahren
+		\item Es ex. auch andere Arten von RB-Räumen (Hermite, POD).
+			Gemeinsam ist diesen die Konstruktion aus Snapshots von $u$ bzw.\ $\partial_\sigma u$.
+		\item Andere MOR-Techniken: $\Phi_N$ kann auch komplett unabhängig von Snapshots auf andere Weise konstruiert werden: Balanced Truncation, Krylov-Räume, etc.\ (siehe z.B.\ Antoulas: Approximation of large scale dynamical systems, SIAM 2004)
+	\end{itemize}
+\end{bem}
+
+\begin{defn}[Reduziertes Problem $\rprob$]
+	Sei eine Instanz von $\prob$ gegeben und $X_N \subseteq X$ ein RB-Raum.
+	Zu $\mu \in \p$ ist die RB-Lösung $u_N(\mu) \in X_N$ und Ausgabe $s_N(\mu) \in \R$ gesucht mit
+	\begin{align*}
+		a(u_N(\mu),v;\mu) &= f(v;\mu) &\forall v \in X_N\\
+		s_N(\mu) &= l(u_N;\mu)
+	\end{align*}
+\end{defn}
+
+\begin{bem} \beginwithlistbem
+	\begin{itemize}
+		\item Wir nennen obiges ``primal'' weil im Fall $f \neq l$ oder $a$ asymmetrisch, kann mit Hilfe eines geeigneten dualen Problems bessere Schätzung für $s$ erreicht werden.
+		\item Obiges ist ``Ritz-Galerkin''-Projektion im Gegensatz zu ``Petrov-Galerkin''-Projektion, welches für nicht-koerzive Probleme notwendig ist. $\leadsto$ \ref{sec-4}
+	\end{itemize}
+\end{bem}
+
+\begin{satz}[Galerkin-Projektion, Galerkin-Orthogonalität]
+	Sei $P_\mu : X \to X_N$ die orthogonale Projektion bzgl.\ Energieskalarprodukt $\dotp\pdot\pdot_\mu$, \emph{sei $a$ symmetrisch} und $u(\mu)$, $u_N(\mu)$ Lösung von $\prob$ bzw.\ $\rprob$.
+	Dann:
+	\begin{enumerate}
+		\item $u_N(\mu) = P_\mu u(\mu)$ ``Galerkin-Projektion''
+		\item $\dotp{e(\mu)}{v}_\mu = 0$ $\forall v \in X_N$, wobei $e(\mu) := u(\mu) - u_N(\mu)$
+	\end{enumerate}
+
+	\begin{proof}
+		Nach Aufgabe 1/Blatt 1 ist $P_\mu$ wohldefiniert, denn $(X,\dotp\pdot\pdot_\mu)$ ist Hilbertraum und $X_N \subseteq X$ abgeschlossen weil endlichdimensional.
+		Orthogonale Projektion des Fehlers ergibt
+		\begin{align*}
+			& & \dotp{P_\mu u(\mu) - u(\mu)}{\phi_i}_\mu &= 0 & \forall i = 1,\cdots,N &\\
+			& \Leftrightarrow & a(P_\mu u(\mu) - u(\mu), \phi_i; \mu) &= 0 & \forall i = 1,\cdots,N &\\
+			& \Leftrightarrow & a(P_\mu u(\mu), \phi_i; \mu) &= a(u(\mu),\phi_i;\mu) = f(\phi_i;\mu) & \forall i = 1,\cdots,N &
+		\end{align*}
+		\begin{enumerate}
+			\item also ist $P_\mu u(\mu)$ Lösung von $\rprob$
+			\item $e(\mu)$ ist also Projektions-Fehler, orthogonal nach Aufgabe 1/Blatt 1
+		\end{enumerate}
+	\end{proof}
+\end{satz}
+
+\begin{bem}
+	Für $a$ nichtsymmetrisch gilt immer noch folgende ``Galerkin-Orthogonalität''
+	\[
+		a(u-u_N,v;\mu) = 0 \quad \forall v \in X_N
+	\]
+	(auch wenn $a$ kein Skalarprodukt)
+\end{bem}
+
+\begin{satz}[Existenz und Eideutigkeit für $\rprob$]
+	Zu $\mu \in \p$ ex. eindeutige Lösung $u_N(\mu) \in X_N$ und RB-Ausgabe $s_n(\mu) \in \R$ von $\rprob$.
+	Diese sind beschränkt
+	\begin{align*}
+		\norm{u_N(\mu)} &\leq \frac{\norm{f(\pdot;\mu)}_{X'}}{\alpha(\mu)} \leq \frac{\bar\gamma_f}{\bar\alpha}\\
+		\norm{s_N(\mu)} &\leq \norm{l(\pdot;\mu)} \norm{u_N(\mu)} \leq \frac{\bar\gamma_l \bar\gamma_f}{\bar\alpha}
+	\end{align*}
+
+	\begin{proof}
+		Weil $X_N \subset X$ ist $a(\pdot,\pdot;\mu)$ stetig und koerziv auf $X_N$.
+		\begin{align*}
+			\alpha_N(\mu) &:= \inf_{v \in X_N} \frac{a(v,v;\mu)}{\norm{v}^2} \geq \inf_{v \in X} \frac{a(v,v;\mu)}{\norm{v}^2} = \alpha(\mu) > 0\\
+			\gamma_N(\mu) &:= \sup_{u,v \in X_N} \frac{a(u,v;\mu)}{\norm u \norm v} \leq \sup_{u,v \in X} \frac{a(u,v;\mu)}{\norm u \norm v} = \gamma(\mu) < \infty
+		\end{align*}
+		analog $f$, $l$ stetig auf $X_N$. Existenz, Eindeutigkeit und Schranken folgen also mit Lax-Milgram analog zu 2.8.
+	\end{proof}
+\end{satz}
+
+\begin{kor}[Lipschitz-Stetigkeit]
+	Seien $f$, $l$ gleichmäßig beschränkt und $a$, $f$, $l$ Lipschitz-stetig bzgl.\ $\mu$, dann sind auch $u_N(\mu)$, $s_N(\mu)$ Lipschitz-stetig bzgl.\ $\mu$ mit $L_u$, $L_s$ wie in 2.15.
+
+	\begin{proof}
+		Analog zu 2.15 / Übung.
+	\end{proof}
+\end{kor}
+
+\begin{satz}[Diskrete RB-Probleme]
+	Sei $\Phi_N = \set{\phi_1,\cdots,\phi_N}$ eine reduzierte Basis für $X_N$.
+	Für $\mu \in \p$,
+	\begin{align*}
+		A_N(\mu) &:= \seq{a(\phi_j,\phi_i;\mu)}_{i,j=1}^N & \in \R^{N \times N}\\
+		\ubar l_N(\mu) &:= \seq{l(\phi_i;\mu)}_{i=1}^N & \in \R^N\\
+		\ubar f_N(\mu) &:= \seq{f(\phi_i;\mu)}_{i=1}^N & \in \R^N
+	\end{align*}
+	und $\ubar u_N = \seq{u_{N,i}}_{i=1}^N \in \R^N$ als Lösung von
+	\begin{equation}
+		A_N(\mu) \ubar u_N = \ubar f_N(\mu)
+		\label{eq:3.1}
+	\end{equation}
+	Dann ist $u_N(\mu) := \sum_{i=1}^N u_{N,i} \, \phi_i$ und $s_N(\mu) := \ubar l_N^\top(\mu) \ubar u_N$.
+
+	\begin{proof}
+		Einsetzen und Linearität zeigt, dass
+		\[
+			a \left(\sum u_{N,j} \, \phi_j, \phi_i; \mu \right) = \seq{A_N(\mu) \ubar u_N}_i = \seq{\ubar f_N}_i = f(\phi_i;\mu)
+		\]
+	\end{proof}
+\end{satz}
+
+\begin{satz}[Kondition bei ONB und Symmetrie]
+	Falls $a(\pdot,\pdot;\mu)$ symmetrisch und $\Phi_N$ ist ONB, so ist Kondition von \eqref{eq:3.1} unabhängig von $N$ beschränkt
+	\[
+		\op{cond}_2(A_N) := \norm{A_N}_2 \norm{A_N^{-1}}_2 \leq \frac{\gamma(\mu)}{\alpha(\mu)}
+	\]
+
+	\begin{proof}
+		Wegen Symmetrie gilt
+		\begin{equation}
+			\op{cond}_2(A_N) = \frac{|\lambda_\text{max}|}{|\lambda_\text{min}|}
+			\label{eq:3.2}
+		\end{equation}
+		mit betragsmäßig größtem/kleinstem Eigenwert $\lambda_\text{max}$/$\lambda_\text{min}$ von $A_N(\mu)$.
+		Sei $\ubar u_\text{max} = \seq{u_i}_{i=1}^N \in \R^N$ Eigenvektor zu $\lambda_\text{max}$ und
+		\[
+			u_\text{max} := \sum_{i=1}^N u_i \, \phi_i \quad \in X_N
+		\]
+		Dann gilt
+		\begin{align*}
+			\lambda_\text{max} \norm{\ubar u_\text{max}}^2 &= \lambda_\text{max} \ubar u_\text{max}^\top \ubar u_\text{max} = \ubar u_\text{max}^\top A_N \ubar u_\text{max}\\
+			&= \sum_{i,j=1}^N u_i u_j \, a(\phi_j,\phi_i;\mu) = a\left(\sum_j u_j \phi_j, \sum_i u_i \phi_i; \mu\right)\\
+			&= a(u_\text{max},u_\text{max};\mu) \leq \gamma(\mu) \norm{u_\text{max}}^2
+		\end{align*}
+		Wegen
+		\[
+			\norm{u_\text{max}}^2 = \dotp{\sum u_i \phi_i}{\sum u_j \phi_j} = \sum u_i u_j \dotp{\phi_i}{\phi_j} = \sum u_i^2 = \norm{\ubar u_\text{max}}^2
+		\]
+		folgt $|\lambda_\text{max}| \leq \gamma(\mu)$. Analog zeigt man $|\lambda_\text{min}| \geq \alpha(\mu)$ also folgt mit \eqref{eq:3.2} die Behauptung.
+	\end{proof}
+\end{satz}
+
+\begin{bem}[Unterschied FEM zu RB]
+	Es bezeichne $A_h(\mu) \in \R^{H \times H}$ die FEM Matrix (oder FV/FD).
+	\begin{enumerate}
+		\item Die RB-Matrix $A_N(\mu) \in \R^{H \times H}$ ist klein aber typischerweise vollbesetzt im Gegensatz zur großen aber dünnbesetzten Matrix $A_h$.
+		\item Die Kondition von $A_N$ verschlechtert sich nicht mit wachsendem N (falls eine ONB verwendet wird), während die Konditionszahl von $A_h$ typischerweise polynomiell in $H$ wächst, also schlechter wird.
+	\end{enumerate}
+\end{bem}

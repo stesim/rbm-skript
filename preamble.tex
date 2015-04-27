@@ -1,5 +1,26 @@
 \documentclass[11pt]{article}
 %
+\usepackage[hyperref,dvipsnames]{xcolor}
+\usepackage{hyperref}
+\definecolor{darkblue}{rgb}{0,0,.5}                                                                                                 
+\definecolor{black}{rgb}{0,0,0}                                                  
+                                                                                 
+\hypersetup{                                                                     
+	breaklinks=true,                                                             
+	bookmarksnumbered=true,                                                      
+	bookmarksopen=true,                                                          
+	bookmarksopenlevel=1,                                                        
+	breaklinks=true,                                                             
+	colorlinks=true,                                                             
+	pdfstartview=Fit,                                                            
+	pdfpagelayout=SinglePage,                                                    
+	%                                                                            
+	filecolor=darkblue,                                                          
+	urlcolor=darkblue,                                                           
+	linkcolor=black,                                                             
+	citecolor=black                                                              
+}
+
 \usepackage{geometry}
 \geometry{a4paper}
 \usepackage{amssymb}
@@ -19,6 +40,7 @@
 \usepackage{enumerate}
 \usepackage{array}
 \usepackage{tabularx}
+\usepackage{cleveref}
 \usepackage{accents}
 
 \newcommand{\ubar}[1]{\underaccent{\bar}{#1}}
@@ -45,7 +67,7 @@
 %%\renewcommand*\arraystretch{1.5}
 %\newcommand{\C}{\operatorname{C}}
 %\renewcommand{\epsilon}{\varepsilon}
-%\renewcommand{\phi}{\varphi}
+\renewcommand{\phi}{\varphi}
 %\renewcommand{\Re}{\operatorname{Re}}
 %\renewcommand{\Im}{\operatorname{Im}}
 %\renewcommand{\d}{\; \mathrm{d}}
@@ -61,12 +83,17 @@
 \newcommand{\p}{\mathcal{P}}
 \newcommand{\LM}{\mathcal{M}}
 \newcommand{\op}{\operatorname}
-\newcommand{\prob}{\big(P(\mu)\big)}
+\newcommand{\prob}[1][\mu]{\big(P(#1)\big)}
+\newcommand{\rprob}[1][\mu]{\big(P_N(#1)\big)}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\spn}{\operatorname{span}}
+\newcommand{\seq}[1]{\left(#1\right)}
 
 \newcommand{\beginwithlist}{\leavevmode \vspace{-\baselineskip}}
 \newcommand{\beginwithlistbem}{\leavevmode}
 \newcommand{\beginwithlistbew}{\leavevmode}
 
+\numberwithin{equation}{section}
 \renewcommand{\labelenumi}{\roman{enumi}\,)}
 
 \newtheoremstyle{mythmstyle}

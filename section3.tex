@@ -43,7 +43,7 @@
 	\end{itemize}
 \end{bem}
 
-\begin{satz}[Galerkin-Projektion, Galerkin-Orthogonalität]
+\begin{satz}[Galerkin-Projektion, Galerkin-Orthogonalität] \label{3.3}
 	Sei $P_\mu : X \to X_N$ die orthogonale Projektion bzgl.\ Energieskalarprodukt $\dotp\pdot\pdot_\mu$, \emph{sei $a$ symmetrisch} und $u(\mu)$, $u_N(\mu)$ Lösung von $\prob$ bzw.\ $\rprob$.
 	Dann:
 	\begin{enumerate}
@@ -161,3 +161,215 @@
 		\item Die Kondition von $A_N$ verschlechtert sich nicht mit wachsendem N (falls eine ONB verwendet wird), während die Konditionszahl von $A_h$ typischerweise polynomiell in $H$ wächst, also schlechter wird.
 	\end{enumerate}
 \end{bem}
+
+\begin{satz}[Reproduktion von Lösungen]
+	Seien $u(\mu)$, $u_N(\mu)$ Lösungen von $\prob$ bzw.\ $\rprob$, $\ubar e_i \in \R$ $i$-ter Einheitsvektor
+	\begin{enumerate}
+		\item Falls $u(\mu) \in X_N \quad \Rightarrow \quad u_N(\mu) = u(\mu)$
+		\item Falls $u(\mu) = \phi_i \in \Phi_N \quad \Rightarrow \quad \ubar u_N(\mu) = \ubar e_i \in \R^N$
+	\end{enumerate}
+
+	\begin{proof} \beginwithlistbew
+		\begin{enumerate}
+			\item Mit $u(\mu)$, $u_N(\mu) \in X_N \Rightarrow e := u(\mu) - u_N(\mu) \in X_N$.
+				Wegen Galerkin-Orthogonalität ($a(e,v;\mu) = 0 \; \forall v \in X_N)$ und Koerzivität folgt:
+				\[
+					0 = a(e,e;\mu) \geq \underbrace{\alpha(\mu)}_{> 0} \underbrace{\norm{e}^2}_{\geq 0} \quad \Rightarrow \quad \norm{e} = 0 \Rightarrow e = 0 \Rightarrow u = u_N
+				\]
+			\item $u_n(\mu) = \phi_i$, nach i).
+				Mit Eindeutigkeit der Basisexpansion folgt die Behauptung.
+		\end{enumerate}
+	\end{proof}
+\end{satz}
+
+\begin{bem} \beginwithlistbem
+	\begin{itemize}
+		\item Reproduktion von Lösungen ist grundlegende Konsistenzeigenschaft.
+			Es gilt trivialerweise falls/sobald Fehlerschranken vorliegen, aber für komplexe RB-Probleme ohne Fehlerschranken ist obiges ein guter Test.
+		\item Validierung für Programmcode: Wähle Basis aus Snapshots $\phi_i = u(\mu^i)$, $i=1,\cdots,N$, ohne Orthonormierung, dann muss $\ubar u_N(\mu^i) = \ubar e_i \in \R^N$ ein Einheitsvektor sein.
+	\end{itemize}
+\end{bem}
+
+\subsection{Fehleranalyse}
+
+\begin{satz}[Cea, Beziehung zur Bestapproximation] \label{3.9}
+	Für alle $\mu \in \p$ gilt
+	\[
+		\norm{u(\mu)-u_N(\mu)} \leq \frac{\gamma(\mu)}{\alpha(\mu)} \inf_{v \in X} \norm{u-v}
+	\]
+
+	\begin{proof}
+		$\forall v \in X_N$ mit Stetigkeit und Koerzivität
+		\begin{align*}
+			\alpha \norm{u-u_N}^2 &\leq a(u-u_N,u-u_N) = a(u-u_N,u-v) + \underbrace{a(u-u_N,v-u_N)}_{= 0 \text{ (Galerkin-Orth.)}}\\
+			&\leq \gamma(\mu) \norm{u-u_N} \norm{u-v}
+		\end{align*}
+		Division durch $\alpha$, $\norm{u-u_N}$ liefert
+		\[
+			\norm{u-u_N} \leq \frac{\gamma}{\alpha} \norm{u-v}
+		\]
+		also Behauptung durch Infimum-Bildung.
+	\end{proof}
+\end{satz}
+
+\begin{bem} \beginwithlistbem
+	\begin{enumerate}
+		\item Ähnliche Bestapproximation Aussagen gelten auch für andere Interpolationstechniken, aber die zugehörigen Lebesgue-Konstante divergiert meist mit wachsender Dimension $N$.
+			Obiges ist konzeptioneller Vorteil von Galerkin Projektion über andere Interpolationstechniken, da $\frac{\gamma}{\alpha}$ unabhängig von $N$ beschränkt bleibt.
+			``Quasi-Optimalität'' der Galerkin-Projektion/des RB-Ansatzes.
+		\item Falls $a(\pdot,\pdot;\mu)$ zusätzlich symmetrisch ist, kann um eine ``Wurzel'' verbessert werden mittels Normäquivalenz \ref{2.5} und Bestapproximation der orthogonalen Projektion (Aufg. 1/Blatt 1)
+			\begin{align*}
+				\sqrt{a} \norm{u-u_N} &\stackrel{\ref{2.5}}{\leq} \norm{u-u_N}_\mu = \norm{u-P_\mu u}_\mu = \inf_{v \in X_N} \norm{u-v}_\mu \stackrel{\ref{2.5}}{\leq} \sqrt{\gamma} \inf_{v \in X_N} \norm{u-v}\\
+				\Rightarrow \; \norm{u-u_N} &\leq \sqrt{\frac \gamma \alpha} \inf_{v \in X_N} \norm{u-v}
+			\end{align*}
+		\item Implikation von \ref{3.9}: Wähle guten Approximationsraum $X_N$, so wird Galerkin-Projektion/RB-Approximation auch garantiert gut sein.
+	\end{enumerate}
+\end{bem}
+
+\begin{satz}[Ausgabe und Bestapproximation] \label{3.10} \beginwithlist
+	\begin{enumerate}
+		\item Für alle $\mu \in \p$ gilt
+			\[
+				|s(\mu)-s_N(\mu)| \leq \norm{l(\pdot;\mu)}_{X'} \frac{\gamma(\mu)}{\alpha(\mu)} \inf_{v \in X_N} \norm{u-v}
+			\]
+		\item Für den sog.\ ``compliant'' Fall (d.h.\ $a(\pdot,\pdot;\mu)$ symmetrisch und $l = f$) gilt sogar
+			\begin{align*}
+				0 \leq s(\mu)-s_N(\mu) &= \norm{u-u_N}_\mu^2\\
+				&= \inf_{v \in X_N} \norm{u-v}_\mu^2\\
+				&\leq \gamma(\mu) \inf_{v \in X_N} \norm{u-v}^2
+			\end{align*}
+	\end{enumerate}
+
+	\begin{proof} \beginwithlistbew
+		\begin{enumerate}
+			\item Klar mit Cea, Bestapproximation und Linearität
+				\[
+					|s(\mu)-s_N(\mu)| = |l(u)-l(u_N)| = |l(u-u_N)| \leq \norm l \norm{u-u_N} \leq \norm{l} \frac{\gamma}{\alpha} \inf_{v \in X_N} \norm{u-v}
+				\]
+			\item Wegen $a(\pdot,\pdot;\mu)$ symmetrisch gilt wie in voriger Bemerkung
+				\begin{equation} \label{eq:3.3}
+					\norm{u-u_N}_\mu = \norm{u-P_\mu u}_\mu = \inf_{v \in X_N} \norm{u-v}
+				\end{equation}
+				Damit
+				\begin{align*}
+					s(\mu) - s_N(\mu) &= l(u)-l(u_N) \stackrel{f=l}{=} f(u) - f(u_N) = f(u-u_N)\\
+					&= a(u,u-u_N) - \underbrace{a(u_N,u-u_N)}_{=0 \text{ (Gal.-Orth./Symm.)}} = \norm{u-u_N}_\mu^2\\
+					&\stackrel{\ref{3.3}}{=} \inf_{v \in X_N} \norm{u-v}_\mu^2\\
+					&\stackrel{\ref{2.5}}{\leq} \gamma \inf_{v \in X_N} \norm{u-v}^2
+				\end{align*}
+				Also insbesondere $s-s_N = \norm{u-u_N}_\mu^2 \geq 0$.
+		\end{enumerate}
+	\end{proof}
+\end{satz}
+
+\begin{bem} \beginwithlistbem
+	\begin{itemize}
+		\item Im ``compliant'' Fall ist der Ausgabefehler i.A.\ sehr klein, da das Quadrat des RB-Fehlers eingeht.
+		\item Im ``nicht-compliant'' Fall geht der RB-Fehler nur linear in die Schranke ein, das wird später durch primal-duale Technik verbessert.
+		\item Aus ii) folgt nicht nur Fehlerschranke, sondern sogar Vorzeichen-Information, $s_N(\mu)$ ist untere Schranke für $s$.
+	\end{itemize}
+\end{bem}
+
+\begin{kor}[Monotoner Fehlerabfall in Energienorm]
+	Falls $a(\pdot,\pdot;\mu)$ symmetrisch, $\seq{X_N}_{N=1}^{N_\text{max}}$ Folge von RB-Räumen, mit $X_N \subseteq X_{N'}$, $\forall N \leq N'$ (``hierarchische Räume'') und für $\mu \in \p$ setze $e_{u,N} := u(\mu)-u_N(\mu)$, $e_{s,N} := s(\mu)-s_N(\mu)$.
+	\begin{enumerate}
+		\item Dann ist $\seq{\norm{e_{u,N}}_\mu}_{N=1}^{N_\text{max}}$ monoton fallend.
+		\item Falls $l=f$ (also ``compliant'' Fall) ist $e_{s,N}$ monoton fallend.
+	\end{enumerate}
+
+	\begin{proof} \beginwithlistbew
+		\begin{enumerate}
+			\item Mit \eqref{eq:3.3} gilt für $N \leq N'$
+				\[
+					\norm{e_{u,N}}_\mu = \norm{u-u_N}_\mu \stackrel{\eqref{eq:3.3}}{=} \inf_{v \in X_N} \norm{u-v}_\mu \geq \inf_{v \in X_{N'}} \norm{u-v}_\mu \stackrel{\eqref{eq:3.3}}{=} \norm{e_{u,N'}}_\mu
+				\]
+			\item Mit Satz \ref{3.10} ii) gilt
+				\[
+					e_{s,N} = \norm{e_{u,N}}_\mu^2 \text{, also Behauptung folgt mit i)}
+				\]
+		\end{enumerate}
+	\end{proof}
+\end{kor}
+
+\begin{bem} \beginwithlistbem
+	\begin{itemize}
+		\item ``Worst-case'' ist Stagnation des Fehlers (unrealistisch, jeder neue Basisvektor müsste orthogonal zum Fehler $e_N(\mu)$ sein).
+			In Praxis ist bei geschickter Basiswahl und ``glatten'' Problemen exponentielle Konvergenz zu erwarten, siehe Basisgenerierung, §\ref{sec-3.4}.
+		\item Monotonie gilt nicht notwendigerweise bezüglich anderen Normen trotz Normäquivalenz
+			\[
+				c \norm{e_{u,N}}_\mu \leq \norm{e_{u,N}} \leq C \norm{e_{u,N}}_\mu \text{, mit $c$, $C$ unabhängig von $N$}
+			\]
+			Fehlernorm $\norm{e_{u,N}}$ kann gelegentlich anwachsen, bleibt aber in einem ``Korridor'', welcher monoton fällt.
+	\end{itemize}
+
+	\begin{figure}[H]
+		\centering\small
+		\includegraphics[width = 0.75 \textwidth]{Bilder/FehlerabfallEnergienorm.png}
+		\caption{Fehlerabfall mit wachsender reduzierter Dimension.}{(aus B. Haasdonk, Reduzierte-Basis-Methoden, Skript zur Vorlesung SS 2011, Universität Stuttgart, IANS-Report 4/11, 2011.)}
+		\label{fig:FehlerabfallEnergienorm}
+	\end{figure}
+\end{bem}
+
+\begin{bem}[Gleichmäßige Konvergenz von Lagrange RB-Ansatz] \beginwithlistbem
+	\begin{itemize}
+		\item Sei $\p$ kompakt und $S_N := \set{\mu^1,\cdots,\mu^N} \subset \p$, $N \in \N$, sodass die sog.\ Füll-Distanz (fill-distance) $h_N$ gegen 0 geht:
+			\begin{align*}
+				h_N &:= \sup_{\mu \in \p} \dist(\mu, S_N), \quad \dist(\mu,S_N) := \min_{\mu' \in S_N} \norm{\mu - \mu'}\\
+				\lim_{N \to \infty} h_N &= 0
+			\end{align*}
+		\item Falls $u(\mu)$, $u_N(\mu)$ Lipschitz-stetig mit Lipschitz-Konstante $L_u$ unabhängig von $N$, so folgt für alle $N$, $\mu$ und ``nächstes'' $\mu^* := \arg\min_{\mu' \in S_N} \norm{\mu-\mu'}$:
+			\begin{align*}
+				\norm{u(\mu)-u_N(\mu)} &\leq \norm{u(\mu)-u(\mu^*)} + \norm{u(\mu^*)-u_N(\mu^*)} + \norm{u_N(\mu^*)-u_N(\mu)}\\
+				&\leq L_u \underbrace{\norm{\mu-\mu^*}}_{\leq h_N} + 0 + L_u \underbrace{\norm{\mu - \mu^*}}_{h_N} \leq 2 L_u h_N
+			\end{align*}
+		\item Also folgt uniforme Konvergenz
+			\[
+				\lim_{N \to \infty} \sup_{\mu \in \p} \norm{u(\mu)-u_N(\mu)} = 0
+			\]
+			\item Jedoch Konvergenzrate linear in $h_N$ ist nicht praktisch bedeutsam, weil $h_N$ sehr langsam mit $N$ abfällt, also muss $N$ sehr groß sein, um kleinen Fehler zu garantieren.
+			\item Wir werden sehen, dass bei gleichmäßig koerziven Problemen und geschickter Wahl der $\mu^i$ sogar exponentielle Konvergenz erreicht wird.
+	\end{itemize}
+\end{bem}
+
+\begin{lemma}[Fehler-Residuums-Beziehung] \label{3.12}
+	Für $\mu \in \p$ definieren wir mittels der RB-Lösung $u_N$ das Residuum $r(\pdot;\mu) \in X'$ bzw.\ seinen Riesz-Repräsentanten $v_r(\mu) \in X$
+	\[
+		\dotp{v_r(\mu)}{v}_X := r(v;\mu) := f(v;\mu) - a(u_N(\mu),v;\mu) \quad \forall v \in X
+	\]
+	Dann erfüllt der Fehler $e(\mu) := u(\mu)-u_N(\mu)$
+	\[
+		a(e(\mu),v;\mu) = r(v;\mu) \quad \forall v \in X
+	\]
+
+	\begin{proof}
+		$a(e(\mu),v;\mu) = \underbrace{a(u,v)}_{f(v)} - a(u_N,v) = r(v)$
+	\end{proof}
+\end{lemma}
+
+\begin{bem} \beginwithlistbem
+	\begin{itemize}
+		\item Fehler erfüllt ``$\prob$ mit Residuum als rechte Seite''
+		\item Insbesondere ist $r(v;\mu) = 0$ $\forall v \in X_N$ (wegen Galerkin-Orthogonalität)
+		\item $r(\pdot;\mu) = 0 \quad \Rightarrow \quad e = 0$
+	\end{itemize}
+\end{bem}
+
+\begin{satz}[A-posteriori Fehlerschätzer, absoluter Fehler]
+	Sei $\mu \in \p$, $u(\mu)$ bzw.\ $u_N(\mu)$ Lösung von $\prob$, $\rprob$ und $e=u-u_N$.
+	Sei $\alpha_{LB}(\mu)$ eine untere Schranke für $\alpha(\mu)$ und $v_r \in X$ Riesz-Repräsentant von $r(\pdot;\mu)$ aus Lemma \ref{3.12}.
+	Dann gelten folgende Schranken
+	\begin{enumerate}
+		\item Fehler in Energienorm
+			\[
+				\norm{e(\mu)}_\mu \leq \Delta_N^{en}(\mu) := \frac{\norm{v_r}}{\sqrt{\alpha_{LB}(\mu)}}
+			\]
+		\item Fehler in $X$-Norm $\norm\pdot$
+			\[
+				\norm{e(\mu)} \leq \Delta_N(\mu) := \frac{\norm{v_r}}{\alpha_{LB}(\mu)}
+			\]
+		\item Ausgabefehler
+			\[
+				|s(\mu)-s_N(\mu)| \leq \Delta_{N,s}(\mu) := \norm{l(\pdot;\mu)} \Delta_N(\mu)
+			\]
+	\end{enumerate}
+\end{satz}

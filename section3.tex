@@ -354,7 +354,7 @@
 	\end{itemize}
 \end{bem}
 
-\begin{satz}[A-posteriori Fehlerschätzer, absoluter Fehler]
+\begin{satz}[A-posteriori Fehlerschätzer, absoluter Fehler] \label{3.13}
 	Sei $\mu \in \p$, $u(\mu)$ bzw.\ $u_N(\mu)$ Lösung von $\prob$, $\rprob$ und $e=u-u_N$.
 	Sei $\alpha_{LB}(\mu)$ eine untere Schranke für $\alpha(\mu)$ und $v_r \in X$ Riesz-Repräsentant von $r(\pdot;\mu)$ aus Lemma \ref{3.12}.
 	Dann gelten folgende Schranken
@@ -372,4 +372,73 @@
 				|s(\mu)-s_N(\mu)| \leq \Delta_{N,s}(\mu) := \norm{l(\pdot;\mu)} \Delta_N(\mu)
 			\]
 	\end{enumerate}
+
+	\begin{proof} \beginwithlistbew
+		\begin{enumerate}
+			\item Normäquivalenz \ref{2.5} impliziert
+				\[
+					\norm e \leq \frac{\norm{e}_\mu}{\sqrt{\alpha_{LB}(\mu)}}
+				\]
+				Damit folgt
+				\[
+					\norm{e}_\mu^2 = a_s(e,e) = a(e,e) = r(v) = \dotp{v_r}{e} \leq \norm{v_r} \norm{e} \leq \frac{\norm{v_r}}{\sqrt{\alpha_{LB}(\mu)}}
+				\]
+				Division durch $\norm{e}_\mu$ liefert die Behauptung i).
+			\item Koerzivität liefert
+				\[
+					\alpha_{LB}(\mu) \norm{e}^2 \leq a(e,e) = r(e) = \dotp{v_r}{e} \leq \norm{v_r} \norm{e}
+				\]
+				Division durch $\alpha_{LB}$ und $\norm e$ liefert ii).
+			\item Stetigkeit von $l$ liefert
+				\[
+					|s(\mu)-s_N(\mu)| = |l(u-u_N;\mu)| \leq \norm{l} \norm{u-u_N} \stackrel{ii)}{\leq} \norm{l} \Delta_N
+				\]
+		\end{enumerate}
+	\end{proof}
 \end{satz}
+
+\begin{bem} \beginwithlistbem
+	\begin{itemize}
+		\item $\alpha_{LB}(\mu)$ soll eine \emph{schnell berechenbare} untere Schranke an $\alpha(\mu)$ sein, z.B.\ $\alpha_{LB}(\mu) := \bar \alpha$ falls $\bar \alpha$ bekannt, andere Möglichkeiten folgen später (``min $\Theta$'', ``SCM'').
+		\item $\Delta_N$ ist also immer um Faktor $\sqrt{\alpha_{LB}(\mu)}$ schlechter.
+		\item Beschränkung des Fehlers durch Residuums-Norm ist bekannte Technik aus FEM, um FEM-Lösung $u_h$ gegen Sobolev-Raum Lösung $u$ abzuschätzen.
+			In diesem Fall ist $X$ $\infty$-dimensional und Residuums-Norm algorithmisch nicht berechenbar.
+			In RB-Methoden wird $\norm{v_r}$ eine \emph{berechenbare} Größe sobald $X$ endlich-dimensional, z.B.\ FEM-Raum, ist.
+			Für Residuum ist $u_N(\mu)$ erforderlich, daher sind Schranken ``\emph{a posteriori}''.
+		\item Allgemeines Vorgehen (und alternative Begründung für ii)) zur Herleitung von Fehlerschranken: Zeige, dass Fehler $e$ erfüllt $\prob$ mit rechter Seite, genannt $r$ (Residuum), wende a-priori Stabilitätsaussage an:
+			\[
+				\norm{e} \leq \frac{\norm r}{\alpha(\mu)} \quad \text{z.B.\ Lax-Milgram}
+			\]
+			und erhalte berechenbare Größe durch Wahl $X=X_{FEM}$ und untere Schranke $\alpha_{LB}(\mu) \leq \alpha(\mu)$.
+		\item Weil die Schranken beweisbare obere Schranken an Fehler darstellen, nennt man sie ``rigorose'' Fehlerschranken (vgl.\ ``zuverlässige'' Schätzer in FEM, bei denen jedoch die Konstante unbekannt ist).
+		\item Fehlerschranken liefern eine Absicherung für RB-Methoden, ``certified'' RB-Methode, im Gegensatz zu vielen anderen Reduktionsmethoden (z.B.\ Krylov-Raum-Methoden).
+		\item Ausgabefehler ist grob, indem $\Delta_N$ nur linear eingeht.
+			Verbesserungen können für den ``compliant'' Fall oder mit primal-dual Techniken erreicht werden. ($\leadsto$ §\ref{sec-3.5})
+	\end{itemize}
+\end{bem}
+
+\begin{kor}[Verschwindende Fehlerschranke] \label{3.14}
+	Falls $u(\mu) = u_N(\mu)$ dann ist $\Delta_N(\mu) = \Delta_N^{en}(\mu) = \Delta_{N,s}(\mu) = 0$
+
+	\begin{proof}
+		\[
+			0 = a(0,v;\mu) = a(e,v;\mu) = r(v;\mu)
+		\]
+		\[
+			\Rightarrow r \equiv 0 \Rightarrow \norm{v_r} = 0 \Rightarrow \Delta_N = \Delta_N^{en} = \Delta_{N,s} = 0
+		\]
+	\end{proof}
+\end{kor}
+
+\begin{bem} \beginwithlistbem
+	\begin{itemize}
+		\item Dies ist initialer Wunsch an eine Fehlerschranke: diese soll verschwinden falls exakte Approximation vorliegt.
+			Dies ist Grundlage dafür, dass der Faktor der Überschätzung endlich ist.
+		\item Aussage ist trivial für \emph{effektive} Fehlerschätzer (sehen wir bald), aber in komplexen Problemen kann \ref{3.14} schon das maximal erreichbare sein.
+		\item \ref{3.14} ist wieder sinnvoll um Programmcode zu validieren.
+	\end{itemize}
+\end{bem}
+
+\begin{satz}[A-posteriori Fehlerschranken, relative Fehler]
+	Mit Bezeichnungen/Voraussetzungen aus \ref{3.13} 
+\end{satz}<++>

@@ -163,7 +163,7 @@
 \end{bem}
 
 \begin{satz}[Reproduktion von Lösungen]
-	Seien $u(\mu)$, $u_N(\mu)$ Lösungen von $\prob$ bzw.\ $\rprob$, $\ubar e_i \in \R$ $i$-ter Einheitsvektor
+	Seien $u(\mu)$, $u_N(\mu)$ Lösungen von $\prob$ bzw.\ $\rprob$, $\ubar e_i \in \R^n$ $i$-ter Einheitsvektor
 	\begin{enumerate}
 		\item Falls $u(\mu) \in X_N \quad \Rightarrow \quad u_N(\mu) = u(\mu)$
 		\item Falls $u(\mu) = \phi_i \in \Phi_N \quad \Rightarrow \quad \ubar u_N(\mu) = \ubar e_i \in \R^N$
@@ -176,7 +176,7 @@
 				\[
 					0 = a(e,e;\mu) \geq \underbrace{\alpha(\mu)}_{> 0} \underbrace{\norm{e}^2}_{\geq 0} \quad \Rightarrow \quad \norm{e} = 0 \Rightarrow e = 0 \Rightarrow u = u_N
 				\]
-			\item $u_n(\mu) = \phi_i$, nach i).
+			\item $u_N(\mu) = \phi_i$, nach i).
 				Mit Eindeutigkeit der Basisexpansion folgt die Behauptung.
 		\end{enumerate}
 	\end{proof}
@@ -186,13 +186,13 @@
 	\begin{itemize}
 		\item Reproduktion von Lösungen ist grundlegende Konsistenzeigenschaft.
 			Es gilt trivialerweise falls/sobald Fehlerschranken vorliegen, aber für komplexe RB-Probleme ohne Fehlerschranken ist obiges ein guter Test.
-		\item Validierung für Programmcode: Wähle Basis aus Snapshots $\phi_i = u(\mu^i)$, $i=1,\cdots,N$, ohne Orthonormierung, dann muss $\ubar u_N(\mu^i) = \ubar e_i \in \R^N$ ein Einheitsvektor sein.
+		\item Validierung für Programmcode: Wähle Basis aus Snapshots $\phi_i = u(\mu^i)$, $i=1,\dots,N$, ohne Orthonormierung, dann muss $\ubar u_N(\mu^i) = \ubar e_i \in \R^N$ ein Einheitsvektor sein.
 	\end{itemize}
 \end{bem}
 
 \subsection{Fehleranalyse}
 
-\begin{satz}[Cea, Beziehung zur Bestapproximation] \label{3.9}
+\begin{satz}[Céa, Beziehung zur Bestapproximation] \label{3.9}
 	Für alle $\mu \in \p$ gilt
 	\[
 		\norm{u(\mu)-u_N(\mu)} \leq \frac{\gamma(\mu)}{\alpha(\mu)} \inf_{v \in X} \norm{u-v}
@@ -214,12 +214,12 @@
 
 \begin{bem} \beginwithlistbem
 	\begin{enumerate}
-		\item Ähnliche Bestapproximation Aussagen gelten auch für andere Interpolationstechniken, aber die zugehörigen Lebesgue-Konstante divergiert meist mit wachsender Dimension $N$.
-			Obiges ist konzeptioneller Vorteil von Galerkin Projektion über andere Interpolationstechniken, da $\frac{\gamma}{\alpha}$ unabhängig von $N$ beschränkt bleibt.
+		\item Ähnliche Bestapproximationsaussagen gelten auch für andere Interpolationstechniken, aber die zugehörige Lebesgue-Konstante divergiert meist mit wachsender Dimension $N$.
+			Obiges ist konzeptioneller Vorteil von Galerkin-Projektion über anderen Interpolationstechniken, da $\frac{\gamma}{\alpha}$ unabhängig von $N$ beschränkt bleibt.
 			``Quasi-Optimalität'' der Galerkin-Projektion/des RB-Ansatzes.
 		\item Falls $a(\pdot,\pdot;\mu)$ zusätzlich symmetrisch ist, kann um eine ``Wurzel'' verbessert werden mittels Normäquivalenz \ref{2.5} und Bestapproximation der orthogonalen Projektion (Aufg. 1/Blatt 1)
 			\begin{align*}
-				\sqrt{a} \norm{u-u_N} &\stackrel{\ref{2.5}}{\leq} \norm{u-u_N}_\mu = \norm{u-P_\mu u}_\mu = \inf_{v \in X_N} \norm{u-v}_\mu \stackrel{\ref{2.5}}{\leq} \sqrt{\gamma} \inf_{v \in X_N} \norm{u-v}\\
+				\sqrt{\alpha} \norm{u-u_N} &\stackrel{\ref{2.5}}{\leq} \norm{u-u_N}_\mu = \norm{u-P_\mu u}_\mu = \inf_{v \in X_N} \norm{u-v}_\mu \stackrel{\ref{2.5}}{\leq} \sqrt{\gamma} \inf_{v \in X_N} \norm{u-v}\\
 				\Rightarrow \; \norm{u-u_N} &\leq \sqrt{\frac \gamma \alpha} \inf_{v \in X_N} \norm{u-v}
 			\end{align*}
 		\item Implikation von \ref{3.9}: Wähle guten Approximationsraum $X_N$, so wird Galerkin-Projektion/RB-Approximation auch garantiert gut sein.
@@ -242,7 +242,7 @@
 
 	\begin{proof} \beginwithlistbew
 		\begin{enumerate}
-			\item Klar mit Cea, Bestapproximation und Linearität
+			\item Klar mit Céa, Bestapproximation und Linearität
 				\[
 					|s(\mu)-s_N(\mu)| = |l(u)-l(u_N)| = |l(u-u_N)| \leq \norm l \norm{u-u_N} \leq \norm{l} \frac{\gamma}{\alpha} \inf_{v \in X_N} \norm{u-v}
 				\]
@@ -312,7 +312,7 @@
 
 \begin{bem}[Gleichmäßige Konvergenz von Lagrange RB-Ansatz] \beginwithlistbem
 	\begin{itemize}
-		\item Sei $\p$ kompakt und $S_N := \set{\mu^1,\cdots,\mu^N} \subset \p$, $N \in \N$, sodass die sog.\ Füll-Distanz (fill-distance) $h_N$ gegen 0 geht:
+		\item Sei $\p$ kompakt und $S_N := \set{\mu^1,\dots,\mu^N} \subset \p$, $N \in \N$, sodass die sog.\ Füll-Distanz (fill-distance) $h_N$ gegen 0 geht:
 			\begin{align*}
 				h_N &:= \sup_{\mu \in \p} \dist(\mu, S_N), \quad \dist(\mu,S_N) := \min_{\mu' \in S_N} \norm{\mu - \mu'}\\
 				\lim_{N \to \infty} h_N &= 0
@@ -320,7 +320,7 @@
 		\item Falls $u(\mu)$, $u_N(\mu)$ Lipschitz-stetig mit Lipschitz-Konstante $L_u$ unabhängig von $N$, so folgt für alle $N$, $\mu$ und ``nächstes'' $\mu^* := \arg\min_{\mu' \in S_N} \norm{\mu-\mu'}$:
 			\begin{align*}
 				\norm{u(\mu)-u_N(\mu)} &\leq \norm{u(\mu)-u(\mu^*)} + \norm{u(\mu^*)-u_N(\mu^*)} + \norm{u_N(\mu^*)-u_N(\mu)}\\
-				&\leq L_u \underbrace{\norm{\mu-\mu^*}}_{\leq h_N} + 0 + L_u \underbrace{\norm{\mu - \mu^*}}_{h_N} \leq 2 L_u h_N
+				&\leq L_u \underbrace{\norm{\mu-\mu^*}}_{\leq h_N} + 0 + L_u \underbrace{\norm{\mu - \mu^*}}_{\leq h_N} \leq 2 L_u h_N
 			\end{align*}
 		\item Also folgt uniforme Konvergenz
 			\[

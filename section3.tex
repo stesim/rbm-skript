@@ -439,6 +439,152 @@
 	\end{itemize}
 \end{bem}
 
-\begin{satz}[A-posteriori Fehlerschranken, relative Fehler]
-	Mit Bezeichnungen/Voraussetzungen aus \ref{3.13} 
-\end{satz}<++>
+\begin{satz}[A-posteriori Fehlerschranken, relative Fehler] \label{3.15}
+	Mit Bezeichnungen/Voraussetzungen aus \ref{3.13} und unter Annahme, dass alle Brüche im Folgenden wohldefiniert sind, gilt:
+	\begin{enumerate}
+		\item Für den relativen Fehler gilt in Energienorm:
+			\[
+				\frac{\norm{e(\mu)}_\mu}{\norm{u(\mu)}_\mu} \leq \Delta_N^{en,rel}(\mu) := 2 \frac{\norm{v_r}}{\sqrt{\alpha_{LB}(\mu)}} \cdot \frac{1}{\norm{u_N(\mu)}_\mu} \quad \text{falls} \quad \Delta_N^{en,rel} \leq 1
+			\]
+		\item Für den relativen Fehler gilt in $X$-Norm:
+			\[
+				\frac{\norm{e(\mu)}}{\norm{u(\mu)}} \leq \Delta_N^{rel}(\mu) := 2 \frac{\norm{v_r}}{\alpha_{LB}(\mu)} \cdot \frac{1}{\norm{u_N(\mu)}} \quad \text{falls} \quad \Delta_N^{rel} \leq 1
+			\]
+	\end{enumerate}
+
+	\begin{proof} \beginwithlistbew
+		\begin{enumerate}
+			\item Falls $\Delta_N^{en,rel}(\mu) \leq 1$, so ist
+				\begin{align*}
+					\left| \frac{\norm{u}_\mu-\norm{u_N}_\mu}{\norm{u_N}_\mu} \right| &\stackrel{\Delta \text{-Ungl.}}{\leq} \frac{\norm{u-u_N}_\mu}{\norm{u_N}_\mu} = \frac{\norm{e}_\mu}{\norm{u_N}_\mu} \stackrel{\ref{3.13} \text{ i)}}{\leq} \frac{\norm{v_r}}{\sqrt{\alpha_{LB}(\mu)} \norm{u_N}_\mu}\\
+					&= \frac 1 2 \Delta_N^{en,rel}(\mu) \leq \frac 1 2
+				\end{align*}
+				Falls $\norm{u_N}_\mu > \norm{u}_\mu$ gilt $\norm{u_N}_\mu-\norm{u}_\mu \leq \frac 1 2 \norm{u_N}_\mu$ also
+				\[
+					\frac 1 2 \norm{u_N}_\mu \leq \norm{u}_\mu \tag{$*$}
+				\]
+				Falls $\norm{u}_\mu \geq \norm{u_N}_\mu$, so ist ($*$) klar.
+				Damit folgt
+				\[
+					\frac{\norm{e}_\mu}{\norm{u}_\mu} \stackrel{\ref{3.13} \text{ i)}}{\leq} \frac{\norm{v_r}}{\sqrt{\alpha_{LB}}} \cdot \frac{1}{\norm{u}_\mu} \stackrel{(*)}{\leq} \frac{\norm{v_r}}{\sqrt{\alpha_{LB}}} \cdot \frac{1}{\norm{u_N}_\mu} \cdot 2 = \Delta_N^{en,rel}(\mu)
+				\]
+			\item analog zu i).
+		\end{enumerate}
+	\end{proof}
+\end{satz}
+
+\begin{bem} \beginwithlistbem
+	\begin{itemize}
+		\item Analog folgt auch relativer Ausgabefehlerschätzer
+			\[
+				\frac{|s(\mu)-s_N(\mu)|}{|s(\mu)|} \leq \Delta_{N,s}^{rel}(\mu) := \frac{\norm{l(\pdot;\mu)} \cdot \Delta_N}{|s_N(\mu)|} \cdot 2 \quad \text{falls} \quad \Delta_{N,s}^{rel}(\mu) \leq 1
+			\]
+		\item Relative Fehlerschranken sind nur mit Zusatzbedingung ($\Delta_*^{rel} \leq 1$) gültig.
+			Diese Bedingung ist jedoch konkret überprüfbar.
+			Falls $\Delta_N^{rel}(\mu) > 1$, sollte der RB-Raum verbessert werden.
+	\end{itemize}
+\end{bem}
+
+\begin{satz}[Effektivität der Fehlerschranken]
+	Mit Bezeichnungen aus \ref{3.13} sei $u(\mu) \neq u_N(\mu)$ und $\gamma_{UB}(\mu) < \infty$ eine obere Schranke an $\gamma(\mu)$.
+	Dann sind die \emph{Effektivitäten} $\eta_N^{en}(\mu)$ und $\eta_N(\mu)$ definiert und beschränkt durch
+	\begin{enumerate}
+		\item
+			\[
+				\eta_N^{en}(\mu) := \frac{\Delta_N^{en}(\mu)}{\norm{e}_\mu} \leq \frac{\gamma_{UB}(\mu)}{\alpha_{LB}(\mu)}
+			\]
+			Falls $a(\pdot,\pdot;\mu)$ symmetrisch, gilt sogar $\eta_N^{en}(\mu) \leq \sqrt{\frac{\gamma_{UB}(\mu)}{\alpha_{LB}(\mu)}}$
+		\item
+			\[
+				\eta_N(\mu) := \frac{\Delta_N(\mu)}{\norm{e}_\mu} \leq \frac{\gamma_{UB}(\mu)}{\alpha_{LB}(\mu)}
+			\]
+	\end{enumerate}
+
+	\begin{proof} \beginwithlistbew
+		\begin{enumerate}
+			\setcounter{enumi}{1}
+			\item $\norm{v_r}^2 = \dotp{v_r}{v_r} = r(v_r) = a(e,v_r) \leq \gamma_{UP}(\mu) \norm{e} \norm{v_r}$
+				\begin{equation} \label{eq:3.4}
+					\norm{v_r} \leq \gamma_{UB}(\mu) \norm{e}
+				\end{equation}
+				Damit
+				\[
+					\frac{\Delta_N(\mu)}{\norm{e}} = \frac{\norm{v_r}}{\alpha_{LB}} \cdot \frac{1}{\norm{e}} \stackrel{\eqref{eq:3.4}}{\leq} \frac{\gamma_{UB}}{\alpha_{LB}} \cdot \frac{\norm e}{\norm e}
+				\]
+			\setcounter{enumi}{0}
+			\item
+				\[
+					\frac{\Delta_N^{en}(\mu)}{\norm{e}_\mu} = \frac{\norm{v_r}}{\sqrt{\alpha_{LB}}} \cdot \frac{1}{\underbrace{\norm{e}_\mu}_{\geq \sqrt{\alpha_{LB}} \cdot \norm{e}}} \leq \frac{\norm{v_r}}{\alpha_{LB}} \cdot \frac{1}{\norm{e}} \stackrel{\text{ii)}}{\leq} \frac{\gamma_{UB}}{\alpha_{LB}}
+				\]
+				Falls $a(\pdot,\pdot)$ symmetrisch, gilt wegen Normäquivalenz
+				\[
+					\norm{v_r}_\mu \leq \sqrt{\gamma_{UB}} \norm{v_r}
+				\]
+				und
+				\[
+					\norm{v_r}^2 = a(e,v_r) \stackrel{\text{CS}}{\leq} \norm{e}_\mu \norm{v_r}_\mu \quad \Rightarrow \quad \norm{v_r} \leq \norm{e}_\mu \cdot \sqrt{\gamma_{UB}}
+				\]
+				Damit
+				\[
+					\frac{\Delta_N^{en}(\mu)}{\norm{e}_\mu} = \frac{\norm{v_r}}{\sqrt{\alpha_{LB}}} \cdot \frac{1}{\norm{e}_\mu} \leq \frac{\norm{e}_\mu \cdot \sqrt{\gamma_{UB}}}{\sqrt{\alpha_{LB}} \cdot \norm{e}_\mu}
+				\]
+		\end{enumerate}
+	\end{proof}
+\end{satz}
+
+\begin{bem} \beginwithlistbem
+	\begin{itemize}
+		\item Wir nennen $\Delta_N$, $\Delta_N^{en}$ daher ``effektive'' Fehlerschranken weil Faktor der Überschätzung höchstens $\frac{\gamma_{UB}}{\alpha_{LB}}$ beträgt.
+		\item ``Rigorosität'' also äquivalent mit $\eta_N(\mu) \geq 1$.
+		\item Für den Ausgabefehler $\Delta_{N,s}(\mu)$ ohne weitere Annahmen keine Effektivität beweisbar.
+			Tatsächlich kann $\frac{\Delta_{N,s}}{|s-s_N|}$ beliebig groß oder nicht definiert sein, falls $\Delta_{N,s} \neq 0$, aber $s(\mu) = s_N(\mu)$:
+
+			Wähle $X_N$ und $\mu$ so dass $u(\mu) \neq u_N(\mu)$, wird erreicht durch $u(\mu) \not\in X_N$
+			\[
+				\Rightarrow e(\mu) \neq 0 \Rightarrow \Delta_N \neq 0, \Delta_{N,s} \neq 0 \quad \text{falls} \quad l \neq 0
+			\]
+			Wähle $l(\pdot;\mu) \neq 0$, so dass $l(u-u_N;\mu) = 0$
+			\[
+				\Rightarrow s(\mu)-s_N(\mu) = l(u-u_N;\mu) = 0
+			\]
+		\item Wir nennen die Fehlerschranken auch \emph{Fehlerschätzer} weil sie äquivalent zum Fehler sind.
+			\[
+				\norm{e} \leq \Delta_N \leq \eta_N \norm{e}
+			\]
+	\end{itemize}
+\end{bem}
+
+\begin{satz}[Effektivität, relative Fehlerschätzer]
+	Für $\Delta_N^{rel}(\mu)$ aus \ref{3.15} ist Effektivität definiert und beschränkt durch
+	\[
+		\eta_N^{rel}(\mu) := \frac{\Delta_N^{rel}(\mu)}{\frac{\norm{e}}{\norm{u}}} \leq 3 \frac{\gamma_{UB}(\mu)}{\alpha_{LB}(\mu)} \quad \text{falls} \quad \Delta_N^{rel}(\mu) \leq 1
+	\]
+
+	\begin{proof}
+		Wie in Beweis zu \ref{3.15} impliziert $\Delta_N^{rel} \leq 1$:
+		\[
+			\left| \frac{\norm{u}-\norm{u_N}}{\norm{u}} \right| \leq \frac 1 2
+		\]
+		Falls $\norm{u_N} \leq \norm{u}$ so gilt $\norm{u}-\norm{u_N} \leq \frac 1 2 \norm{u_N}$ also
+		\[
+			\norm{u} \leq \frac 3 2 \norm{u_N}
+		\]
+		Falls $\norm{u_N} > \norm{u}$, so ist ($*$) klar.
+		Dann gilt
+		\[
+			\eta_N^{rel}(\mu) = \underbrace{\frac{2 \norm{v_r}}{\alpha_{LB}(\mu) \norm{u_N}}}_{\Delta_N^{rel}} \cdot \frac{1}{\frac{\norm e}{\norm u}} \stackrel{\eqref{eq:3.4}}{\leq} 2 \frac{\gamma_{UB} \norm{e}}{\alpha_{LB} \norm{e}} \cdot \frac{\norm{u}}{\norm{u_N}} \stackrel{(*)}{\leq} 3 \frac{\gamma_{UB}}{\alpha_{LB}}
+		\]
+	\end{proof}
+\end{satz}
+
+\begin{bem} \beginwithlistbem
+	\begin{itemize}
+		\item Ähnlich für $\Delta_N^{en,rel}$
+		\item Verbesserung von Schranken und Effektivität durch Normwechsel.
+
+			Wähle $\bar\mu \in \p$ und $\norm{u} := \norm{u}_{\bar\mu}$ als neue Norm auf $X$.
+			Dann gilt für symmetrisches $a$: $\alpha(\bar\mu) = 1 = \gamma(\bar\mu)$ also Effektivitäten $\eta_N$, $\eta_N^{en} = 1$, Schätzer sind genau der echte Fehler.
+			Dies lässt $u_N$ unberührt, liefert aber bessere Fehlerschätzung.
+			Im Fall von Stetigkeit bzgl.\ $\mu$ kann auch in Umgebung von $\bar\mu$ gute Effektivität erwartet werden.
+	\end{itemize}
+\end{bem}

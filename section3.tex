@@ -162,7 +162,7 @@
 	\end{enumerate}
 \end{bem}
 
-\begin{satz}[Reproduktion von Lösungen]
+\begin{satz}[Reproduktion von Lösungen] \label{3.8}
 	Seien $u(\mu)$, $u_N(\mu)$ Lösungen von $\prob$ bzw.\ $\rprob$, $\ubar e_i \in \R^n$ $i$-ter Einheitsvektor
 	\begin{enumerate}
 		\item Falls $u(\mu) \in X_N \quad \Rightarrow \quad u_N(\mu) = u(\mu)$
@@ -485,7 +485,7 @@
 	\end{itemize}
 \end{bem}
 
-\begin{satz}[Effektivität der Fehlerschranken]
+\begin{satz}[Effektivität der Fehlerschranken] \label{3.16}
 	Mit Bezeichnungen aus \ref{3.13} sei $u(\mu) \neq u_N(\mu)$ und $\gamma_{UB}(\mu) < \infty$ eine obere Schranke an $\gamma(\mu)$.
 	Dann sind die \emph{Effektivitäten} $\eta_N^{en}(\mu)$ und $\eta_N(\mu)$ definiert und beschränkt durch
 	\begin{enumerate}
@@ -503,7 +503,7 @@
 	\begin{proof} \beginwithlistbew
 		\begin{enumerate}
 			\setcounter{enumi}{1}
-			\item $\norm{v_r}^2 = \dotp{v_r}{v_r} = r(v_r) = a(e,v_r) \leq \gamma_{UP}(\mu) \norm{e} \norm{v_r}$
+			\item $\norm{v_r}^2 = \dotp{v_r}{v_r} = r(v_r) = a(e,v_r) \leq \gamma_{UB}(\mu) \norm{e} \norm{v_r}$
 				\begin{equation} \label{eq:3.4}
 					\norm{v_r} \leq \gamma_{UB}(\mu) \norm{e}
 				\end{equation}
@@ -586,5 +586,174 @@
 			Dann gilt für symmetrisches $a$: $\alpha(\bar\mu) = 1 = \gamma(\bar\mu)$ also Effektivitäten $\eta_N$, $\eta_N^{en} = 1$, Schätzer sind genau der echte Fehler.
 			Dies lässt $u_N$ unberührt, liefert aber bessere Fehlerschätzung.
 			Im Fall von Stetigkeit bzgl.\ $\mu$ kann auch in Umgebung von $\bar\mu$ gute Effektivität erwartet werden.
+	\end{itemize}
+\end{bem}
+
+\begin{satz}[Ausgabefehlerschranke und Effektivität, compliant Fall]
+	Sei $a(\pdot,\pdot;\mu)$ symmetrisch, $l=f$. Dann erhalte verbesserte Ausgabeschranke
+	\[
+		0 \leq s(\mu) - s_N(\mu) \leq \bar \Delta_{N,s}(\mu) := \frac{\norm{v_r}^2}{\alpha_{LB}}
+	\]
+	und Effektivität
+	\[
+		\bar\eta_{N,s}(\mu) := \frac{\bar\Delta_{N,s}(\mu)}{s(\mu)-s_N(\mu)} \leq \frac{\gamma_{UB}(\mu)}{\alpha_{LB}(\mu)}
+	\]
+
+	\begin{proof}
+		Nach Satz \ref{3.10} ii) und \ref{3.13} gilt
+		\[
+			0 \stackrel{\ref{3.10}}{\leq} s(\mu)-s_N(\mu) = \norm{u-u_N}_\mu^2 = \norm{e}_\mu^2 \stackrel{\ref{3.13}}{\leq} \Delta_N^{en}(\mu)^2 = \bar\Delta_{N,s}(\mu)
+		\]
+		Für Effektivität gilt entsprechend mit \ref{3.16} i)
+		\[
+			\bar\eta_{N,s}(\mu) = \frac{\bar\Delta_{N,s}}{s(\mu)-s_N(\mu)} \stackrel{\ref{3.10}}{=} \frac{\Delta_N^{en}(\mu)^2}{\norm{u-u_N}_\mu^2} = \eta_N^{en}(\mu)^2 \stackrel{\ref{3.16}}{=} \sqrt{\frac{\gamma_{UB}}{\alpha_{LB}}}^2 = \frac{\gamma_{UB}}{\alpha_{LB}}
+		\]
+	\end{proof}
+\end{satz}
+
+\begin{bem}
+	Analog kann man im compliant Fall eine relative Ausgabefehlerschranke und Effektivität beweisen.
+	\[
+		\frac{s(\mu)-s_N(\mu)}{s(\mu)} \leq \bar\Delta_{N,s}^{rel}(\mu) := \frac{\norm{v_r}^2}{\alpha_{LB} s_N(\mu)}
+	\]
+	und
+	\[
+		\bar\eta_{N,s}^{rel}(\mu) := \frac{\bar\Delta_{N,s}^{rel}}{\frac{s(\mu)-s_N(\mu)}{s(\mu)}} \leq 2 \frac{\gamma_{UB}(\mu)}{\alpha_{LB}(\mu)}
+	\]
+	falls $\bar\Delta_{N,s}^{rel}(\mu) \leq 1$.
+\end{bem}
+
+\begin{bem}[Zusammenfassende Relevanz der Fehlerschätzer] \beginwithlistbem
+	\begin{itemize}
+		\item Rigorose obere Schranke für tatsächlichen Fehler nicht nur ``Indikatoren'' wie bei FEM.
+		\item Effektivität Faktor der Überschätzung des Fehlers ist klein und bleibt beschränkt.
+			Insbesondere:
+			\[
+				e(\mu) = 0 \Rightarrow \Delta_N(\mu) = 0
+			\]
+			also ``a-posteriori'' exakte Approximation verifizierbar.
+		\item Theoretische Untermauerung der i.A.\ empirischen Basiswahl.
+		\item Unabhängig von Basiswahl sind Fehlerschätzer anwendbar, auch für nicht-Snapshot-Basen (z.B.\ Krylov-Unterräume, etc.).
+		\item Effiziente Berechnung: Durch Offline-Online-Zerlegung ($\leadsto$ §\ref{sec-3.3}) ist neben reduzierter Simulation auch Fehlerschranken \& Effektivitätsschranken schnell berechenbar.
+		\item Weitere Einsatzmöglichkeiten: Offline zur Basisgenerierung ($\leadsto$ §\ref{sec-3.4}) und Online zur adaptiven Dimensionswahl.
+	\end{itemize}
+\end{bem}
+
+\subsubsection*{Numerische Beispiele}
+
+\paragraph*{demos\_chapter3(1)} Thermischer Block aus Beispiel \ref{2.10}, $B_1 = B_2 = 2$; $N = 5$, $\dotp{\pdot}{\pdot}_X := \dotp{\pdot}{\pdot}_{H_0^1}$,
+\[
+	S_N = \{ 0.1, 0.5, 0.9, 1.4, 1.7 \} \times \{0.1\}^3 \subseteq \R^4
+\]
+Erkenntnisse:
+\begin{itemize}
+	\item Fehlerschätzer kann günstig für sehr feines Parametergitter berechnet werden, Fehler ist teuer zu berechnen, daher nur in wenigen Punkten.
+	\item Fehler und Schätzer sind $0$ für Basisparameter (bestätigt \ref{3.8}, \ref{3.14}).
+	\item Fehlerschätzer ist obere Schranke für Fehler gemäß \ref{3.13}.
+	\item Für kleine Werte von $\mu_1$ größere Fehler $\Rightarrow$ gute Wahl von $S_N$ wird vermutlich (und später bewiesen) hier mehr Samples benötigen.
+\end{itemize}
+
+\paragraph*{demos\_chapter3(2)} Effektivitäten $\eta_N(\mu)$ und obere Schranke $\frac{\gamma}{\alpha} \leq \frac{\mu_{max}}{\mu_{min}}$.\\
+Erkenntnisse:
+\begin{itemize}
+	\item Effektivitäten sind gut, nur etwa Faktor $10$ über Fehler.
+	\item Obere Schranke für Effektivität gemäß \ref{3.16}.
+	\item Effektivitäten sind undefiniert für Parametersamples $\mu \in S_N$ (Division durch Null).
+\end{itemize}
+
+\paragraph*{demos\_chapter3(3)} Fehlerkonvergenz bezüglich $N$.
+\[
+	B_1 = B_2 = 3, \quad \mu_1 \in [0.5,2], \quad \mu = (\mu_1,1,\dots,1) \in \R^9
+\]
+Lagrange-Basis mit Gram-Schmidt-Orthonormierung, $\{\mu_i\}_{i=1}^N$ äquidistant.
+Erkenntnisse für Testfehler: (Maximierung über 100 zufällige Parameter)
+\[
+	S_{test} \subset \p, \quad |S_{test}| = 100
+\]
+
+\begin{itemize}
+	\item Exponentielle Konvergenz für Fehler und Schätzer.
+	\item Obere Schranke sehr gut.
+	\item Numerische Ungenauigkeiten für Schätzer.
+\end{itemize}
+
+\subsection{Offline/Online-Zerlegung} \label{sec-3.3}
+
+Bisher:
+\begin{itemize}
+	\item $\rprob$ niedrigdimensional, aber noch keine schnelle Berechnungsvorschrift.
+	\item Um ``berechenbares'' Verfahren zu erhalten: Forderung $\dim X < \infty$ in diesem Kapitel.
+	\item Für effiziente Berechnung ist separierbare Parameterabhängigkeit von $\prob$ essenziell.
+\end{itemize}
+Offline-Phase:
+\begin{itemize}
+	\item Typischerweise berechnungsintensiv, Komplexität polynomiell in $H := \dim X$
+	\item Einmal durchgeführt.
+	\item Berechnung \emph{hochdimensionaler} Daten: Snapshots, reduzierte Basis, Riesz-Repräsentanten. (``detailed\_data'' in RBmatlab)
+	\item Projektion der hochdimensionalen Daten in \emph{parameterunabhängigen niedrigdimensionalen} Daten. (``reduced\_data'')
+\end{itemize}
+Online-Phase:
+\begin{itemize}
+	\item Schnelle Berechnung, Komplexität polynomiell in $N$, $Q_a$, $Q_f$, $Q_l$, \emph{unabhängig von $H$}.
+	\item Typischerweise häufig ausgeführt für variierendes $\mu$.
+	\item Assemblierung des reduzierten parametrischen Systems für $\rprob$.
+	\item Lösen von $\rprob$.
+	\item Berechnung von Fehlerschranken und Effektivität.
+\end{itemize}
+
+\subsubsection*{Komplexitätsbetrachtung der bisherigen Formulierung}
+\begin{itemize}
+	\item Mit $\dim X = H$ und dünnbesetzter Matrix für $\prob$ ist Lösung z.B.\ in $\O(H^2)$ erreichbar (z.B.\ $H$ Schritte eines iterativen Lösers mit $\O(H)$ Komplexität für Matrix-Vektor-Multiplikation dank Dünnbesetztheit).
+	\item  $N \times N$ System für $\rprob$ ist vollbesetzt, also in $\O(N^3)$ lösbar, also $N << H$ erforderlich, um Gewinn zu bewirken.
+	\item Genaue Betrachtung der Berechnung von $u_N(\mu)$:
+		\begin{enumerate}[1.]
+			\item $N$ Snapshots berechnen mittels $\prob$: $\O(N \cdot H^2)$
+			\item $N^2$ Auswertungen von $a(\phi_i,\phi_j;\mu)$: $\O(N^2 \cdot H)$
+			\item $N$ Auswertungen von $f(\phi_i; \mu)$: $\O(N \cdot H)$
+			\item Lösen des $N \times N$ Systems für $\rprob$: $\O(N^3)$
+		\end{enumerate}
+	\item Wir haben noch keine Offline/Online-Zerlegung: 1. gehört zur Offline-Phase, 4. gehört zur Online-Phase, aber 2. und 3. können nicht in Offline-Phase berechnet werden (wegen Parameterabhängigkeit) und nicht in Online-Phase (wegen $H$-Abhängigkeit).\\
+		$\rightarrow$ Zerlegung von 2. und 3. mittels separierbarer Parameterabhängigkeit
+\end{itemize}
+
+\begin{defn}[Notation für Zerlegung von $\prob$]
+	Unter Annahme $H = \dim X < \infty$, $X = \spn \set{\psi_i}_{i=1}^H$, definiere Matrix
+	\[
+		K := \seq{\dotp{\psi_i}{\psi_j}}_{i,j=1}^H \in \R^{H \times H} \quad \text{``Gram'sche Matrix'' / ``Skalarprodukt-Matrix''}
+	\]
+	Mit separierbare Parameterabhängigkeit definiere Matrizen und Vektoren
+	\begin{align*}
+		A^q &:= \seq{a^q(\psi_j,\psi_i)}_{i,j=1}^H \in \R^{H \times H}, & q = 1,\dots,Q_a \\
+		\ubar f^q &:= \seq{f^q(\psi_i)}_{i=1}^H \in \R^H, & q = 1,\dots,Q_f \\
+		\ubar l^q &:= \seq{l^q(\psi_i)}_{i=1}^H \in \R^H, & q = 1,\dots,Q_l
+	\end{align*}
+\end{defn}
+
+\begin{kor}[Lösung von $\prob$]
+	Lösung von $\prob$ wird erhalten durch Assemblieren des vollen Systems
+	\[
+		A(\mu) = \sum_{q=1}^{Q_a} \Theta_a^q(\mu) \cdot A^q, \quad \ubar f(\mu) = \sum_{q=1}^{Q_f} \Theta_f^q(\mu) \ubar f^q, \quad \ubar l(\mu) = \sum_{q=1}^{Q_l} \Theta_l^q(\mu) \ubar l^q
+	\]
+	und Lösen von $A(\mu) \ubar u(\mu) = \ubar f(\mu)$ nach $\ubar u(\mu) = \seq{u_i}_{i=1}^H \in \R^H$ und
+	\[
+		u(\mu) = \sum_{i=1}^H u_i \phi_i \in X, \quad s(\mu) = \ubar l^T(\mu) \cdot \ubar u(\mu)
+	\]
+
+	\begin{proof}
+		Klar mit Definitionen.
+	\end{proof}
+\end{kor}
+
+\begin{bem} \beginwithlistbem
+	\begin{itemize}
+		\item Das Vorliegen der $A^q$, $\ubar f^q$, $\ubar l^q$ ist nicht trivial im Fall von ``fremden'' Diskretisierungspaketen und stellt wesentliche Schwierigkeit in breiter praktischer Anwendung dar.
+			Motivation für Eigenentwicklung von Diskretisierungscode.
+		\item Sinn von Matrix $K$ ist Berechnung von Skalarprodukten und Normen, z.B.\ für
+			\[
+				u = \sum u_i \psi_i, \quad v = \sum v_i \psi_i \in X \quad \text{für} \quad \ubar u = \seq{u_i}, \ubar v = \seq{v_i}_{i=1}^H \in \R^H
+			\]
+			\[
+				\Rightarrow \dotp{u}{v}_X = \sum_{i,j} u_i v_j \dotp{\psi_i}{\psi_j} = \ubar u^T K \ubar v
+			\]
 	\end{itemize}
 \end{bem}

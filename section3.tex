@@ -100,7 +100,7 @@
 	\end{proof}
 \end{kor}
 
-\begin{satz}[Diskrete RB-Probleme]
+\begin{satz}[Diskrete RB-Probleme] \label{3.6}
 	Sei $\Phi_N = \set{\phi_1,\cdots,\phi_N}$ eine reduzierte Basis für $X_N$.
 	Für $\mu \in \p$,
 	\begin{align*}
@@ -756,4 +756,196 @@ Online-Phase:
 				\Rightarrow \dotp{u}{v}_X = \sum_{i,j} u_i v_j \dotp{\psi_i}{\psi_j} = \ubar u^T K \ubar v
 			\]
 	\end{itemize}
+\end{bem}
+
+\begin{kor}[Offline-/Online- Zerlegung für $(P_N(\mu))$]
+\label{3.21}
+(Offline:) Nach Konstruktion einer Basis $\Phi_N = \{\phi_1,...,\phi_N\}$ berechne parameter-unabhängige Komponenten-Matrizen \& Vektoren
+\[
+	A_N^q := (a^q(\phi_j,\phi_i))_{i,j = 1}^N \in \R^{N \times N} \, , \qquad q = 1,...,Q_n
+\]
+\[
+	\underbar f_N^q := (f^q(\phi_i))_{i=1}^N \, , \qquad 	\underbar l_N^q := (l^q(\phi_i))_{i=1}^N \in \R^N \, , \qquad q = 1,...,Q_f/Q_l
+\]
+(Online:) Zu $\mu \in \mathcal{P}$ berechne Koeffizienten $\Theta_a^q(\mu), \Theta_f^q(\mu), \Theta_l^q(\mu)$ und 
+\[
+	A_N (\mu) := \sum_q  \Theta_a^q(\mu) A_N^q
+\]
+\[
+	\underbar f_N (\mu) := \sum_q \Theta_f^q(\mu) \underbar f_N^q \, , \qquad \underbar l_N (\mu) := \sum_q \Theta_l^q(\mu) \underbar l_N^q
+\]
+Dies liefert genau das diskrete System $A_N(\mu) \underbar u_N = f_N(\mu)$ aus \ref{3.6} welches nach $\underbar u_N$ geläst wird und $u_N(\mu), s_N(\mu)$ ergibt
+\end{kor}
+
+\begin{proof}
+	klar wg. Separierbarkeit
+\end{proof}
+
+\begin{bem}[Einfache Berechnung von $A_N^q, \underbar f_N^q, \underbar l_N^q$]
+	Die reduzierten Komponenten benötigen keinerlei Integration über $\Omega$ oder Gitterdurchlauf, falls hochdim. $A^q$ vorliegen.
+	Sei Basis $\Phi_N$ gegeben durch Koeffizientenmatrix
+	\[
+		\Phi_N := (\phi_{ji})_{i = 1, \,\, j = 1}^{H \,\,\,\,\,\,\, N} \in \R^{N \times N} \qquad \text{mit \,} \phi_{j} = \sum_{i=1}^{H} \phi_{ji} \psi_i
+	\]
+	% Hier bin ich mir nicht sicher, ob meine Formel stimmt!
+	Dann erhalte reduzierten Komponenten durch Matrix-Multi
+	% Ich musste für die griechischen Buchstaben leider underline verwenden. 
+	\[
+		A_N^q := \underline{\Phi}_N^T A^q \, ; \, \underbar f_N^q := \underline{\Phi}_N^T \underbar f^q \, ; \, \underbar l_N^q := \underline{\Phi}_N^T l^q
+	\]
+\end{bem}
+
+\begin{bem} \beginwithlistbem
+	\begin{itemize}
+		\item Offline-Phase benötigt $\mathcal{O}(NH^2 + NH(Q_f + Q_l) + N^2HQ_a)$ für die Berechnung von $\Phi_N, f_N^q, l_N^q, A_N^q$ dominiert von der Basisgenerierung.
+		\item Online-Phase skaliert mit $\mathcal{O}(N^2Qa + N(Q_f + Q_l) + N^3)$ für Berechnung von $A_N(\mu), f_N(\mu), l_N(\mu)$ und $\underbar u_N(\mu)$ dominiert durch LGS lösen falls $Q_a, Q_f, Q_l$ klein sind. Insbesondere komplett unabhängig von $H$, wie gewünscht.
+		\item Laufzeitdiagramm
+		Seien $t_{detail}, t_{offline}, t_{online}$, die Laufzeiten für einzelne Lösungen von $(P(\mu))$, Offline-Phase bzw. Online-Phase von $(P_N(\mu))$. Unter Annahme, dass diese konstant unter Parametervariation, erhalte affin-lineare Beziehung der Gesamtlaufzeit für $k$ parameterische Lösungen
+		\[
+			t(k) := k \cdot t_{detail} \, , \qquad t_N(k) = t_{offline} + k \cdot t_{online}
+		\]
+		Das reduzierte Modell zahlt sich aus, sobald mehr als $k* := \frac{t_{offline}}{t_{detail} - t_{online}}$ Lösungen berechnet werden sollen.
+		\begin{figure}[H]
+		\centering\small
+		\includegraphics[width = 0.5 \textwidth]{Bilder/Laufzeiten.png}
+		\caption{Laufzeiten mit wachsender Anzahl an Simulationen.}{(aus B. Haasdonk, Reduzierte-Basis-Methoden, Skript zur Vorlesung SS 2011, Universität Stuttgart, IANS-Report 4/11, 2011.)}
+		\label{fig:Laufzeiten}
+	\end{figure}
+	\end{itemize}
+\end{bem}
+
+\begin{bem}[Keine Unterscheidung zwischen $u$ und $u_h$]
+	Erinnerung: Wir unterscheiden (meistens) nicht in Notation zwischen $u_h$ (FEM-Lösung) und $u$ (Sobolev-Raum Lösung). Dies kann nun begründet werden:
+	\begin{enumerate}
+		\item Die Online-Phase ist unabhängig von $H = \dim(X)$, daher kann $H$ beliebig groß und damit $u_h$ beliebig präzise gemacht werden durch geeignete Diskretisierung mit genügend feinem Gitter, so dass $u$ und $u_h$ praktisch ununterscheidbar sind ($||u - u_h ||$ beliebig klein aber $(P_N(\mu))$ schnell lösbar).
+		\item In der Praxis wird Reduktionsfehler den Gesamtfehler dominieren, der (FEM-)Diskretisierungsfehler spielt untergeordnete Rolle.
+		\[
+			\epsilon := ||u - u_h|| \ll ||u_h - u_N||
+		\]
+		\[
+			\Rightarrow ||u_h - u_N|| - \epsilon \leq \underbrace{||u-u_N||}_{\text{theoretisch das Ideal}} \leq \overbrace{||u_h - u_N||}^{\text{berechenbar}} + \epsilon
+		\]
+		also kontrollieren wir durch Fehlerschranken für $||u_h - u_N||$ bis auf $\epsilon$ auch den eigentlich interessanten Fehler $||u - u_N||$.
+	\end{enumerate}
+\end{bem}
+
+\subsection{Offline-/Online- Zerlegung für Fehlerschranken/Effektivitätsschranken}
+
+Für schnelle Berechnung der Fehlerschranken \& Effektivitätsschranken benötigen wir Zerlegung für
+\begin{itemize}
+	\item Duale Norm des Residuums $|| r(\pdot ; \mu)||_{X'} = ||v_r||$ für alle Fehlerschranken
+	\item Duale Norm des Ausgabefunktionals $|| l(\pdot;\mu)||_{X'}$ für $\Delta_{N,s}(\mu)$
+	\item Norm $||u_N (\mu) ||_X$ der RB-Lösung für relativen Energienormfehlerschätzer $\Delta_N^{en, rel}$.
+	\item Untere/obere Schranke $\alpha_{LB}(\mu)$ bzw. $\gamma_{UB} (\mu)$ für Koerzivitäts- bzw. Stetigkeitskonstante für Fehlerschätzer bzw. Effektivitätsschranken.
+\end{itemize}
+Separierbarkeit von $(P(\mu))$ überträgt sich auf Residuum
+
+\begin{satz}[Separierbare Parameter-Abhängigkeit für $r(\pdot;\mu)$]
+\label{3.22}
+	Seien $a, f$ sep. parametrisch. Nach Riesz existieren $v_f^q \in X$ mit $<v_f^q, v> = f^q(v) \,\,\, \forall v \in X, \, q=1,...,Q_f$ und $v_a^{q,n} \in X$ mit $<v_a^{q,n}, v> = a^q (\phi_n,v), \, v \in X, \, q=1,...,Q_a, n=1,...,N$
+	Setze $Q_r := N Q_a + Q_f$ und Aufzählung von $\{v_a^{q,n},v_f\}$ durch
+	\[
+		(v_r^1,...,v_r^{Q_r}) := (v_f^1,...,v_f^{Q_f},v_a^{1,1},...,v_a^{Q_a,1},v_a^{1,2},...,v_a^{Q_a,2},...,v_a^{Q_a,N})
+	\]
+	Für $\mu \in \mathcal{P}$ sei $u_N = \sum_{n=1}^N u_{Nn} \phi_n$ Lösung von $(P_N(\mu))$ und hiermit definiere
+	\begin{align*}
+		(\Theta_r^1(\mu),...,\Theta_r^{Q_r}(\mu)) := (\Theta_f^1(\mu),...,\Theta_f^{Q_f}(\mu),-\Theta_a^{1}(\mu),...,-\Theta_a^{Q_a}(\mu)u_{N1},-\Theta_a^{1}(\mu)u_{N2},... \\
+		...,-\Theta_a^{Q_a}(\mu)u_{N2},...,-\Theta_a^{Q_a}(\mu)u_{NN})
+	\end{align*}
+	Mit $r^q(\pdot) := <v_r^q, \pdot> \in X', \, q = 1,...,Q_r$ sind $r(\pdot;\mu)$ und $v_r(\mu)$ separierbar parametrisch via
+	\[
+		r(\pdot;\mu) = \sum_{q=1}^{Q_r} \Theta_r^{q}(\mu) \cdot r^q(\pdot), \qquad v_r(\mu) = \sum_{q=1}^{Q_r} \Theta_r^{q}(\mu) \cdot v_r^q \qquad \forall \mu \in \mathcal{P}
+	\]
+\end{satz}
+
+\begin{proof}
+	Definition und Linearität ergibt:
+	\begin{align*}
+		<v_r(\mu),v> = r(v;\mu) &= f(v;\mu) - a(u_N(\mu),v;\mu) \\
+		&= \sum_q \Theta_f^q(\mu) f^q (v) - \sum_q \sum_n \Theta_a^q (\mu) u_{Nn} a^q(\phi_n,v) \\
+		&= \underbrace{<\sum_q \Theta_f^q (\mu) v_f^q - \sum_q \sum_n \Theta_a^q (\mu) u_{Nn} v_a^q, v>}_{\sum \Theta_r^q (\mu) v_r^q} \\
+		&= \sum_{q=1}^{Q_r} \Theta_r^q (\mu) r^q(v) \qquad \forall v \in X
+		\label{eq:3.5}
+	\end{align*}
+\end{proof}
+
+Offensichtlich Berechnung von Riesz-Repräsentant notwendig, dies geschieht durch Ausnutzen der Endlichdim. von $X = \op{span}\{\psi_i\}_{i=1}^Ĥ$ und $K := (<\psi_i,\psi_j>)_{i,j=1}^H$
+
+\begin{satz}[Berechnung von Riesz-Repr.]
+	Für $g \in X'$ erhält man Koeffizientenvektor $\underbar v = (v_i)_{i=1}^H \in \R^H$ seines Riesz-Repräsentanten $v_g = \sum_{i=1}^H v_i \, \psi_i \in X$ durch lösen von
+	\begin{align}
+		K \underbar v = \underline{g}
+	\end{align}
+	mit Vektor $\underline{g} := (g(\psi_i))_{i=1}^H \in \R^H$
+\end{satz}
+
+\begin{proof}
+	Für jedes $u = \sum_{i=1}^H u_i \, \psi_i \in X$ mit Koeffizientenvektor $\underbar u = (u_i)_{i=1}^H$ erhalten wir
+	\[
+		g(u) = g(\sum u_i \, \psi_i) = \sum u_i \, g(\psi_i) = \underbar u^T \underline{g} \overset{\ref{eq:3.5}}{=} \underbar u^T K \underbar v = <u,v_g>
+	\] 
+\end{proof}
+
+\begin{bem}
+	\ref{eq:3.5} ist typischerweise dünn besetzt, also mit iterativen LGS-Lösern berechenbar.
+\end{bem}
+
+\begin{kor}[Offline-/Online- für Residuen-Norm]
+\label{3.24}
+	(Offline:) Nach Offline von $(P_N(\mu))$ gemäß \ref{3.21} def. $G_r := <r^q (v_r^{q'})>_{q,q' =1}^{Q_r} \in \R^{Q_r \times Q_r}$ mittels Residuen-Komponenten $r^q$ und Riesz-Repr. $v_r^q$ aus \ref{3.22}
+	(Online:) Für $\mu \in \mathcal{P}$ und RB-Lösung $\underbar u_N \in \R^N$ berechne Residuen-Koeff-Vektor $\underline{\Theta}_r(\mu) = (\Theta_r^1(\mu),...,\Theta_r^{Q_r} (\mu))^T \, \in \R^{Q_r}$.
+	Dann gilt: 
+	\begin{align}
+	||v_r(\mu)||_X = ||r(\pdot;\mu)||_X = \sqrt{\underline{\Theta}_r(\mu)^T \cdot G_r \underline{\Theta}_r(\mu)}
+	\label{eq:3.6}
+	\end{align}
+\end{kor}
+
+\begin{proof}
+	Zunächst sehen wir $G_r = (<v_r^q,v_r^{q'}>)_{q, q' = 1}^{Q_r}$. Isometrie der Riesz-Abbildung \& Separierbarkeit ergeben
+	\[
+		||r(\mu)||_X^2 = ||v_r(\mu)||_X^2 = <\sum_{q=1}^{Q_r} \Theta_r^q(\mu) \, v_r^q,\sum_{q'=1}^{Q_r} \Theta_r^{q'}(\mu) \, v_r^{q'}>= \underline{\Theta}_r^T \cdot G_r \cdot \underline{\Theta}_r (\mu) 
+	\]
+\end{proof}
+
+\begin{bem}[Stabilisierung durch Orthonormierung von $\{v_r^q\}$]
+	Wie in \textsf{demos\_chapter3(3)} gesehen, existiert eine Genauigkeitsgrenze für Fehlerschätzer, diese liegt in numerischen Auslöschungseffekten in \ref{eq:3.6} begründet, denn $G_r$ ist potentiell schlecht konditioniert. Gemäß einer Idee von Behr \& Rave 2014 lässt sich die Genauigkeit steigern, indem die $\{v_r^q\}$ orthonormiert werden und \ref{eq:3.6} mit entsprechender Transformationsmatrix modifiziert werden.
+\end{bem}
+
+\begin{kor}[Offline-/Online- Zerlegung für $||l(\pdot;\mu)||_{X'}$]
+	(Offline:) Berechne Riesz-Repr. $v_l^q \in X$ der Ausgabekommponenten, d.\,h.
+	\[
+		<v_l^q,v> = l^q(v) \qquad \forall v \in X, \, q=1,...,Q_l
+	\]
+	und def. $G_l := (l^q(v_l^{q'})_{q, q' =1}^{Q_l}$
+	(Online:) Zu $\mu \in \mathcal{P}$ berechne $\underline{\Theta}_l (\mu) := (\Theta_l^1(\mu),...,\Theta_l^{Q_l}(\mu))$ und $||l(\pdot;\mu)||_{X'} = \sqrt{\underline{\Theta}_l^T G_l \underline{\Theta}_l}$
+\end{kor}
+
+\begin{proof}
+	analog zu \ref{3.24}
+\end{proof}
+
+\begin{kor}[Offline-/Online für $||u_N(\mu)||_X,\, ||u_N(\mu)||_{\mu}$]
+	(Offline:) Nach der Offline-Phase von $(P_N(\mu))$ def.
+	\[
+		K_N := (<(\phi_i,\phi_j>)_{i,j=1}^N \, \in \R^{N \times N}
+	\]
+	(Online:) Zu $\mu \in \mathcal{P}$ berechne $A_N(\mu)$ und $\underbar u_N(\mu)$ durch Online-Phase von $(P_N(\mu)$
+	\[
+		|| u_N(\mu)||_X = \sqrt{\underbar u_N^T \, K_N \, \underbar u_N}
+	\]
+	\[
+		|| u_N(\mu)||_{\mu} = \sqrt{\underbar u_N^T \, (\frac{1}{2} (A_N(\mu) + A_N(\mu)^T)) \, \underbar u_N}
+	\]
+\end{kor}
+
+\begin{proof}
+	\begin{align*}
+		||u_N||^2 = <\sum_n u_{Nn} \phi_n \, , \, \sum u_{Nn'} \phi_{n'}> = \sum_{n, n'} u_{Nn} u_{Nn'} <\phi_n, \phi_{n'}> = \underbar u_N^T \cdot K_N \cdot \underbar u_N
+	\end{align*}	
+	analog für Energienorm mit $A_{N,s} := \frac{1}{2} (A_N(\mu) + A_N(\mu)^T)$
+\end{proof}
+
+\begin{bem}
+	$K_N$ wieder einfach aus $K$ berechenbar (Übung).
 \end{bem}

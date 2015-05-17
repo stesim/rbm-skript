@@ -717,6 +717,7 @@ Online-Phase:
 \end{itemize}
 
 \begin{defn}[Notation für Zerlegung von $\prob$]
+\label{3.19}
 	Unter Annahme $H = \dim X < \infty$, $X = \spn \set{\psi_i}_{i=1}^H$, definiere Matrix
 	\[
 		K := \seq{\dotp{\psi_i}{\psi_j}}_{i,j=1}^H \in \R^{H \times H} \quad \text{``Gram'sche Matrix'' / ``Skalarprodukt-Matrix''}
@@ -730,6 +731,7 @@ Online-Phase:
 \end{defn}
 
 \begin{kor}[Lösung von $\prob$]
+\label{3.20}
 	Lösung von $\prob$ wird erhalten durch Assemblieren des vollen Systems
 	\[
 		A(\mu) = \sum_{q=1}^{Q_a} \Theta_a^q(\mu) \cdot A^q, \quad \ubar f(\mu) = \sum_{q=1}^{Q_f} \Theta_f^q(\mu) \ubar f^q, \quad \ubar l(\mu) = \sum_{q=1}^{Q_l} \Theta_l^q(\mu) \ubar l^q
@@ -948,4 +950,95 @@ Offensichtlich Berechnung von Riesz-Repräsentant notwendig, dies geschieht durc
 
 \begin{bem}
 	$K_N$ wieder einfach aus $K$ berechenbar (Übung).
+\end{bem}
+
+Für Fehlerschranken fehlen noch untere Schranke $\alpha_{LB} (\mu) \le \alpha (\mu)$, welche schnell berechenbar sein sollen.
+Falls $a(\pdot , \pdot ; \mu)$ glm. koerziv bzgl. $\mu$ und $\bar{\alpha} < 0$ bekannt, so ist $\alpha_{LB} (\mu) := \bar{\alpha}$ gültige Wahlmöglichkeit.
+In gewissen Fällen kann eine größere und damit bessere Schranke angegeben werden.
+
+\begin{satz}[``Min-$\Theta$-Verfahren'' zur Berechnung von $\alpha_{LB}(\mu)$]
+	Seien $a^q(u,u) \geq 0 \,\, \forall q,u$ und $\Theta_a^q (\mu) > 0 \,\, \forall \mu$ \\
+	(Offline:) Sei $\alpha(\bar{\mu})$ für ein $\bar{\mu} \in \mathcal{P}$ verfügbar \\
+	(Online:) Setze für $\mu \in \mathcal{P}$
+	\[
+		\alpha_{LB} (\mu) := \alpha(\bar{\mu}) \cdot \min_{q=1,\dots,??} \frac{\Theta_a^q(\mu)}{\Theta_a^q(\bar{\mu})}
+	\]
+	Dann gilt $0 < \alpha_{LB} (\mu) \leq \alpha(\mu)$
+\end{satz}
+
+\begin{proof}
+	Wegen $0 < \alpha(\bar{\mu})$ und $0 < c(\mu) := \min\limits_q \frac{\Theta_a^q(\mu)}{\Theta_a^q(\bar{\mu})}$ gilt $ 0 < \alpha(\bar{\mu}) \cdot c(\mu) := \alpha_{LB}(\mu)$
+	Folgende Argumentation ähnlich zu \ref{2.6} ii) \\
+	Für alle $u \in X$ gilt
+	\begin{align*}
+		a(u,u;\mu) &= \sum\limits_q \Theta_a^q(\mu) \, a^q(u,u) = \sum\limits_q \frac{\Theta_a^q(\mu)}{\Theta_a^q(\bar{\mu})} \cdot \Theta_a^q(\bar{\mu}) \, a^q(u,u) \\
+		&\geq \sum\limits_q \underbrace{\Bigl( \min\limits_{q'} \frac{\Theta_a^{q'}(\mu)}{\Theta_a^{q'}(\bar{\mu})} \Bigr)}_{c(\mu)} \cdot \Theta_a^q(\bar{\mu}) \, a^q(u,u) \\
+		&= c(\mu) \cdot \underbrace{\sum\limits_q \Theta_a^q(\bar{\mu}) \, a^q(u,u)}_{= a(u,u;\bar{\mu})} = c(\mu) \, a(u,u;\bar{\mu}) \\
+		&\overset{\text{glm. koerziv bzgl} \mu}{\geq} c(\mu) \cdot \alpha(\bar{\mu}) \cdot ||u||^2 \\
+		&= \alpha_{LB}(\mu) \cdot ||u||^2
+	\end{align*}
+	Also insbesondere
+	\[
+		\alpha(\mu) = \inf\limits_u \frac{a(u,u;\mu)}{||u||^2} \geq \alpha_{LB}(\mu)
+	\]
+\end{proof}
+
+\begin{bem} \beginwithlistbem
+	\begin{itemize}
+		\item ``Min-$\Theta$'' kann für Thermischen Block angewandt werden
+		\item obiges gilt auch für nichtsymm. $a(\pdot , \pdot)$
+		\item $\alpha(\bar{\mu})$ kann mittels eines hochdimensionalen Eigenwertproblems bestimmt werden:
+	\end{itemize}
+\end{bem}
+
+\begin{satz}[Berechnung von $\alpha(\mu)$ für $(P(\mu))$]
+	Seien $A(\mu), \, K \in \R^{H \times H}$ wie in \ref{3.19}/\ref{3.20}. \\
+	Setze $A_s(\mu) := \frac{1}{2} (A(\mu) + A(\mu)^T)$. Dann gilt
+	\[
+		\alpha(\mu) = \lambda_{\op{min}} (K^{-1} A_s(\mu))
+	\]
+	wobei $\lambda_{\op{min}}$ den kleinsten Eigenwert bezeichnet.
+\end{satz}
+
+\begin{proof}
+	Sie $K = L L^T$ (z.\,B. Cholesky oder Matrix-Wurzel) und verwende $\underbar v = L^t \underbar u$:
+	\begin{align*}
+		\alpha (\mu) &= \inf\limits_{u \in X} \frac{a(u,u;\mu)}{||u||^2} = \inf\limits_{\underbar u \in \R^H} \frac{\underbar u^T A(\mu) \underbar u}{\underbar u^T K \underbar u} \\
+		&= \inf\limits_{\underbar u \in \R^H} \frac{\underbar u^T A_s(\mu) \underbar u}{\underbar u^T K \underbar u} \\
+		&= \inf\limits_{\underbar v \in \R^H} \frac{\underbar v^T L^{-1} A_s \overbrace{L^{-T}}^{\text{inv. transp.} -1 \cdot T} \underbar v}{\underbar v^T L^{-1} L L^T L^{-T} \underbar v} = \inf\limits_{\underbar v \in \R^H} \frac{\underbar v^T L^{-1} A_s L^{-T} \underbar v}{\underbar v^T \underbar v}
+	\end{align*}
+	Also ist $\alpha(\mu)$ Minimum eines Rayleigh-Quotionenten, also kleinster Eigenwert der symmetrischen \& positiv definiten Matrix $\bar{A_s} := L^{-1} A_s L^{-T}$ \\
+	Die Matrizen $\bar{A_s}$ und $K^{-1} A_s$ sind ähnlich, da 
+	\[
+		L^T(K^{-1}A_s)L^{-T} = L^T L^{-T}L^{-1}A_sL^{-T} = L^{-1}A_sL^{-T} = \bar{A_s}
+	\]
+	Also haben sie identische Eigenwerte.
+\end{proof}
+
+\begin{bem} \beginwithlistbem
+	\begin{itemize}
+		\item Inversion von $K$ muss verhindert werden. Daher verwende EW-Löser, welcher nur Matrix-Vektor-Multiplikation verwendet. Sobald ein Produkt $y=K^{-1}A_s x$ erforderlich ist, löst man das System $Ky = A_s x$. Alternativ kann auch kleinster EW eines verallgemeinerten EWP $A_s \underbar u = \lambda K \underbar u$ berechnet werden.
+		\item Für variationelle Form des verallg. EWP für $\infty$-dim $(P(\mu))$ siehe Patera \& Rozza
+		\item Für Probleme, bei denen die Voraussetzungen von Min-$\Theta$ nicht erfüllt sind, kann ``Successive Constraint Method'' (SCM) eine Alternative darstellen.  $\leadsto$ §\ref{sec-4}
+	\end{itemize}
+\end{bem}
+
+\begin{satz}[``Max-$\Theta$''-Verfahren für $\gamma_{UB}(\mu)$, symmetrisches $a(\pdot , \pdot)$]
+	Sei $a$ symmetrisch, koerziv, separierbar parametrisch mit $a^q$ positiv semidefinit und $\Theta_a^q > 0 \, \, \forall q,u$ \\
+	(Offline:) Sei $\bar{\mu} \in \mathcal{P}$ und $\gamma(\bar{\mu})$ berechnet \\
+	(Online:) Setze für $\mu \ in \mathcal{P}: \gamma_{UB}(\mu) := \gamma(\bar{\mu}) \max\limits_q \frac{\Theta_a^q(\mu)}{\Theta_a^q(\bar{\mu})}$. Dann gilt 
+	\[
+		\gamma_{UB}(\mu) \leq \gamma_{UB} (\mu) < \infty
+	\]
+\end{satz}
+
+\begin{proof}
+	Übung.
+\end{proof}
+
+\begin{bem}[Komplexitäten]
+	Durch die angegebenen Berechnungsverfahren ist vollständige Offline-/Online-Zerlegung der RB-Lösung, Fehlerschranken und Effektivitätsschranken erreicht (Offline unabh. von $\mu$, Online unabh. von $H$). Komplexitäten für $\Delta_N(\mu), \Delta_{N,s}(\mu)$:
+	\begin{itemize}
+		\item Offline: $\mathcal{O} (H^3 + H^2 (Q_f + Q_l + N \cdot Q_a) + H Q_l^2) + H(Q_f + NQ_a)^2$ für EWP für $\alpha(\bar{\mu})$
+	\end{itemize}
 \end{bem}

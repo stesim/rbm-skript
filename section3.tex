@@ -961,7 +961,7 @@ In gewissen Fällen kann eine größere und damit bessere Schranke angegeben wer
 	(Offline:) Sei $\alpha(\bar{\mu})$ für ein $\bar{\mu} \in \mathcal{P}$ verfügbar \\
 	(Online:) Setze für $\mu \in \mathcal{P}$
 	\[
-		\alpha_{LB} (\mu) := \alpha(\bar{\mu}) \cdot \min_{q=1,\dots,??} \frac{\Theta_a^q(\mu)}{\Theta_a^q(\bar{\mu})}
+		\alpha_{LB} (\mu) := \alpha(\bar{\mu}) \cdot \min_{q} \frac{\Theta_a^q(\mu)}{\Theta_a^q(\bar{\mu})}
 	\]
 	Dann gilt $0 < \alpha_{LB} (\mu) \leq \alpha(\mu)$
 \end{satz}
@@ -1039,6 +1039,30 @@ In gewissen Fällen kann eine größere und damit bessere Schranke angegeben wer
 \begin{bem}[Komplexitäten]
 	Durch die angegebenen Berechnungsverfahren ist vollständige Offline-/Online-Zerlegung der RB-Lösung, Fehlerschranken und Effektivitätsschranken erreicht (Offline unabh. von $\mu$, Online unabh. von $H$). Komplexitäten für $\Delta_N(\mu), \Delta_{N,s}(\mu)$:
 	\begin{itemize}
-		\item Offline: $\mathcal{O} (H^3 + H^2 (Q_f + Q_l + N \cdot Q_a) + H Q_l^2) + H(Q_f + NQ_a)^2$ für EWP für $\alpha(\bar{\mu})$
+		\item Offline: $\O(H^3 + H^2 (Q_f + Q_l + N Q_a) + H Q_l^2 + H(Q_f + NQ_a)^2$ für EWP für $\alpha(\bar{\mu})$,
+			Riesz-Repräsentanten für $f^q$, $l^q$, $a^q(\phi_n,\pdot)$ und Matrix $G_l$ und $G_r$
+		\item Online: $\O((Q_f+N Q_a)^2 + Q_l^2 + Q_a)$ für Berechnung von $\norm{v_r(\pdot;\mu)}$, $\norm{l(\pdot;\mu)}_{X'}$ und $\alpha_{LB}(\mu)$ durch Min-$\Theta$.
+			Problematisch ist quadratische Abhängigkeit von $Q_f$, $Q_l$, $N Q_a$, welches diese Größen in der Praxis stark einschränkt.
 	\end{itemize}
 \end{bem}
+
+\paragraph{demos\_chapter3(4)} Beispiel-Lauf von Reduktionsschritten in RBmatlab.
+
+\subsection{Basisgenerierung}
+\label{sec-3.4}
+
+\subsubsection*{Approximation durch lineare Unterräume}
+
+Motivation für Snapshot-basierte Verfahren:
+\begin{itemize}
+	\item Bestimmung eines möglichst guten $X_N$, welches $\LM$ global approximiert.
+	\item Formulierung durch Optimierungsproblem, z.B.\ minimiere maximalen Fehler in Energienorm
+		\begin{equation}
+			\min_{\stackrel{Y \subset X}{\dim Y = N}} \max_{\mu \in \p} \norm{u(\mu)-u_N(\mu)}_\mu
+		\end{equation}
+		oder Minimum des mittleren quadratischen Projektionsfehlers
+		\begin{equation}
+			\min_{\stackrel{Y \subset X}{\dim Y = N}} \int_\p \norm{u(\mu)-P_Y u(\mu)}^2 \,\mathrm{d}\mu
+		\end{equation}
+		oder beliebiges anderes Distanzmaß.
+\end{itemize}

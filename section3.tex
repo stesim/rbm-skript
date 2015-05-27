@@ -1066,3 +1066,272 @@ Motivation für Snapshot-basierte Verfahren:
 		\end{equation}
 		oder beliebiges anderes Distanzmaß.
 \end{itemize}
+
+\begin{satz}
+\end{satz}
+
+\begin{satz}
+\end{satz}
+
+\begin{satz}
+\end{satz}
+
+\begin{satz}
+\end{satz}
+
+\begin{satz}[Optimales $X_N$ für $Q_a=1$]
+	Sei $Q_a=1$ und o.B.d.A.\ $a(u,v;\mu) = \Theta_a^1(\mu) a^1(u,v)$ und $\Theta_a^1(\mu) > 0$. Seien $\set{\mu^i}_{i=1}^{Q_f}$ derart, dass $\set{f(\pdot;\mu^i)}_{i=1}^{Q_f}$ linear unabhängig. Dann erfüllt der Lagrange RB-Raum $X_N = \spn\seq{u(\mu^i)}_{i=1}^{Q_f}$, $\dim X_N = Q_f$ und
+	\[
+		\inf_{v \in X_N} \norm{u(\mu)-v} = \inf_{v \in X_N} \norm{u(\mu)-v}_\mu = 0 \quad \forall \mu \in \p
+	\]
+
+	\begin{proof} \beginwithlistbew
+		\begin{enumerate}
+			\item \checkmark
+			\item $\spn\set{f^q}_{q=1}^{Q_f} = \spn\set{f(\pdot;\mu^i)}_{i=1}^q$
+				\begin{itemize}
+					\item[``$\supseteq$''] ist klar weil $f(\pdot;\mu^i) = \sum_{q=1}^{Q_f} \Theta_f^q f^q(\pdot)$
+					\item[``$=$''] aus Dimensionsbetrachtung
+						\begin{align*}
+							\dim\left( \spn\set{f(\pdot;\mu^i)}_{i=1}^{Q_f} \right) &= Q_f\\
+							\dim\left( \spn\set{f^q}_{q=1}^{Q_f} \right) &\leq Q_f
+						\end{align*}
+						$\Rightarrow$ folgt $\dim\left( \spn\set{f^q}_{q=1}^{Q_f} \right) = Q_f$ Gleichheit beider Räume
+				\end{itemize}
+			\item Zeige nun exakte Approximation in $X_N$.\\
+				Zu $\mu \in \p$ existiert wegen ii) $c(\mu) = \seq{c_i(\mu)}_{i=1}^{Q_f}$ mit
+				\[
+					f(\pdot;\mu) = \sum_{i=1}^{Q_f} c_i(\mu) f(\pdot;\mu^i) \tag{$*$}
+				\]
+				Damit ist dann $u(\mu) := \sum c_i(\mu) \frac{\Theta_a^q(\mu^i)}{\Theta_a^q(\mu)} u(\mu^i)$ Lösung von $\prob$:
+				\begin{align*}
+					a(u(\mu),v;\mu) &= \Theta_a^1(\mu) a^1(\sum c_i(\mu) \frac{\Theta_a^1(\mu^i)}{\Theta_a^1(\mu)} u(\mu^i), v)\\
+					&= \sum c_i(\mu) \underbrace{\Theta_a^1(\mu^i) a^1(u(\mu^i),v)}_{=a(u(\mu^i),v;\mu^i)}\\
+					&= \sum c_i(\mu) f(v;\mu^i) \stackrel{(*)}{=} f(v;\mu)
+				\end{align*}
+		\end{enumerate}
+	\end{proof}
+\end{satz}
+
+Für die folgende Aussage referenzieren wir Fink \& Rheinboldt: On the Error Behavior of the Reduced Basis Technique for Nonlinear Finite Element Approximations, ZAMM, 63:21-28, 1983.
+
+\begin{satz}[Lokale exponentielle Konvergenz]
+	Sei $\mu^0 \in U \subset \p \subset \R$ und $u(\mu)$ analytisch in Umgebung $U$. Sei $X_{k,\mu^0}$ der Taylor-RB-Raum für $k \in \N$. Dann existiert ein $B_\delta(\mu^0) \subset U$ und $C > 0$, so dass
+	\[
+		\inf_{v \in X_{k,\mu^0}} \norm{u(\mu)-v} \leq C |\mu-\mu^0|^{k+1} \quad \forall \mu \in B_\delta(\mu^0)
+	\]
+
+	\begin{proof}
+		Taylor-Entwicklung
+		\begin{align*}
+			u(\mu) &= \sum_{i=0}^\infty \frac{\partial^i}{\partial\mu^i} u(\mu^0) \frac{1}{i!} (\mu-\mu^0)^i\\
+			&= \underbrace{\sum_{i=0}^k \frac{\partial^i}{\partial\mu^i} u(\mu^0) \frac{1}{i!} (\mu-\mu^0)^i}_{v_k(\mu)} + \underbrace{\sum_{i=k+1}^\infty \frac{\partial^i}{\partial\mu^i} u(\mu^0) \frac{1}{i!} (\mu-\mu^0)^{i-(k+1)} (\mu-\mu^0)^{k+1}}_{w_k(\mu)}
+		\end{align*}
+		Sei $\delta < 1$ so dass $B_\delta(\mu^0) \subset U$ und $C' := \sup_i \norm{\frac{\partial^i}{\partial\mu^i} u(\mu^0) \frac{1}{i!}} < \infty$. Dann gilt für $\mu \in B_\delta(\mu)$
+		\begin{align*}
+			\norm{w_k(\mu)} &\leq \sum_{i=k+1}^\infty \norm{\frac{\partial^i}{\partial\mu^i} u(\mu^0) \frac{1}{i!}} \cdot |\mu-\mu^0|^{i-k+1} \leq C' \sum_{i=k+1}^\infty |\mu-\mu^0|^{i-(k+1)}\\
+			&\leq C' \frac{1}{1-|\mu-\mu^0|} \leq C' \frac{1}{1-\delta} =: C\\
+			\inf_{v \in X_{k,\mu^0}} \norm{u(\mu)-v} &\leq \norm{u(\mu)-v_k(\mu)} = \norm{w_k(\mu) \cdot (\mu-\mu^0)^{k+1}} \leq C |\mu-\mu^0|^{k+1}
+		\end{align*}
+	\end{proof}
+\end{satz}
+
+Die folgende Aussage basiert auf Maday \& Patera \& Turinici: Global a priori convergence theory for reduced-basis approximations of single-parameter symmetric coercive elliptic partial differential equations. C.R.\ Acad.\ Sci., Paris, Ser.\ 1, 335, 289-294, 2002.
+
+\begin{satz}[Globale exponentielle Konvergenz, $p=1$] \label{3.36}
+	Sei $\p = [\mu_{min},\mu_{max}] \subset \R^+$ mit $\mu_{max} > 1$ genügend groß und $\mu_{min} = \frac{1}{\mu_{max}}$
+	\[
+		a(u,v;\mu) = \mu a^1(u,v) + a^2(u,v)
+	\]
+	mit $a^1$, $a^2$ symmetrisch positiv semidefinit und $f \in X'$ sei nicht parametrisch. Zu $N \in \N$, $N \geq 2$ seien
+	\[
+		\mu_{min} = \mu^1 < \dots < \mu^N = \mu_{max}
+	\]
+	logarithmisch äquidistant, d.h.\
+	\[
+		\ln(\mu^{i+1}) - \ln(\mu^i) = \frac{\ln(\mu_{max})-\ln(\mu_{min})}{N-1} = \delta_N
+	\]
+	und $X_N = \spn\set{u(\mu^i)}_{i=1}^N$ zugehöriger Lagrange RB-Raum. Dann existiert $N_0$ so dass für alle $N \geq N_0$ gilt
+	\begin{equation}
+		\frac{\norm{u(\mu)-u_N(\mu)}_\mu}{\norm{u(\mu)}_\mu} \leq \mu_{max}^2 e^{\frac{-N-1}{N_0-1}} \quad \forall \mu \in \p
+	\end{equation}
+\end{satz}
+
+\begin{bem} \beginwithlistbem
+	\begin{itemize}
+		\item Voraussetzungen sind z.B.\ für einen thermischen Block mit $B_1 = 2$, $B_2 = 1$ erfüllt, wenn $\mu_2 = 1$ konstant gehalten wird und nur $\mu_1 = \mu$ variiert.
+		\item Verallgemeinerung für $p > 1$ existiert.
+		\item Satz \ref{3.36} liefert sogar die exponentielle Konvergenz des Approximationsfehlers und damit der Weiten $d_N$, $\bar d_N$.
+	\end{itemize}
+\end{bem}
+
+\begin{kor}[Exponentielle Konvergenz von $d_N$, $\bar d_N$]
+	Unter den Voraussetzungen von \ref{3.36} gilt insbesondere mit $C > 0$ unabhängig von $N$
+	\[
+		\inf_{v\in X_N} \norm{u(\mu)-v} \leq C \cdot e^{\frac{-N-1}{N_0-1}} \quad \forall \mu \in \p, N \geq N_0
+	\]
+	also für Kulmogorov $N$-Weite
+	\[
+		d_N(\LM) \leq C \cdot e^\frac{-N-1}{N_0-1} \quad \forall N \geq N_0
+	\]
+	und wegen $X_N \subset \spn(\LM)$
+	\[
+		\bar d_N(\LM) \leq C \cdot e^\frac{-N-1}{N_0-1}
+	\]
+
+	\begin{proof}
+		Wegen Normäquivalenz und Beschränktheit von $u$ gilt
+		\[
+			\norm{u(\mu)}_\mu \leq \sqrt{\gamma(\mu)} \norm{u(\mu)} \leq \frac{\gamma(\mu)}{\alpha(\mu)} \norm{f(\mu)} \leq C', \quad \text{mit} \quad C' := \sup_{\mu \in \p} \frac{\sqrt{\gamma(\mu)}}{\alpha(\mu)} \norm{f(\mu)}
+		\]
+		Also folgt
+		\begin{align*}
+			\inf_{v\in X_N} \norm{u(\mu)-v} &\leq \norm{u(\mu)-u_N(\mu)} \leq \frac{1}{\sqrt{\alpha(\mu)}} \norm{u(\mu)-u_N(\mu)}_\mu \cdot \frac{\norm{u(\mu)}_\mu}{\norm{u(\mu)}_\mu}\\
+			&\stackrel{\ref{3.36}}{\leq} \frac{\norm{u(\mu)}_\mu}{\sqrt{\alpha(\mu)}} \cdot e^\frac{-N-1}{N_0-1} \leq \underbrace{\frac{C'}{\bar\alpha}}_{=: C} \cdot e^\frac{-N-1}{N_0-1}
+		\end{align*}
+	\end{proof}
+\end{kor}
+
+Ziel ist Beweis von \ref{3.36}, hierzu benötigen wir jedoch einige Notationen und Hilfsaussagen.
+
+\begin{itemize}
+	\item Es sei $\dim X = H$ endlich aber beliebig groß.
+		Man kann zeigen, dass die Konstante $N_0$ und Forderung an $\mu_{max}$ unabhängig von $H$ ist.
+	\item Logarithmische Abbildung des Parametergebiets.
+		Es sei
+		\[
+			\tau(z) = \ln(z)
+		\]
+		und damit $\hat\mu := \tau(\mu)$, $\hat\mu_{min} = \tau(\mu_{min})$, $\hat\mu_{max} = \tau(\mu_{max}) = -\hat\mu_{min}$, $\hat\p := \tau(\p)$, $\hat u(\hat\mu) := u(\tau^{-1}(\hat\mu))$, also $\hat u(\hat\mu)$ Lösung von
+		\begin{equation}
+			e^{\hat\mu} a^1(\hat u(\hat\mu), v) + a^2(\hat u(\hat\mu), v) = f(v) \quad \forall v \in X \label{eq:3.10}
+		\end{equation}
+		und dann $u(\mu) = \hat u(\tau(\mu))$.
+	\item Es sei $\dotp{u}{v}_X := a(u,v;\mu=1) = a^1(u,v) + a^2(u,v)$, dann ist \eqref{eq:3.10} äquivalent zu
+		\begin{equation}
+			\dotp{\hat u(\hat\mu)}{v}_X + (e^{\hat\mu}-1) a^1(\hat u(\hat\mu),v) = f(v) \quad \forall v \in X \label{eq:3.11}
+		\end{equation}
+	\item Seien $\seq{\Upsilon_i, \lambda_i}_{i=1}^H \in (X, \R^+)$ Eigenfunktionen/-werte von verallgemeinertem EWP
+		\begin{equation}
+			a^1(\Upsilon_i,v) = \lambda_i \dotp{\Upsilon_i}{v}_X \quad \forall v \in X \label{eq:3.12}
+		\end{equation}
+		mit $0 \leq \lambda_1 \leq \dots \leq \lambda_H$, $\norm{\Upsilon_i} = 1$ ist dann $\set{\Upsilon_i}_{i=1}^H$ ONB von $X$.
+		Aus \eqref{eq:3.12} mit $v = \Upsilon_i$ und positiver Semidefinitheit von $a^2$ folgt
+		\[
+			1 = \dotp{\Upsilon_i}{\Upsilon_i}_X = a^1(\Upsilon_i,\Upsilon_i) + a^2(\Upsilon_i,\Upsilon_i) = \lambda_i + a^2(\Upsilon_i,\Upsilon_i)
+		\]
+		\[
+			\Rightarrow \lambda_i \in [0,1] =: \Lambda \text{ weil } \lambda_i = 1-a^2(\Upsilon_i,\Upsilon_i) \leq 1
+		\]
+	\item Aus Orthogonalität und \eqref{eq:3.12} folgt
+		\begin{equation}
+			a(\Upsilon_j,\Upsilon_i;\mu) = \underbrace{\dotp{\Upsilon_j}{\Upsilon_i}}_{\delta_{ij}} + (e^{\hat\mu}-1) \underbrace{a^1(\Upsilon_j,\Upsilon_i)}_{\lambda_i \delta_{ij}} = (1-\lambda_j+\lambda_j e^{\hat\mu}) \delta_{ij} \label{eq:3.13}
+		\end{equation}
+\end{itemize}
+
+\begin{lemma}[Lösungsdarstellung]
+	Die Lösung von \eqref{eq:3.10}, \eqref{eq:3.11} ist explizit gegeben durch
+	\begin{equation}
+		\hat u(\hat\mu) = \sum_{j=1}^H f_j \Upsilon_j g(\hat\mu,\lambda_j) \label{eq:3.14}
+	\end{equation}
+	mit $f_j = f(\Upsilon_j)$ und $g: \hat\p \times \Lambda \to \R^+$ definiert durch
+	\begin{equation}
+		g(z,\sigma) = \frac{1}{1-\sigma+\sigma e^z} \label{eq:3.15}
+	\end{equation}
+
+	\begin{proof}
+		Einsetzen von \eqref{eq:3.14} in \eqref{eq:3.11} liefert für Testfunktionen $v := \Upsilon_i$
+		\begin{align*}
+			&\dotp{\sum_j f_j \Upsilon_j g(\hat\mu,\lambda_j)}{\Upsilon_i}_X + (e^{\hat\mu}-1) a^1\left( \sum_j f_j \Upsilon_j g(\hat\mu,\lambda_j), \Upsilon_i \right)\\
+			&= \sum_j f_j g(\hat\mu,\lambda_j) \left( \dotp{\Upsilon_j}{\Upsilon_i}_X + (e^{\hat\mu}-1) a^1(\Upsilon_j,\Upsilon_i) \right)\\
+			&\stackrel{\eqref{eq:3.13}}{=} \sum_j f_j g(\hat\mu,\lambda_j)(1-\lambda_j+\lambda_j e^{\hat\mu}) \delta_{ij}\\
+			&= f_i g(\hat\mu,\lambda_i)\underbrace{(1-\lambda_i+\lambda_i e^{\hat\mu})}_{=\frac{1}{g(\hat\mu,\lambda_i)}} = f_i = f(\Upsilon_i) 
+		\end{align*}
+		also ist $\hat u(\hat\mu)$ Lösung von \eqref{eq:3.10} / \eqref{eq:3.11}.
+	\end{proof}
+\end{lemma}
+
+\begin{bem}
+	Im obigen Beweis wird also ausgenutzt, dass die Systemmatrix bezüglich $\set{\Upsilon_i}_{i=1}^H$ diagonal ist.
+\end{bem}
+
+\begin{lemma}[Energienorm-Darstellung in ONB]
+	Mit $\mu = \tau^{-1}(\hat\mu)$ gilt für eine Funktion $w = \sum_{i=1}^H w_i \Upsilon_i$
+	\[
+		\norm{w}_\mu^2 = \sum_{i=1}^H \frac{w_i^2}{g(\hat\mu,\lambda_i)}
+	\]
+
+	\begin{proof}
+		\[
+			\norm{w}_{\mu} = a(w,w;\mu) = \sum_{i,j} w_i w_j \underbrace{a(\Upsilon_i,\Upsilon_j;\mu)}_{\mathclap{\stackrel{\eqref{eq:3.13}}{=} (1-\lambda_j+\lambda_j e^{\hat\mu}) \delta_{ij}}} = \sum \frac{w_i^2}{g(\hat\mu,\lambda_i)}
+		\]
+	\end{proof}
+\end{lemma}
+
+Wir benötigen (grobe) Schranken für $g$ und seinen Ableitungen bezüglich $z$.
+
+\begin{lemma}[Schranken für $g$, $\frac{\partial^i}{\partial z^i} g$]
+	Für alle $z \in \hat\p$, $\sigma \in \Lambda = [0,1]$ gilt
+	\begin{enumerate}
+		\item
+			\[
+				g(z,\sigma) \in \left[ \frac{1}{\mu_{max}}, \mu_{max} \right]
+			\]
+		\item
+			\[
+				\frac{1}{g(z,\sigma)} \in \left[ \frac{1}{\mu_{max}}, \mu_{max} \right]
+			\]
+		\item
+			\[
+				\left| \frac{\partial^i}{\partial z^i} g(z,\sigma) \right| \leq \bar C \cdot C \cdot j! \quad \text{mit} \quad \bar C = \mu_{max}, C = 2\mu_{max}^2
+			\]
+	\end{enumerate}
+
+	\begin{proof}
+		i) \& ii)
+		\[
+			\frac{1}{g(z,\sigma)} = 1 + \sigma (e^z-1) \stackrel{j=1}{\leq} e^{\hat\mu_{max}} = \mu_{max} \quad \Rightarrow \quad g(z,\sigma) \geq \frac{1}{\mu_{max}}
+		\]
+		Für festes $z$ minimiere $\frac{1}{g(z,\sigma) = 1+\sigma(e^z-1)}$ bezüglich $\sigma$
+		\[
+			\min_{\sigma \in [0,1]} \frac{1}{g(z,\sigma)} = \begin{cases}
+				1 & z = 0 \quad (\sigma \text{ beliebig})\\
+				1 & z > 0 \quad (\sigma = 0)\\
+				e^z & z < 0 \quad (\sigma = 1)
+			\end{cases}
+		\]
+		\[
+			\frac{1}{g(z,\sigma)} \geq \min_{\sigma,z} \frac{1}{g(z,\sigma)} = e^{\hat\mu_{min}} = \mu_{min} = \frac{1}{\mu_{max}} \quad \Rightarrow \quad g(z,\sigma) \leq \mu_{max}
+		\]
+		iii) Wir zeigen per Induktion, dass $\frac{\partial^i}{\partial z^i} g(z,\sigma)$ sich darstellen lässt als
+		\begin{equation}
+			\frac{\partial^i}{\partial z^i} g(z,\sigma) = \sum_{k=2}^{j+1} \beta_k^j \sigma^{(k-1)} e^{(k-1)z} g^k(z,\sigma), \quad j \geq 1 \label{eq:3.16}
+		\end{equation}
+		mit
+		\begin{equation}
+			\left.
+			\begin{array}{l}
+				\beta_2^1 := -1\\
+				\beta_2^{j+1} = \beta_2^j = -1\\
+				\beta_k^{j+1} = \beta_k^j (k-1) - \beta_{k-1}^j(k-1), \quad k = 3,\dots,j+1\\
+				\beta_{j+2}^{j+1} := -(j+1) \beta_{j+1}^j
+			\end{array}
+			\right\} \label{eq:3.17}
+		\end{equation}
+		Denn für $j = 1$ erhält man
+		\[
+			\frac{\partial}{\partial z} g(z,\sigma) = \frac{-\sigma e^z}{(1-\sigma-\sigma e^z)^2} = -e^z \sigma g^2(z,\sigma)
+		\]
+		also mit \eqref{eq:3.16} $\beta_2^1 = -1$.
+		\paragraph*{Induktionsschritt}
+		\begin{align*}
+			\frac{\partial^i}{\partial z^i} g(z,\sigma) &= \frac{\partial}{\partial z} \left( \sum_{k=2}^{j+1} \beta_k^j \sigma^{(k-1)} e^{(k-1)z} g^k(z,\sigma) \right)\\
+			&= \sum_{k=2}^{j+1} \beta_k^j \sigma^{(k-1)} \bigg( e^{(k-1)z} \frac{\partial}{\partial z} \underbrace{g^k(z,\sigma)}_{\mathclap{= kg^{k-1}(z,\sigma) \cdot \underbrace{\frac{\partial}{\partial z} g(z,\sigma)}_{=-\sigma e^z g^2(z,\sigma)}}}+(k-1)e^{(k-1)z} g^k(z,\sigma) \bigg)\\
+			&= \sum_{k=2}^{j+1} \beta_k^j \sigma^{(k-1)} \left[ -\sigma e^{kz} k \cdot g^{k+1}(z,\sigma) + (k-1) e^{(k-1)z} g^k(z,\sigma) \right]\\
+			&= \sum_{k=2}^{j+1} \beta_k^j (k-1) \sigma^{(k-1)} e^{(k-1)z} g^k(z,\sigma) + \sum_{k=3}^{j+2} \beta_{k-1}^j \sigma^{(k-1)} \cdot \left( -\sigma e^{(k-1)z} (k-1) g^k(z,\sigma) \right)\\
+			&= \underbrace{\beta_2^j \sigma e^z g^2(z,\sigma)}_{k = 2} + \sum_{k=3}^{j+1} \left( \beta_k^j(k-1) - \beta_{k-1}^j(k-1) \right) \sigma^{(k-1)} e^{(k-1)z} g^k(z,\sigma)\\
+			&\quad \underbrace{- \beta_{j+1}^j (j+1) \sigma^{j+1} e^{(j+1)z} g^{j+2}(z,\sigma)}_{``k=j+2``}
+		\end{align*}
+		{\bf \ldots TODO (nächste Vorlesung)}
+	\end{proof}
+\end{lemma}

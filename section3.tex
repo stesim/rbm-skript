@@ -1048,6 +1048,83 @@ In gewissen Fällen kann eine größere und damit bessere Schranke angegeben wer
 
 \paragraph{demos\_chapter3(4)} Beispiel-Lauf von Reduktionsschritten in RBmatlab.
 
+\begin{itemize}
+	\item Vorteilhafte Eigenschaften einer Basis $\phi_N$: orthogonal für numerische Stabilität, Hierarchie, so dass Basisvektoren nach Relevanz geordnet sind, d.h. $(X_{N'})_{N'=1}^{N}$, $X_{N'} = \op{span}\{\phi_1, \dots, \phi_{N'}\}$ soll Sequenz von ``optimalen'' Räumen sein, damit durch Variation von $N'$ eine Fehlerkontrolle erlaubt.
+	\item Probleme (\ref{eq:3.7}), (\ref{eq:3.8}) stellen schwierige nichtlineare Optimierungsprobleme dar. Um zu praktischer Basisgenerierung zu kommen, werden verschiedene Vereinfachungen gemacht:
+	\begin{itemize}
+		\item ``Snapshotbasierte'' Räume: Statt $Y \subset X$ beliebig, wird $Y = \op{span}\{u(\mu^i)\}_{i=1}^N$ mit unbekanntem $\mu$ gesucht. %% Ist es unbekanntes mü ???%%
+		\item ``Diskretisierung des Parameterraumes''. Statt $\mu \in \mathcal{P}$ wird Maximum bzw. Mittelung nur über $\mu \in \mathcal{S}_{train}$ durchgeführt, wobei $\mathcal{S}_{train} = \{\mu^i\}_{i=1}^n \subset \mathcal{P}$ \emph{endliche} Menge von Trainingsparametern $\mu$ (z.\,B. Punkte eines äquidistanten Gitters oder zufällig gewählte Parameter oder mittels adaptiven Verfahren gewählt.
+		\item Statt eines Fehlermaßes, welches echte Lösung $u(\mu)$ erfordert, wird häufig ein Fehlerschätzer gewählt, welcher sehr viel schneller auswertbar ist.
+		\item Das resultierende vereinfachte Optimierungsproblem kann approximativ minimiert werden, indem statt simultan über $\{\mu^i\}_{i=1}^N$ zu optimieren, einzelne Basisvektoren der Reihe nach durch Optimierung bestimmt werden (``Greedy-Verfahren'')
+	\end{itemize}
+\end{itemize}
+
+\begin{defn}[Kolmogorov $n$-Weite]
+Sei $\mathcal{M} \subseteq X$ kompakte Teilmenge. Zu einem abgeschlossenen Unterraum $Y \subseteq X$ nennen wir
+\[
+	d(Y,\mathcal{M}) := \sup_{v \in \mathcal{M}} \inf_{w \in Y} ||v-w|| = \sup_{v \in \mathcal{M}} ||v-P_Yv||
+\]
+den \emph{Abstand} von $Y$ zu $\mathcal{M}$. Für $n \in N$ nennen wir
+\[
+	d_n(\mathcal{M}) := \inf_{Y \subset X , \dim(Y) = n} d(Y,\mathcal{M})
+\]
+die \emph{Kolmogorov $n$-Weite} der Menge $\mathcal{M}$. Als Abschwächung definieren wir
+\[
+	\bar{d}_n(\mathcal{M}) := \inf_{Y \subset \op{span}(\mathcal{M}), \dim(Y)=n} d(Y,\mathcal{M}) .
+\]
+\end{defn}
+
+\begin{bem} \beginwithlistbem
+	\begin{itemize}
+		\item $d_n$, $\bar{d}_n$ fallen monoton.
+		\item $d_n$, $\bar{d}_n$ sind rein approximationstheoretische Maße, deren ?? die Approximierbarkeit von $\mathcal{M}$ mit linearen Unterräumen charakterisiert unabhängig von der RB-Approximation
+		\item Wenn wir für ein $(\mathcal{P}(\mu))$ Konvergenz oder sogar Konvergenzrate von $d_n(\mathcal{M})$ zeigen können, so erhalten wir ebenso Konvergenz mit mind derselben Rate via Céa \ref{3.9} für die RB-Approximation
+		\[
+			|| u(\mu) - u_N(\mu) || \leq \frac{\gamma(\mu)}{\alpha(\mu)} \inf_{v \in X_N} || u(\mu) - v || \leq ??
+		\]
+		\item Beziehung $d_n$ zu $\bar{d}_n$. Es gilt trivialerweise
+		\[
+			d_0(\mathcal{M}) = \bar{d}_0(\mathcal{M}) = d(0,\mathcal{M}) = \sup_{v \in \mathcal{M}} ||v||,
+		\]
+		\[
+			d_n(\mathcal{M}) \leq \bar{d}_0(\mathcal{M}) \qquad \forall n \in \N,
+		\]
+		falls $n_0 := \dim(\op{span}(\mathcal{M})) < \infty, \,\, d_n(\mathcal{M}) = \bar{d}_n(\mathcal{M}) = 0 \,\, \forall n \geq n_0$
+		\item Präzise Werte für $d_n$ sind selten bekannt. Für endliche Menge oder Einheitskugeln können aber exakte Werte der Schranken für $d_n$ angegeben werden.
+		\item Beispiel: $\mathcal{M} := \{v \in X|||v|| \leq 1\}$ erfüllt $d_n(\mathcal{M}) = d_n(\mathcal{M}) = 1$ für alle $n < \dim(X)$ und $d_n(\mathcal{M}) = d_n(\mathcal{M}) = 0$ für $n \geq \dim(X)$.
+		\item Beispiel: $\mathcal{M} := [−1, 1]^m \subset X := R^m$ erfüllt $d_n(\mathcal{M}) = d_n(\mathcal{M}) = \sqrt{m−n}$ für alle $n \leq m$ und $d_n(\mathcal{M}) = d_n(\mathcal{M}) = 0$ für $n \geq m$.
+		\item Beispiel: ``Müsli-Schachtel'': $\mathcal{M}:=\prod_{i \in \N} [-2^i,2^i] \subset ?? \Rightarrow d_n(\mathcal{M}) \leq ??$
+	\end{itemize}
+\end{bem}
+
+\begin{defn}[Gram-Matrix]
+Zu $\{u_i\}_{i=1}^n \subset X$ definieren wir die \emph{Gram-Matrix} als $K:=(<u_i,u_j>_X)_{i,j=1}^n \in \R^{n \times n}$
+\end{defn}
+
+\begin{lemma}[Eigenschaften von $K$]
+Für $K$ Gram-Matrix von $\{u_i\}_{i=1}^n$ gilt
+\begin{enumerate}
+	\item $K$ ist symmetrisch und positiv semidefinit.
+	\item $\op{Rang}(K) = \dim \op{span}\{u_i\}_{i=1}^n$
+	\item $\{u_i\}_{i=1}^n$ linear unabhängig $\Leftrightarrow K$ positiv definit
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+	Übung
+\end{proof}
+
+\begin{bem}[Geometrische Information in $K$]
+$K$ enthält sehr viel Information der $\{u_i\}_{i=1}^n$, insbesondere kann man mittels $K$ eine isometrische Einbettung in $\R^n$ erzeugt werden, d.\,h. es existiert $\{x_i\}_{i=1}^n \in \R^n$ mit 
+\[
+	<x_i,x_j>_{\R^n} = <u_i,u_j>_X
+\] 
+und 
+\[
+	||x_i - x_j ||_{\R^n} = ||u_i - u_j||_X
+\]
+\end{bem}
+
 \subsection{Basisgenerierung}
 \label{sec-3.4}
 
@@ -1058,24 +1135,16 @@ Motivation für Snapshot-basierte Verfahren:
 	\item Bestimmung eines möglichst guten $X_N$, welches $\LM$ global approximiert.
 	\item Formulierung durch Optimierungsproblem, z.B.\ minimiere maximalen Fehler in Energienorm
 		\begin{equation}
-			\min_{\stackrel{Y \subset X}{\dim Y = N}} \max_{\mu \in \p} \norm{u(\mu)-u_N(\mu)}_\mu
-		\end{equation}
+			\min_{\stackrel{Y \subset X}{\dim Y = N}} \max_{\mu \in \p} \norm{u(\mu)-u_N(\mu)}_\mu \label{eq:3.7}
+		\end{equation} 
 		oder Minimum des mittleren quadratischen Projektionsfehlers
 		\begin{equation}
-			\min_{\stackrel{Y \subset X}{\dim Y = N}} \int_\p \norm{u(\mu)-P_Y u(\mu)}^2 \,\mathrm{d}\mu
-		\end{equation}
+			\min_{\stackrel{Y \subset X}{\dim Y = N}} \int_\p \norm{u(\mu)-P_Y u(\mu)}^2 \,\mathrm{d}\mu  \label{eq:3.8}
+		\end{equation} 
 		oder beliebiges anderes Distanzmaß.
 \end{itemize}
 
-\begin{satz}
-\end{satz}
-
-\begin{satz}
-\end{satz}
-
-\begin{satz}
-\end{satz}
-
+%% LÜCKE!!
 \begin{satz}
 \end{satz}
 

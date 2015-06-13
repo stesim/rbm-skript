@@ -124,6 +124,7 @@
 \end{satz}
 
 \begin{satz}[Kondition bei ONB und Symmetrie]
+\label{3.7}
 	Falls $a(\pdot,\pdot;\mu)$ symmetrisch und $\Phi_N$ ist ONB, so ist Kondition von \eqref{eq:3.1} unabhängig von $N$ beschränkt
 	\[
 		\op{cond}_2(A_N) := \norm{A_N}_2 \norm{A_N^{-1}}_2 \leq \frac{\gamma(\mu)}{\alpha(\mu)}
@@ -1049,10 +1050,10 @@ In gewissen Fällen kann eine größere und damit bessere Schranke angegeben wer
 \paragraph{demos\_chapter3(4)} Beispiel-Lauf von Reduktionsschritten in RBmatlab.
 
 \begin{itemize}
-	\item Vorteilhafte Eigenschaften einer Basis $\phi_N$: orthogonal für numerische Stabilität, Hierarchie, so dass Basisvektoren nach Relevanz geordnet sind, d.h. $(X_{N'})_{N'=1}^{N}$, $X_{N'} = \op{span}\{\phi_1, \dots, \phi_{N'}\}$ soll Sequenz von ``optimalen'' Räumen sein, damit durch Variation von $N'$ eine Fehlerkontrolle erlaubt.
+	\item Vorteilhafte Eigenschaften einer Basis $\Phi_N$: orthogonal für numerische Stabilität, Hierarchie, so dass Basisvektoren nach Relevanz geordnet sind, d.h. $(X_{N'})_{N'=1}^{N}$, $X_{N'} = \op{span}\{\phi_1, \dots, \phi_{N'}\}$ soll Sequenz von ``optimalen'' Räumen sein, damit durch Variation von $N'$ eine Fehlerkontrolle erlaubt.
 	\item Probleme (\ref{eq:3.7}), (\ref{eq:3.8}) stellen schwierige nichtlineare Optimierungsprobleme dar. Um zu praktischer Basisgenerierung zu kommen, werden verschiedene Vereinfachungen gemacht:
 	\begin{itemize}
-		\item ``Snapshotbasierte'' Räume: Statt $Y \subset X$ beliebig, wird $Y = \op{span}\{u(\mu^i)\}_{i=1}^N$ mit unbekanntem $\mu$ gesucht. %% Ist es unbekanntes mü ???%%
+		\item ``Snapshotbasierte'' Räume: Statt $Y \subset X$ beliebig, wird $Y = \op{span}\{u(\mu^i)\}_{i=1}^N$ mit unbekanntem $\{\mu^i\}_{i=1}^N$ gesucht. 
 		\item ``Diskretisierung des Parameterraumes''. Statt $\mu \in \mathcal{P}$ wird Maximum bzw. Mittelung nur über $\mu \in \mathcal{S}_{train}$ durchgeführt, wobei $\mathcal{S}_{train} = \{\mu^i\}_{i=1}^n \subset \mathcal{P}$ \emph{endliche} Menge von Trainingsparametern $\mu$ (z.\,B. Punkte eines äquidistanten Gitters oder zufällig gewählte Parameter oder mittels adaptiven Verfahren gewählt.
 		\item Statt eines Fehlermaßes, welches echte Lösung $u(\mu)$ erfordert, wird häufig ein Fehlerschätzer gewählt, welcher sehr viel schneller auswertbar ist.
 		\item Das resultierende vereinfachte Optimierungsproblem kann approximativ minimiert werden, indem statt simultan über $\{\mu^i\}_{i=1}^N$ zu optimieren, einzelne Basisvektoren der Reihe nach durch Optimierung bestimmt werden (``Greedy-Verfahren'')
@@ -1077,23 +1078,23 @@ die \emph{Kolmogorov $n$-Weite} der Menge $\mathcal{M}$. Als Abschwächung defin
 \begin{bem} \beginwithlistbem
 	\begin{itemize}
 		\item $d_n$, $\bar{d}_n$ fallen monoton.
-		\item $d_n$, $\bar{d}_n$ sind rein approximationstheoretische Maße, deren ?? die Approximierbarkeit von $\mathcal{M}$ mit linearen Unterräumen charakterisiert unabhängig von der RB-Approximation
+		\item $d_n$, $\bar{d}_n$ sind rein approximationstheoretische Maße, deren Abfall die Approximierbarkeit von $\mathcal{M}$ mit linearen Unterräumen charakterisiert, unabhängig von der RB-Approximation
 		\item Wenn wir für ein $(\mathcal{P}(\mu))$ Konvergenz oder sogar Konvergenzrate von $d_n(\mathcal{M})$ zeigen können, so erhalten wir ebenso Konvergenz mit mind derselben Rate via Céa \ref{3.9} für die RB-Approximation
 		\[
-			|| u(\mu) - u_N(\mu) || \leq \frac{\gamma(\mu)}{\alpha(\mu)} \inf_{v \in X_N} || u(\mu) - v || \leq ??
+			|| u(\mu) - u_N(\mu) || \leq \frac{\gamma(\mu)}{\alpha(\mu)} \underbrace{\inf_{v \in X_N} || u(\mu) - v ||}_{d(X_N,\mathcal{M})} \leq \frac{\bar{\gamma}}{\bar{\alpha}} d_n(\mathcal{M})
 		\]
 		\item Beziehung $d_n$ zu $\bar{d}_n$. Es gilt trivialerweise
 		\[
 			d_0(\mathcal{M}) = \bar{d}_0(\mathcal{M}) = d(0,\mathcal{M}) = \sup_{v \in \mathcal{M}} ||v||,
 		\]
 		\[
-			d_n(\mathcal{M}) \leq \bar{d}_0(\mathcal{M}) \qquad \forall n \in \N,
+			d_n(\mathcal{M}) \leq \bar{d}_n(\mathcal{M}) \qquad \forall n \in \N,
 		\]
 		falls $n_0 := \dim(\op{span}(\mathcal{M})) < \infty, \,\, d_n(\mathcal{M}) = \bar{d}_n(\mathcal{M}) = 0 \,\, \forall n \geq n_0$
 		\item Präzise Werte für $d_n$ sind selten bekannt. Für endliche Menge oder Einheitskugeln können aber exakte Werte der Schranken für $d_n$ angegeben werden.
-		\item Beispiel: $\mathcal{M} := \{v \in X|||v|| \leq 1\}$ erfüllt $d_n(\mathcal{M}) = d_n(\mathcal{M}) = 1$ für alle $n < \dim(X)$ und $d_n(\mathcal{M}) = d_n(\mathcal{M}) = 0$ für $n \geq \dim(X)$.
-		\item Beispiel: $\mathcal{M} := [−1, 1]^m \subset X := R^m$ erfüllt $d_n(\mathcal{M}) = d_n(\mathcal{M}) = \sqrt{m−n}$ für alle $n \leq m$ und $d_n(\mathcal{M}) = d_n(\mathcal{M}) = 0$ für $n \geq m$.
-		\item Beispiel: ``Müsli-Schachtel'': $\mathcal{M}:=\prod_{i \in \N} [-2^i,2^i] \subset ?? \Rightarrow d_n(\mathcal{M}) \leq ??$
+		\item Beispiel: $\mathcal{M} := \{v \in X|||v|| \leq 1\}$ erfüllt $d_n(\mathcal{M}) = \bar{d}_n(\mathcal{M}) = 1$ für alle $n < \dim(X)$ und $d_n(\mathcal{M}) = \bar{d}_n(\mathcal{M}) = 0$ für $n \geq \dim(X)$.
+		\item Beispiel: $\mathcal{M} := [−1, 1]^m \subset X := R^m$ erfüllt $d_n(\mathcal{M}) = \bar{d}_n(\mathcal{M}) = \sqrt{m−n}$ für alle $n \leq m$ und $d_n(\mathcal{M}) = \bar{d}_n(\mathcal{M}) = 0$ für $n \geq m$.
+		\item Beispiel: ``Müsli-Schachtel'': $\mathcal{M}:=\prod_{i \in \N} [-2^i,2^i] \subseteq l_2 \Rightarrow d_n(\mathcal{M}) \leq C \cdot 2^{-n}$, exponentielle Konvergenz
 	\end{itemize}
 \end{bem}
 
@@ -1105,7 +1106,7 @@ Zu $\{u_i\}_{i=1}^n \subset X$ definieren wir die \emph{Gram-Matrix} als $K:=(<u
 Für $K$ Gram-Matrix von $\{u_i\}_{i=1}^n$ gilt
 \begin{enumerate}
 	\item $K$ ist symmetrisch und positiv semidefinit.
-	\item $\op{Rang}(K) = \dim \op{span}\{u_i\}_{i=1}^n$
+	\item $\op{Rang}(K) = \dim (\op{span}\{u_i\}_{i=1}^n)$
 	\item $\{u_i\}_{i=1}^n$ linear unabhängig $\Leftrightarrow K$ positiv definit
 \end{enumerate}
 \end{lemma}
@@ -1123,6 +1124,27 @@ und
 \[
 	||x_i - x_j ||_{\R^n} = ||u_i - u_j||_X
 \]
+
+Sie $K = UDU^T$ Eigenwertzerlegung mit $D= \op{diag}(\lambda_1,\dots,\lambda_n)$. Setze $(x_1,\dots,x_n):=D^{\frac{1}{2}}U^T$.
+Dann:
+\begin{align*}
+	<x_i,x_j>_{\R^n} &= [(D^{\frac{1}{2}}U^T)_{i,j}]^T[(D^{\frac{1}{2}}U^T)_{i,j}]  \\
+	&= (UD^{\frac{1}{2}})_{i,j} (D^{\frac{1}{2}} U^T)_{i,j} \\
+	&= (U)_{i,j} D^{\frac{1}{2}} D^{\frac{1}{2}} (U^T)_{i,j} = (UDU^T)_{ij} = (K)_{ij} =<u_i,u_j>_X
+\end{align*}
+
+und
+
+\begin{align*}
+	||x_i-x_j||_{\R^n}^2 &= <x_i,x_i>_{\R^n} - 2 <x_i,x_j>_{\R^n} + <x_j,x_j>_{\R^n} \\
+	&= <u_i,u_i>_{X} - 2 <u_i,u_j>_{X} + <u_j,u_j>_{X} = ||u_i-u_j||_X
+\end{align*}
+
+Damit können viele lineare Operationen auf $\{u_i\}_{i=1}^n$ durch geeignete Operation mit $K$ ausgedrückt werden. Z.\,B. Normberechnung in $\op{span}\{u_i\}_{i=1}^n$: (siehe auch Offline/Online für Normen)
+\[
+	v= \sum\limits_{i=1}^n v_i u_i \,\,\,\, , \,\,\,\, \underbar v= (v_i)_{i=1}^n \in \R^n \qquad \Rightarrow \qquad ||v||_X^2 = \underbar v^T K \cdot \underbar v
+\]
+
 \end{bem}
 
 \subsection{Basisgenerierung}
@@ -1144,9 +1166,18 @@ Motivation für Snapshot-basierte Verfahren:
 		oder beliebiges anderes Distanzmaß.
 \end{itemize}
 
-%% LÜCKE!!
-\begin{satz}
+Wir haben bereits gesehen, dass in bestimmten Fällen fehlerfreie Approximation durch geeignete RB-Räume möglich ist
+
+\begin{satz}[Optimales $X_N$ für Thermischer Block, $B_1 = 1$]
+Sie $p \in \N, \, B_1=1, \, B_2 = p, \, \mu^i := (\mu_{min},\dots,\mu_{min})^T + e_i \cdot (\mu_{max} - \mu_{min}), i=1,\dots,p$. Dann ist $X_N := \op{span}(u(\mu^i))_{i=1}^p$ optimal in dem Sinne, dass
+\[
+	\inf_{v \in X_N} ||u(\mu) - v|| = \inf_{v \in X_N} ||u(\mu) - v||_{\mu} = 0 \qquad \forall \mu \in \mathcal{P}
+\] 
 \end{satz}
+
+\begin{proof}
+Übung.
+\end{proof}
 
 \begin{satz}[Optimales $X_N$ für $Q_a=1$]
 	Sei $Q_a=1$ und o.B.d.A.\ $a(u,v;\mu) = \Theta_a^1(\mu) a^1(u,v)$ und $\Theta_a^1(\mu) > 0$. Seien $\set{\mu^i}_{i=1}^{Q_f}$ derart, dass $\set{f(\pdot;\mu^i)}_{i=1}^{Q_f}$ linear unabhängig. Dann erfüllt der Lagrange RB-Raum $X_N = \spn\seq{u(\mu^i)}_{i=1}^{Q_f}$, $\dim X_N = Q_f$ und
@@ -1299,6 +1330,7 @@ Ziel ist Beweis von \ref{3.36}, hierzu benötigen wir jedoch einige Notationen u
 \end{itemize}
 
 \begin{lemma}[Lösungsdarstellung]
+\label{3.38}
 	Die Lösung von \eqref{eq:3.10}, \eqref{eq:3.11} ist explizit gegeben durch
 	\begin{equation}
 		\hat u(\hat\mu) = \sum_{j=1}^H f_j \Upsilon_j g(\hat\mu,\lambda_j) \label{eq:3.14}
@@ -1325,6 +1357,7 @@ Ziel ist Beweis von \ref{3.36}, hierzu benötigen wir jedoch einige Notationen u
 \end{bem}
 
 \begin{lemma}[Energienorm-Darstellung in ONB]
+\label{3.39}
 	Mit $\mu = \tau^{-1}(\hat\mu)$ gilt für eine Funktion $w = \sum_{i=1}^H w_i \Upsilon_i$
 	\[
 		\norm{w}_\mu^2 = \sum_{i=1}^H \frac{w_i^2}{g(\hat\mu,\lambda_i)}
@@ -1340,6 +1373,7 @@ Ziel ist Beweis von \ref{3.36}, hierzu benötigen wir jedoch einige Notationen u
 Wir benötigen (grobe) Schranken für $g$ und seinen Ableitungen bezüglich $z$.
 
 \begin{lemma}[Schranken für $g$, $\frac{\partial^i}{\partial z^i} g$]
+\label{3.40}
 	Für alle $z \in \hat\p$, $\sigma \in \Lambda = [0,1]$ gilt
 	\begin{enumerate}
 		\item
@@ -1401,6 +1435,217 @@ Wir benötigen (grobe) Schranken für $g$ und seinen Ableitungen bezüglich $z$.
 			&= \underbrace{\beta_2^j \sigma e^z g^2(z,\sigma)}_{k = 2} + \sum_{k=3}^{j+1} \left( \beta_k^j(k-1) - \beta_{k-1}^j(k-1) \right) \sigma^{(k-1)} e^{(k-1)z} g^k(z,\sigma)\\
 			&\quad \underbrace{- \beta_{j+1}^j (j+1) \sigma^{j+1} e^{(j+1)z} g^{j+2}(z,\sigma)}_{``k=j+2``}
 		\end{align*}
-		{\bf \ldots TODO (nächste Vorlesung)}
+	Für $j \geq 1$ setze $S_j := \sum\limits_{k=2}^{j+1} |\beta_k^j|$ und zeige per Induktion, dass
+	\[
+		S_j \leq 2^j \cdot j! \qquad j \geq 1
+	\]
+	Für j = 1 ist $S_j =1 \leq 2^1 \cdot 1! = 2$ also Induktionsanfang.
+	Gelte Behauptung für $j \geq 1$. Dann gilt:
+	\begin{align*}
+		|\beta_2^{j+1}| &= 1 \\
+		|\beta_k^{j+1}| &< (j+1)(|\beta_k^j| + |\beta_{k-1}^j|) \qquad k=3,\dots,j+1 \\
+		|\beta_{j+2}^{j+1}| &= (j+1) |\beta_{j+1}^j| \\
+		\Rightarrow S_{j+1} = \sum\limits_{k=2}^{j+2} |\beta_k^{j+1}| &\leq 2 (j+1) S_j \overset{i.A.}{\leq} 2 (j+1) 2^j \cdot j! = 2^{j+1} (j+1)!
+	\end{align*}
+	Damit folgt (iii):
+	\begin{align*}
+	|\frac{\partial^i}{\partial z^i} g(z,\sigma)| &= |\sum\limits_{k=2}^{j+1} \beta_k^j \sigma^{(k-1)} e^{(k-1)z} g^k(z,\sigma)| \\
+	&\leq \underbrace{(\sum\limits_{k=2}^{j+1} |\beta_k^j|)}_{\leq 2^j \cdot j!} \underbrace{\sup_k |\sigma^{(k-1)} e^{(k-1)z} g^k(z,\sigma)|}_{\leq 1 \cdot e^{j_{\mu_{max}}^1} \cdot \mu_{max}^{j+1} = \mu_{max} (\mu_{max}^2)^j} \\
+	&\leq (2 \mu_{max}^2)^j \cdot j! \cdot \mu_{max}
+	\end{align*}
 	\end{proof}
 \end{lemma}
+
+\begin{bem}
+$g(\hat{\mu}, \lambda_i)$ sind gemäß \ref{3.38} Koeffizienten für $\hat{u}(\hat{\mu})$ in ONB Entwicklung. Entsprechend sind $\frac{\partial^j}{\partial z^j} g(z,\sigma)$ für $z=\hat{\mu}, \, \sigma = \lambda_i$ die Koeffizienten der Sensitivitätsableitung $\frac{\partial^j}{\partial \hat{\mu}^j} \hat{u}(\hat{\mu})$ in der ONB Entwicklung, also impliziert Lemma \ref{3.40} eine Beschränktheit der Sensitivitätsableitungen.
+\end{bem}
+
+\begin{lemma}[Darstellung von Fkt. aus $X_N$]
+\label{3.41}
+Für Koeffizientenfunktionen $\tilde{C_n}: \hat{\mathcal{P}} \rightarrow \R, \, n=1,\dots,N$
+\[
+	\hat{w}_N(\hat{\mu}):= \sum\limits_{n=1}^N \tilde{C_n} (\hat{\mu})\hat{u}(\hat{\mu}^n)
+\]
+%?? ln hier???
+mit $\hat{\mu}^n := \ln\, \mu^n$ ist also $\hat{w}_N(\hat{\mu}) \in X_N$. Dann lässt sich $\hat{w}_N$ darstellen als
+\[
+	\hat{w}_N(\hat{\mu}) = \sum\limits_{i=1}^H f_i \Upsilon_i \tilde{g}_N(\hat{\mu},\lambda_i)
+\]
+wobei $\tilde{g}_N(\hat{\mu}, \sigma) := \sum\limits_{n=1}^N \tilde{C}_n(\hat{\mu}) g(\hat{\mu}^n,\sigma)$
+\begin{proof}
+	Aus Lösungsdarstellung \ref{3.38} folgt
+	\[
+		u(\mu^n) = \hat{u}(\hat{\mu}^n) = \sum\limits_{i=1}^H f_i \Upsilon_i  g(\hat{\mu}^n,\lambda_i) \qquad ,n=1,\dots,N
+	\]
+	Also ist
+	\[
+		\hat{w}_N(\hat{\mu}) = \sum_n \tilde{C}_n(\hat{\mu})\sum\limits_{i=1}^H f_i \Upsilon_i  g(\hat{\mu}^n,\lambda_i) = \sum\limits_{i=1}^H f_i \Upsilon_i  \underbrace{\sum\limits_{n=1}^N \tilde{C}_n(\hat{\mu}) g(\hat{\mu}^n,\sigma)}_{= \tilde{g}_N(\hat{\mu},\sigma)}
+	\]
+\end{proof}
+\end{lemma}
+
+Wir benötigen noch Lagrange-Interpolation in M aufeinanderfolgenden Punkten $\{\hat{\mu}^i,\dots,\hat{\mu}^{i+M-1}\}$: Sie $h \in C^M(\hat{\mathcal{P}})$ zu interpolierende Funktion. Es bezeichne $I_M^i : C^0 (\hat{\mathcal{P}}) \rightarrow P_{M-1}(\hat{\mathcal{P}})$ Polynominterpolation zu $\{\hat{\mu^{i+m-1}}_{m=1}^M\}$ für $M \geq 2$ und $i \in \{1,\dots,N\}$ s.\,d. $i+M \leq N+1$.
+
+Sei $L_M^{i;m} \in P_{M-1}(\hat{\mathcal{P}})$ Lagrange-Polynom zu den Stützstellen, d.\,h.
+\[
+	L_M^{i;m}(\hat{\mu}^{i+m'-1}) = \delta_{m m'} \qquad \text{für} \,\,\, 1 \leq m, m' \leq M
+\]
+Dann ist der Interpolant darstellbar als
+\[
+	(I_M^i h)(\hat{\mu}) = \sum\limits_{m=1}^M L_M^{i;m}(\hat{\mu})h(\hat{\mu}^{i+m-1})
+\]
+Für den Interpolationsfehler gilt in $\hat{\mu} \in [\hat{\mu}^i, \mu^{i+M-1}]$
+\begin{align}
+	|h(\hat{\mu} - (I_M^i h)(\hat{\mu})| &\leq \underbrace{\frac{\prod\limits_{m=1}^M |\hat{\mu}-\hat{\mu}^{i+m-1}|}{M!}}_{\leq \frac{(\hat{\mu}^{i+M-1} - \hat{\mu}^i)^M}{M!} = \frac{[(M-1)\delta_N]^M}{M!}} \sup_{\hat{\mu}'} |h^{(M)}(\hat{\mu}')| \leq \frac{[(M-1)\delta_N]^M}{M!}  \sup_{\hat{\mu}'} |h^{(M)}(\hat{\mu}')|
+	\label{eq:3.18}
+\end{align}
+
+(endlich:)
+\begin{proof} Satz \ref{3.36}
+\\ Idee: zeige Existenz eines $\hat{w}_N(\hat{\mu}) \in X_N$ s.\,d. (mit $\mu := \tau^{-1}(\hat{\mu})$)
+\begin{align}
+\label{eq:3.19}
+	\frac{|| \hat{u}(\hat{\mu}) - \hat{w}_N (\hat{\mu}) ||_{\mu}}{|| \hat{u}(\hat{\mu}) ||_{\mu}} \leq \mu_{max}^2 \cdot e^{\frac{-(N-1)}{N_0 - 1}} \qquad \forall N \geq N_0
+\end{align}
+Denn dann folgt Behauptung via $||\hat{u}(\hat{\mu})||_{\mu} = || u(\mu) ||_{\mu}$ und
+\[
+	|| u(\mu) - u_N(\mu) ||_{\mu} = \inf_{v \in X_N} || u(\mu) - v ||_{\mu} \leq || u(\mu) - \hat{w}_N(\hat{\mu}) ||_{\mu} = || \hat{u}(\hat{\mu}) - \hat{w}_N(\hat{\mu}) ||_{\mu}
+\]
+Für Konstruktion eines $\hat{w}_N(\hat{\mu})$ reicht es, die Koeffizienten $\tilde{C}_n(\hat{\mu})$ zu definieren (siehe \ref{3.41}): Sei $\hat{\mu} \in \mathcal{P}$ gegeben und $M \in \{2,\dots,N\}$ wähle $i$ s.\,d. $\hat{\mu} \in [\hat{\mu}^2,\hat{\mu}^{i+M-1}] =: J_M^i$, also $|J_M^i| = (M-1) d_N$
+
+Definiere nun $\tilde{C}_n$ durch Lagrange-Polynome zu $\{\hat{\mu}^{i+m-1}\}_{m=1}^M$:
+\[
+\tilde{C}_n(\hat{\mu}) = \begin{cases}
+				0 & \text{falls} \,\,\, n< i \,\,\, \text{oder} \,\,\, n \geq i+M\\
+				L_M^{i;n-i+1} (\hat{\mu}) & \text{falls} \,\,\, i \leq n \leq i+M-1
+			\end{cases}
+\]
+Dann ist zugehöriges $\tilde{g}_N(\hat{\mu}, \sigma)$ aus \ref{3.41} Interpolierende im Sinne von
+\[
+	\tilde{g}_N(\hat{\mu}, \sigma) = (I_M^i g(\pdot,\sigma))(\hat{\mu})
+\]
+denn
+\[
+	\tilde{g}_N(\hat{\mu}, \sigma) \overset{\ref{3.41}}{=} \sum\limits_{n=1}^N \tilde{C}_n (\hat{\mu}) g(\hat{\mu}^n,\sigma) = \sum\limits_{n=i}^{i+n-1} L_M^{i;n-i+1} (\hat{\mu}) g(\hat{\mu}^n,\sigma) = (I_M^i g(\pdot,\sigma))(\hat{\mu})
+\]
+also insbesondere $\tilde{g}_N(\hat{\mu}^n, \sigma) = g(\hat{\mu}^n, \sigma)$.
+
+Betrachtet man die linke Seite von (\ref{eq:3.19}) für $\hat{w}_N (\hat{\mu})$: Mit \ref{3.41} \& \ref{3.38} \& \ref{3.39} folgt
+\begin{align}
+	\frac{||\hat{u}(\hat{\mu}) - \hat{w}_N (\hat{\mu}) ||_{\mu}^2}{|| \hat{u}(\hat{\mu}) ||_{\mu}^2} &\overset{\ref{3.39}}{=} \frac{\sum\limits_{i=1}^H \frac{f_i^2 (g(\hat{\mu},\lambda_i) - \tilde{g}_N (\hat{\mu},\lambda_i))^2}{g(\hat{\mu},\lambda_i)}}{\sum\limits_{i=1}^H \frac{f_i^2 g(\hat{\mu},\lambda_i)^2}{g(\hat{\mu},\lambda_i)}} \notag \\ 
+	&= \frac{\sum\limits_{i=1}^H f_i^2 g(\hat{\mu},\lambda_i)^2 \frac{(g(\hat{\mu},\lambda_i) - \tilde{g}_N (\hat{\mu},\lambda_i))^2}{g(\hat{\mu},\lambda_i)^2} \frac{1}{g(\hat{\mu},\lambda_i)}}{\sum\limits_{i=1}^H \frac{f_i^2 g(\hat{\mu},\lambda_i)^2}{g(\hat{\mu},\lambda_i)}} \notag \\
+	&\leq \sup_{z,\sigma} \frac{(g(z,\sigma - \tilde{g}_N(z,\sigma))^2}{g(z,\sigma)^2} \cdot \frac{\sum\limits_{i=1}^H f_i^2 \frac{g(\hat{\mu},\lambda_i)^2}{g(\hat{\mu},\lambda_i}}{\sum\limits_{i=1}^H f_i^2 \frac{g(\hat{\mu},\lambda_i)^2}{g(\hat{\mu},\lambda_i}} \notag \\
+	&\leq \Big( \sup_{z,\sigma} \frac{1}{g(z,\sigma)^2} \Big) \Big( \sup_{z,\sigma} (g(z,\sigma - \tilde{g}_N(z,\sigma))^2 \Big) \notag \\
+	&\overset{\ref{3.40} ii)}{\leq} \mu_{max}^2 \big( \sup_{z,\sigma} |g(z,\sigma - \tilde{g}_N(z,\sigma)| \big)^2
+	\label{eq:3.20}
+\end{align}
+Für Fehler rechts erhalte mittels Interpolationsfehlerabschätzung:
+\begin{align}
+	|g(z,\sigma - \tilde{g}_N(z,\sigma)| &= | g(z,\sigma) - \big(I_M^i g(\pdot, \sigma) \big) (z)| \notag \\
+	& \overset{(\ref{eq:3.18})}{\leq} \frac{\big((M-1)\delta_N \big) ^M}{M!} \sup_{\hat{\mu}'} \underbrace{| \frac{\partial^M}{\partial \hat{\mu}^M} g(\hat{\mu}', \sigma) |}_{\leq \bar{C}C^M M! \text{ wegen \ref{3.40} ii)}} \notag \\
+	&= \frac{\big((M-1)\delta_N \big) ^M}{M!} \cdot \bar{C}C^M M! \notag \\
+	&= \big( C(M-1)\delta_N \big)^M \cdot \bar{C}
+	\label{eq:3.21}
+\end{align}
+Bisher: $M$ beliebig. Finde nun $M_{opt} \in \{2,\dots,N\}$, welches den Fehler ``klein'' macht. Suche zunächst ein reelles $\bar{M}_{opt} \in [2,N] \subset \R$. Hierzu setze
+\[
+	\bar{M}_{opt} := 1+ \frac{1}{C e \delta_N}
+\]
+Wir sehen mit Abbkürzung $\lambda := \ln \mu_{max} - \ln \mu_{min} = 2 \ln \mu_{max}$
+\begin{align*}
+	\frac{1}{C e \delta_N} \geq 1 \iff  1 \geq C e \frac{\ln \mu_{max} - \ln \mu_{min}}{N-1} &\iff N -1 \geq C \cdot e \cdot \lambda \\
+	&\iff N \geq C e \lambda + 1
+\end{align*}
+Also ist mit Forderung $N_0 \geq C \cdot e \cdot \lambda + 1$ ist $\bar{M}_{opt} \geq 2$.
+Weiter:
+\begin{align*}
+	1 + \frac{1}{C e \delta_N} &\iff \frac{1}{C e \delta_N} \iff 1 \leq (N-1)(C e \delta_N) \\
+	&\iff 1 \leq (N-1) C \cdot e \frac{\lambda}{N-1} \iff 1 \leq C e \lambda \\
+	&\overset{\ref{3.40}}{\iff} 1 \leq 2 \mu_{max}^2 \cdot e \cdot 2 \ln \mu_{max}
+\end{align*}
+Also ist für $\mu_{max}$ genügend groß $\bar{M}_{opt} \leq N$.
+
+Insgesamt nun also $\bar{M}_{opt} \in [2,N]$.
+
+Wegen $C(\bar{M}_{opt} - 1) \delta_N = C \frac{1}{C e \delta_N} \cdot \delta_N = \frac{1}{e}$ folgt
+\[
+	\Big(C (\bar{M}_{opt} - 1) \delta_N \Big)^{\bar{M}_{opt} -1} = \left( \frac{1}{e} \right)^{\frac{1}{C e \delta_N}} = e^{- \frac{1}{C e \delta_N}} = e^{- \frac{N-1}{C e \lambda}} \leq e^{- \frac{N-1}{N_0 -1}}
+\]
+falls $C e \lambda \leq N_0 -1$, d.\,h. $N_0 \geq C e \lambda + 1$ (identische Forderung an $N_0$ wie zuvor). Setze nun $M_{opt} := \lfloor \bar{M}_{opt} \rfloor$ größte ganze Zahl kleiner/gleich $\bar{M}_{opt}$
+\[
+	\Rightarrow M_{opt} \in \{2,\dots,N\}
+\]
+\[
+	\text{wg.} M_{opt} \leq \bar{M}_{opt} \Rightarrow C (M_{opt} - 1) \delta_N \leq C (\bar{M}_{opt} - 1 ) \delta_N \big( = \frac{1}{e} < 1 \big)
+\]
+\[
+	\text{und} M_{opt} > \bar{M}_{opt} - 1
+\]
+folgt
+\begin{align}
+	\big( C ( M_{opt} - 1) \delta_N \big)^{M_{opt}} \leq \big( C ( \bar{M}_{opt} - 1) \delta_N \big)^{\bar{M}_{opt}} \leq e^{- \frac{N - 1 }{N_0 - 1}}
+	\label{eq:3.22}
+\end{align}
+Damit insgesamt
+\begin{align*}
+	\frac{||\hat{u}(\hat{\mu}) - \hat{w}_N (\hat{\mu}) ||_{\mu}}{|| \hat{u}(\hat{\mu}) ||_{\mu}} &\overset{(\ref{eq:3.20})}{\leq} \mu_{max} \sup_{z,\sigma} |g(z,\sigma - \tilde{g}_N(z,\sigma)| \\
+	&\overset{(\ref{eq:3.21})}{\leq} \mu_{max} \underbrace{\bar{C}}_{= \mu_{max}} \cdot \big( C (M_{opt} - 1) \delta_N \big)^{M_{opt}} \overset{(\ref{eq:3.22})}{\leq} \mu_{max}^2 e^{- \frac{N - 1}{N_0 - 1}}
+\end{align*}
+also (\ref{eq:3.19}) und damit Satz \ref{3.36} gezeigt.
+\end{proof}
+
+\begin{defn}[Gram-Schmidt]
+	Seien $\{u_i\}_{i=1}^n \in X$ lin. unabh. Dann ist \emph{Gram-Schmidt Basis} $\Phi_{GR} := \{\phi_1,\dots, \phi_n\}$ definiert durch
+\[
+	\bar{\phi}_m := u_m - \sum\limits_{i=1}^{m-1} <u_n,\phi_i>\phi_i \qquad, \qquad \phi_m := \frac{\bar{\phi}_m}{||\bar{\phi}_m||} \qquad, \qquad m=1,\dots,n	
+\]
+und $X_{GR}$ der zugehörige \emph{Gram-Schmidt RB-Raum}
+\end{defn}
+
+\begin{lemma}[Eigenschaften von $\Phi_{GR}$] \beginwithlist
+\begin{enumerate}
+	\item $\Phi_{GR}$ ist ONB
+	\item $\op{span}\{u_i\}_{i=1}^n = X_{GR}$
+\end{enumerate}
+\begin{proof}
+	\begin{enumerate}
+		\item Normiertheit klar nach Definition \\
+		Orthogonalität per Induktion: \\
+		Sei $<\phi_i,\phi_j> = 0 \,\,\, \forall \,\,\, j < i$ \\
+		Dann gilt für $j < i+1$:
+		\begin{align*}
+			<\bar{\phi}_{i+1},\phi_j> &= <u_{i+1},\phi_j> - \sum\limits_{k=1}^{(i+1) -1} <u_{i+1},\phi_k> \underbrace{<\phi_k,phi_j>}_{\delta_{kj} \text{ sowohl für} j<i \text{ als auch} j=i}	 \\
+			&= <u_{i+1},\phi_j> - <u_{i+1},\phi_j>= 0
+		\end{align*}
+		also auch $<\phi_{i+1},\phi_j> = <\frac{\bar{\phi}_{i+1}}{||\phi_{i+1} ||},\phi_j> = 0$
+		\item ``$\supseteq$'' klar nach Konstruktion \\
+		``$=$'' folgt durch Dimensionsbetrachtung:
+		\[
+			\dim \op{span} \{\phi_i\}_{i=1}^n = n = \dim \op{span} \{\u_i\}_{i=1}^n
+		\]
+	\end{enumerate}
+\end{proof}
+\end{lemma}
+
+\begin{bem} \beginwithlistbem
+	\begin{itemize}
+		\item Algorithmus liefert also ONB, garantiert Stabilität des RB-Verfahren für symmetrisches $a(\pdot,\pdot)$ gemäß \ref{3.7}
+		\item Es existiert nur triviale Approximationsaussage, z.\,B. wegen ii):
+		\[
+			\max_{j=1,\dots,m} \inf_{v \in X_{GR}} ||u_j - v|| = 0
+		\]
+		Für Teilbasis $\Phi_{GR,m} := \{\phi_1,\dots,\phi_m\}\, , \, m < n$ werden $\{u_i\}_{i=1}^m$ exakt approximiert über $\{u_i\}_{i=m+1}^n$ weiß man nichts.
+		\item Basis hängt von Reihenfolge der $\{u_i\}_{i=1}^n$ ab, macht also nur Sinn, wenn diese eine natürliche Reihenfolge haben.
+		\item Gram Schmidt Orthonormierung folgt häufig als ``Postprocessing'' für anderweitig erzeugte Basis, z.\,B. Lagrange-, Greedy-Basis, etc.
+	\end{itemize}
+\end{bem}
+
+\begin{satz}[Berechnung von $\Phi_{GR}$ über Gram-Matrix]
+	Seien $\{u_i\}_{i=1}^m \subset X$ lin. unabh., $K = (<u_i,u_j>)_{i,j=1}^n$ mit Cholesky-Zerlegung $K=LL^T$, d.\,h. $L$ untere $\Delta$-Matrix mit positiver Diagonalen. Definiere $A=(a_{ij})_{i,j=1}^n := (L^T)^{-1}$. Dann ist die Gram-Schmidt ONB $\Phi_{GR}$ äquivalent berechenbar durch
+	\[
+		\phi_j = \sum\limits_{i=1}^j a_{ij} u_i \qquad \text{für}	\qquad 1 \leq j \leq n
+	\]
+\begin{proof}
+	Übung.
+\end{proof}
+\end{satz}

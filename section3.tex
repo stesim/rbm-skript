@@ -2078,3 +2078,138 @@ Das Greedy-Verfahren erzeugt monoton fallende Sequenzen $(\epsilon_n)_{n\geq 1}$
 		\item Ein verbessertes Ergebnis (ohne Faktor $(n+1)$) und ein Ergebnis für Fall algebraischer (polynomiell in $N^{-1}$) Konvergenz liefert (BCDPW), welches wir in unserer Notation formulieren (ohne Beweis).
 	\end{itemize}
 \end{bem}
+
+\begin{satz}[Greedy Konvergenzraten]
+	Sei $S_{train} = \p$ kompakt und $\Delta(Y,\mu)$ so gewählt, dass ex. ein $\gamma \in (0,1]$ mit
+	\begin{equation} \label{eq:3.24}
+		\norm{u(\mu^{(n+1)}) - P_{X_n} u(\mu^{(n+1)})} \geq \gamma \sup_{u \in \LM} \norm{u-P_{X_n} u}
+	\end{equation}
+	\begin{enumerate}
+		\item (algebraische Konvergenz) Falls $d_n(\LM) \leq M \cdot n^{-\alpha}$ für geeignetes $\alpha$, $M > 0$ und alle $n \in \N$ und $d_0(\LM) \leq M$ dann gilt
+			\[
+				\epsilon_n \leq C \cdot M n^{-\alpha}, \quad n > 0
+			\]
+			mit explizit berechenbarer Konstante $C$.
+		\item (exponentielle Konvergenz) Falls $d_n(\LM) \leq M \cdot e^{-an^\alpha}$ für $n \geq 0$, $M$, $a$, $\alpha > 0$ dann gilt
+			\[
+				\epsilon_n \leq C \dot M e^{-cn\beta}, \quad n \geq 0
+			\]
+			mit $\beta := \frac{\alpha}{\alpha+1}$ und geeignete Konstanten $C$, $c > 0$.
+	\end{enumerate}
+\end{satz}
+
+\begin{bem}
+	``Quasi-Optimalität des Greedy-Verfahrens: bis auf Konstante so gut wie optimale Approximation.
+\end{bem}
+
+\begin{bem}[``strong'' vs ``weak'' greedy] \beginwithlistbem
+	\begin{itemize}
+		\item Für $\gamma = 1$ nennt man das Verfahren ``strong greedy''.
+			Wird nur durch die Wahl
+			\[
+				\Delta(Y,\mu) := \norm{u(\mu)-P_Y u(\mu)}
+			\]
+			realisiert.
+		\item Für $\gamma < 1$ nennt man das Verfahren ``weak greedy'' d.h. statt schlechtest-approximiertes Element wird ein einigermaßen schlecht approximiertes Element gewählt zur Basisgenerierung.
+		\item Achtung $\gamma \neq \gamma(\mu)$ Stetigkeitskonstante
+	\end{itemize}
+\end{bem}
+
+Interessant ist Frage, ob Verwendung von Fehlerschätzern Bedingung \eqref{eq:3.24} erfüllt für geeignetes $\gamma$.
+Für $\Delta(Y,\mu) := \Delta_N(\mu)$ kann dies positiv beantwortet werden.
+
+\begin{satz}[$\Delta_N$ liefert weak Greedy]
+	Das Greedy-Verfahren mit Fehlerindikator $\Delta(Y,\mu) := \Delta_N(\mu)$ stellt weak greedy Verfahren dar mit Konstante
+	\[
+		\gamma := \frac{\bar\alpha^2}{\bar\gamma^2}
+	\]
+	mit $\bar\alpha$, $\bar\gamma$ uniforme untere/obere Schranke für Koerzivitäts-/Stetigkeitskonstante.
+
+	\begin{proof}
+		Lemma von Cea \ref{3.9}, Fehlerschranke \ref{3.13} und Effektivitätsschranke \ref{3.16} gelten für alle Räume $X_n$, $n \geq 1$ also
+		\begin{align*}
+			\norm{u(\mu^{(n+1)})-P_{X_n} u(\mu^{(n+1)})} &= \inf_{v \in X_n} \norm{u(\mu^{(n+1)})-v} \\
+			&\geq \frac{\alpha(\mu)}{\gamma(\mu)} \norm{u(\mu^{(n+1)}) - u_N(\mu^{(n+1)})} \\
+			&\stackrel{\ref{3.16}}{\geq} \frac{\alpha(\mu)}{\gamma(\mu) \eta_N(\mu)} \cdot \Delta_N(\mu^{(n+1)})
+		\end{align*}
+		Behauptung folgt mit
+		\[
+			\frac{\alpha(\mu)}{\gamma(\mu) \eta_N(\mu)} \stackrel{\ref{3.16}}{\geq} \frac{\alpha(\mu)}{\gamma(\mu)} \frac{\bar\alpha}{\bar\gamma} \geq \frac{\bar\alpha^2}{\bar\gamma^2} =: \gamma
+		\]
+		und
+		\[
+			\Delta_N(\mu^{(n+1)}) = \sup_{\mu \in \p} \Delta_N(\mu) \stackrel{\ref{3.13}}{\geq} \sup_{\mu \in \p} \norm{u(\mu)-u_N(\mu)} \geq \sup_{\mu \in \p} \norm{u(\mu)-P_{X_n} u(\mu)}
+		\]
+	\end{proof}
+\end{satz}
+
+\begin{bem} \beginwithlistbem
+	\begin{itemize}
+		\item Für thermischen Block $B_1 = 2$, $B_2 = 1$ gesehen: $d_n$ fällt exponentiell d.h. hier liefert Greedy-Verfahren exponentielle Konvergenz.
+		\item ``Lücke'' zwischen Theorie \& Praxis ist jedoch noch, dass $S_{train} \neq \p$ weil nur endliche Mengen $S_{train}$ betrachtet werden können.
+		\item In der Praxis beobachtet man jedoch auch für allgemeines $B_1$, $B_2$ und solchen endlichen $S_{train}$ konvergenz.
+	\end{itemize}
+\end{bem}
+
+\subsubsection*{Numerische Beispiele:}
+
+\paragraph{demos\_chapter3(5)} Illustration von Gram-Schmidt ONB aus demos\_chapter(3) d.h. $B_1 = B_2 = 3$ und nur $\mu_1$ variiert.
+$\phi_1$ ist normierter Snapshot, $\phi_2, \ldots, \phi_8$ weisen stärker werdende Gradienten auf mit lokalen Strukturen um Kanten von $\Omega_1$.
+
+\paragraph{demos\_chapter3(6)} $B_1 = B_2 = 2$, $\mu \in \p = [0.5,2]^4$\\
+Greedy-Basis mit zufälliger Menge $S_{train}$, $|S_{train}| = 1000$.
+Fehlerindikator $\Delta(Y,\mu) = \Delta_N(\mu)$, Gram-Schmidt ON in jeder Iteration.
+Testmenge $S_{test}$, $|S_{test}| = 100$.
+Bestimmung von maximalem Testfehler und -Schätzer.\\
+$\Rightarrow$ schöne exponentielle Konvergenz von
+\[
+	\max_{\mu \in S_{test}} \norm{u(\mu)-u_N(\mu)} \quad \text{und} \quad \max_{\mu \in S_{test}} \Delta_N(\mu)
+\]
+Schätzer ist sehr nah an echtem Fehler (gute Effektivität).
+
+\paragraph{demos\_chapter3(7)} Effekt bei steigendem $p = B_1 \cdot B_2$\\
+$B_1 = B_2 = 2,3,4$, $\mu \in \p = [0.5,2]^p$, Greedy wie in vorigem Beispiel.\\
+(Achtung 10 Minuten Laufzeit)\\
+Illustration des Trainingsfehlers $(\epsilon_n)_{n \geq 1}$\\
+$\Rightarrow$ Exponentielle Konvergenz, aber schlechtere Exponenten für größere $p$
+
+\begin{bem}[Trainingsmenge-Wahl] \beginwithlistbem
+	\begin{itemize}
+		\item Die Trainingsmenge sollte möglichst repräsentativ für $\p$ sein, kann aber nicht beliebig groß sein aus Laufzeitgründen.
+			Sollte nicht zu klein gewählt werden, um nicht Overfitting zu bewirken.
+			Sorgfältige Wahl von $S_{train}$ kann also entweder Qualität des RB-Modells oder die Offline-Laufzeit verbessern.
+			Hierzu gibt es einige Ansätze \& Modifikationen des Greedy-Verfahrens:
+		\item ``Multistage-Greedy'': Wähle sehr große Menge $S_{train}$, zerlege diese in Sequenz gröberer Mengen
+			\[
+				S_{train}^{(0)} \subset S_{train}^{(1)} \subset \ldots \subset S_{train}^{(m)} = S_{train}
+			\]
+			Erzeuge $\Phi_{GRE}^{(0)}$ aus $S_{train}^{(0)}$, dann erweitere diese Basis durch Greedy-Verfahren auf $S_{train}^{(1)}$, etc.
+			Effekt ist wesentliche Beschleunigung des Greedy-Verfahren für $S_{train}$.
+			Die meisten Iterationen werden nur mit kleiner Trainingsmenge durchgeführt (schnell), nur wenige Iterationen für $S_{train}^{(m)}$ erforderlich (teuer).
+
+			Ref.: Sen: Reduced-Basis Approximation and A Posteriori Error Estimation for Many-Parameter Heat Conduction Problems, Numerical Heat Transfer, Part B: Fundamentals 54(5): 369-389, 2008.
+		\item Randomisiertes Greedy: Statt fester Menge $S_{train}$ der Größe $N_{train}$ in allen Iterationen, wähle in jeder Iteration eine neue Trainingsmenge der Größe $N_{train}$.
+			Dadurch wird praktisch eine Trainingsmenge der Größe $N \cdot N_{train}$ in der Basisgenerierung verwendet.
+
+			Ref.: [HSZ2013]: Hesthaven, Stamm, Zhang: Efficient greedy algorithms for high-dimensional parameter spaces with applications to empirical interpolation and reduced basis methods. M2AN, 2013.
+		\item Saturierungs-Annahme (?): Unter Annahme, dass ein Fehlerindikator für ein Parameter sich in einer Sequenz von Basiserweiterungen höchstens um Faktor $C_s$ verschlechtert, besteht folgende Beschleunigungsmöglichkeit:
+
+			Für feste Menge $S_{train}$ wird jeder Parameter $\mu$, der im Laufe des Greedy-Verfahren $\Delta_N(\mu) \leq \frac{\epsilon_{tol}}{C_s}$ erfüllt, markiert und künftige Fehlerschätzer nicht mehr berechnet, da $\mu$ bereits präzise erfasst. [HSZ2013] mit weiteren technischen Schnörkeln.
+		\item Adaptive Trainingsmengen-Erweiterung:\\
+			Idee: Übertragen des adaptiven FEM-Schemas ``Solve, Estimate, Mark, Refine'' auf das Parametergebiet:
+
+			Initiale Trainingsmenge (grob) $S_{train}^{(0)}$ ist Menge der Knoten eines Gitters auf $\p$.
+			Auf $S_{train}^{(0)}$ wird ein Greedy-Verfahren mit ``early stopping'' angewandt, d.h.\ das Greedy-Verfahren wird abgebrochen, sobald Overfitting detektiert wird, d.h.\ $\frac{E_{val}}{E_{train}}$ zu groß wird, wobei $E_{val}$, $E_{train}$ den aktuell maximalen Fehlerindikator über einer Validationsmenge (zufällig) und $S_{train}$ darstellen.
+			Sobald Overfitting detektiert wird, werden für alle Gitterelemente Fehlerindikatoren bestimmt (z.B.\ Fehlerschätzer im Mittelpunkt), ein Anteil $\Theta \in (0,1]$ der Elemente mit größten Indikatoren zur Verfeinerung markiert, das Parametergebiet verfeinert und seine Knoten ergeben erweiterte Trainingsmenge $S_{train}^{(1)}$.
+			Dies wird wiederholt, bis $\epsilon_{tol}$ erreicht wird.
+
+			Ergebnis ist gleichverteilter Fehler und sehr problemangepasste Wahl von $S_{train}$ z.B.\ führt dieser Algorithmus automatisch zu Verfeinerungen in wichtigen Bereichen. Bei Diffusion z.B.\ in bereichen kleiner Diffusionsparameter.
+
+			Ref.: [HDO11] Haasdonk, Dihlmann, Ohlberger: A Training Set and Multiple Basis Generation Approach for Parametrized Model Reduction Based on Adaptive Grids in Parameter Space. MCMDS, 17 : 423-442, 2011.
+		\item Greedy mit Optimierung: Statt großer Menge $S_{train}$ wird kleines $S_{train}$ gewählt.
+			Jedes $\mu \in S_{train}$ wird als Startwert eines Optimierungsproblems gewählt.
+			Aus den $N_{train}$ lokalen Optima wird $\mu^{(n+1)}$ als nächster Snapshotparameter gewählt.
+
+			Ref.: Urban, Volkwein, Zeeb: Greedy Sampling using Nonlinear Optimization. Kapitel in: Quarteroni, Rozza: Reduced Order Methods for Modeling and Computational Reduction, Springer MS\&A Serie, 2014.
+	\end{itemize}
+\end{bem}

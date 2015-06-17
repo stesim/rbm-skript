@@ -124,6 +124,7 @@
 \end{satz}
 
 \begin{satz}[Kondition bei ONB und Symmetrie]
+\label{3.7}
 	Falls $a(\pdot,\pdot;\mu)$ symmetrisch und $\Phi_N$ ist ONB, so ist Kondition von \eqref{eq:3.1} unabhängig von $N$ beschränkt
 	\[
 		\op{cond}_2(A_N) := \norm{A_N}_2 \norm{A_N^{-1}}_2 \leq \frac{\gamma(\mu)}{\alpha(\mu)}
@@ -270,7 +271,7 @@
 	\end{itemize}
 \end{bem}
 
-\begin{kor}[Monotoner Fehlerabfall in Energienorm]
+\begin{kor}[Monotoner Fehlerabfall in Energienorm] \label{3.11}
 	Falls $a(\pdot,\pdot;\mu)$ symmetrisch, $\seq{X_N}_{N=1}^{N_\text{max}}$ Folge von RB-Räumen, mit $X_N \subseteq X_{N'}$, $\forall N \leq N'$ (``hierarchische Räume'') und für $\mu \in \p$ setze $e_{u,N} := u(\mu)-u_N(\mu)$, $e_{s,N} := s(\mu)-s_N(\mu)$.
 	\begin{enumerate}
 		\item Dann ist $\seq{\norm{e_{u,N}}_\mu}_{N=1}^{N_\text{max}}$ monoton fallend.
@@ -844,7 +845,7 @@ Separierbarkeit von $(P(\mu))$ überträgt sich auf Residuum
 
 \begin{satz}[Separierbare Parameter-Abhängigkeit für $r(\pdot;\mu)$]
 \label{3.22}
-	Seien $a, f$ sep. parametrisch. Nach Riesz existieren $v_f^q \in X$ mit $<v_f^q, v> = f^q(v) \,\,\, \forall v \in X, \, q=1,...,Q_f$ und $v_a^{q,n} \in X$ mit $<v_a^{q,n}, v> = a^q (\phi_n,v), \, v \in X, \, q=1,...,Q_a, n=1,...,N$
+	Seien $a, f$ sep. parametrisch. Nach Riesz existieren $v_f^q \in X$ mit $\dotp{v_f^q}{ v} = f^q(v) \,\,\, \forall v \in X, \, q=1,...,Q_f$ und $v_a^{q,n} \in X$ mit $\dotp{v_a^{q,n}}{ v} = a^q (\phi_n,v), \, v \in X, \, q=1,...,Q_a, n=1,...,N$
 	Setze $Q_r := N Q_a + Q_f$ und Aufzählung von $\{v_a^{q,n},v_f\}$ durch
 	\[
 		(v_r^1,...,v_r^{Q_r}) := (v_f^1,...,v_f^{Q_f},v_a^{1,1},...,v_a^{Q_a,1},v_a^{1,2},...,v_a^{Q_a,2},...,v_a^{Q_a,N})
@@ -854,7 +855,7 @@ Separierbarkeit von $(P(\mu))$ überträgt sich auf Residuum
 		(\Theta_r^1(\mu),...,\Theta_r^{Q_r}(\mu)) := (\Theta_f^1(\mu),...,\Theta_f^{Q_f}(\mu),-\Theta_a^{1}(\mu),...,-\Theta_a^{Q_a}(\mu)u_{N1},-\Theta_a^{1}(\mu)u_{N2},... \\
 		...,-\Theta_a^{Q_a}(\mu)u_{N2},...,-\Theta_a^{Q_a}(\mu)u_{NN})
 	\end{align*}
-	Mit $r^q(\pdot) := <v_r^q, \pdot> \in X', \, q = 1,...,Q_r$ sind $r(\pdot;\mu)$ und $v_r(\mu)$ separierbar parametrisch via
+	Mit $r^q(\pdot) := \dotp{v_r^q}{ \pdot} \in X', \, q = 1,...,Q_r$ sind $r(\pdot;\mu)$ und $v_r(\mu)$ separierbar parametrisch via
 	\[
 		r(\pdot;\mu) = \sum_{q=1}^{Q_r} \Theta_r^{q}(\mu) \cdot r^q(\pdot), \qquad v_r(\mu) = \sum_{q=1}^{Q_r} \Theta_r^{q}(\mu) \cdot v_r^q \qquad \forall \mu \in \mathcal{P}
 	\]
@@ -863,15 +864,15 @@ Separierbarkeit von $(P(\mu))$ überträgt sich auf Residuum
 \begin{proof}
 	Definition und Linearität ergibt:
 	\begin{align*}
-		<v_r(\mu),v> = r(v;\mu) &= f(v;\mu) - a(u_N(\mu),v;\mu) \\
+		\dotp{v_r(\mu)}{v} = r(v;\mu) &= f(v;\mu) - a(u_N(\mu),v;\mu) \\
 		&= \sum_q \Theta_f^q(\mu) f^q (v) - \sum_q \sum_n \Theta_a^q (\mu) u_{Nn} a^q(\phi_n,v) \\
-		&= \underbrace{<\sum_q \Theta_f^q (\mu) v_f^q - \sum_q \sum_n \Theta_a^q (\mu) u_{Nn} v_a^q, v>}_{\sum \Theta_r^q (\mu) v_r^q} \\
+		&= \underbrace{\dotp{\sum_q \Theta_f^q (\mu) v_f^q - \sum_q \sum_n \Theta_a^q (\mu) u_{Nn} v_a^q}{ v}}_{\sum \Theta_r^q (\mu) v_r^q} \\
 		&= \sum_{q=1}^{Q_r} \Theta_r^q (\mu) r^q(v) \qquad \forall v \in X
 		\label{eq:3.5}
 	\end{align*}
 \end{proof}
 
-Offensichtlich Berechnung von Riesz-Repräsentant notwendig, dies geschieht durch Ausnutzen der Endlichdim. von $X = \op{span}\{\psi_i\}_{i=1}^Ĥ$ und $K := (<\psi_i,\psi_j>)_{i,j=1}^H$
+Offensichtlich Berechnung von Riesz-Repräsentant notwendig, dies geschieht durch Ausnutzen der Endlichdim. von $X = \op{span}\{\psi_i\}_{i=1}^Ĥ$ und $K := (\dotp{\psi_i}{\psi_j})_{i,j=1}^H$
 
 \begin{satz}[Berechnung von Riesz-Repr.]
 	Für $g \in X'$ erhält man Koeffizientenvektor $\underbar v = (v_i)_{i=1}^H \in \R^H$ seines Riesz-Repräsentanten $v_g = \sum_{i=1}^H v_i \, \psi_i \in X$ durch lösen von
@@ -884,7 +885,7 @@ Offensichtlich Berechnung von Riesz-Repräsentant notwendig, dies geschieht durc
 \begin{proof}
 	Für jedes $u = \sum_{i=1}^H u_i \, \psi_i \in X$ mit Koeffizientenvektor $\underbar u = (u_i)_{i=1}^H$ erhalten wir
 	\[
-		g(u) = g(\sum u_i \, \psi_i) = \sum u_i \, g(\psi_i) = \underbar u^T \underline{g} \overset{\ref{eq:3.5}}{=} \underbar u^T K \underbar v = <u,v_g>
+		g(u) = g(\sum u_i \, \psi_i) = \sum u_i \, g(\psi_i) = \underbar u^T \underline{g} \overset{\ref{eq:3.5}}{=} \underbar u^T K \underbar v = \dotp{u}{v_g}
 	\] 
 \end{proof}
 
@@ -894,7 +895,7 @@ Offensichtlich Berechnung von Riesz-Repräsentant notwendig, dies geschieht durc
 
 \begin{kor}[Offline-/Online- für Residuen-Norm]
 \label{3.24}
-	(Offline:) Nach Offline von $(P_N(\mu))$ gemäß \ref{3.21} def. $G_r := <r^q (v_r^{q'})>_{q,q' =1}^{Q_r} \in \R^{Q_r \times Q_r}$ mittels Residuen-Komponenten $r^q$ und Riesz-Repr. $v_r^q$ aus \ref{3.22}
+	(Offline:) Nach Offline von $(P_N(\mu))$ gemäß \ref{3.21} def. $G_r := (r^q (v_r^{q'}))_{q,q' =1}^{Q_r} \in \R^{Q_r \times Q_r}$ mittels Residuen-Komponenten $r^q$ und Riesz-Repr. $v_r^q$ aus \ref{3.22}
 	(Online:) Für $\mu \in \mathcal{P}$ und RB-Lösung $\underbar u_N \in \R^N$ berechne Residuen-Koeff-Vektor $\underline{\Theta}_r(\mu) = (\Theta_r^1(\mu),...,\Theta_r^{Q_r} (\mu))^T \, \in \R^{Q_r}$.
 	Dann gilt: 
 	\begin{align}
@@ -904,9 +905,9 @@ Offensichtlich Berechnung von Riesz-Repräsentant notwendig, dies geschieht durc
 \end{kor}
 
 \begin{proof}
-	Zunächst sehen wir $G_r = (<v_r^q,v_r^{q'}>)_{q, q' = 1}^{Q_r}$. Isometrie der Riesz-Abbildung \& Separierbarkeit ergeben
+	Zunächst sehen wir $G_r = (\dotp{v_r^q}{v_r^{q'}})_{q, q' = 1}^{Q_r}$. Isometrie der Riesz-Abbildung \& Separierbarkeit ergeben
 	\[
-		||r(\mu)||_X^2 = ||v_r(\mu)||_X^2 = <\sum_{q=1}^{Q_r} \Theta_r^q(\mu) \, v_r^q,\sum_{q'=1}^{Q_r} \Theta_r^{q'}(\mu) \, v_r^{q'}>= \underline{\Theta}_r^T \cdot G_r \cdot \underline{\Theta}_r (\mu) 
+		||r(\mu)||_X^2 = ||v_r(\mu)||_X^2 = \dotp{\sum_{q=1}^{Q_r} \Theta_r^q(\mu) \, v_r^q}{\sum_{q'=1}^{Q_r} \Theta_r^{q'}(\mu) \, v_r^{q'}} = \underline{\Theta}_r^T \cdot G_r \cdot \underline{\Theta}_r (\mu) 
 	\]
 \end{proof}
 
@@ -917,7 +918,7 @@ Offensichtlich Berechnung von Riesz-Repräsentant notwendig, dies geschieht durc
 \begin{kor}[Offline-/Online- Zerlegung für $||l(\pdot;\mu)||_{X'}$]
 	(Offline:) Berechne Riesz-Repr. $v_l^q \in X$ der Ausgabekommponenten, d.\,h.
 	\[
-		<v_l^q,v> = l^q(v) \qquad \forall v \in X, \, q=1,...,Q_l
+		\dotp{v_l^q}{v} = l^q(v) \qquad \forall v \in X, \, q=1,...,Q_l
 	\]
 	und def. $G_l := (l^q(v_l^{q'})_{q, q' =1}^{Q_l}$
 	(Online:) Zu $\mu \in \mathcal{P}$ berechne $\underline{\Theta}_l (\mu) := (\Theta_l^1(\mu),...,\Theta_l^{Q_l}(\mu))$ und $||l(\pdot;\mu)||_{X'} = \sqrt{\underline{\Theta}_l^T G_l \underline{\Theta}_l}$
@@ -930,7 +931,7 @@ Offensichtlich Berechnung von Riesz-Repräsentant notwendig, dies geschieht durc
 \begin{kor}[Offline-/Online für $||u_N(\mu)||_X,\, ||u_N(\mu)||_{\mu}$]
 	(Offline:) Nach der Offline-Phase von $(P_N(\mu))$ def.
 	\[
-		K_N := (<(\phi_i,\phi_j>)_{i,j=1}^N \, \in \R^{N \times N}
+		K_N := (\dotp{\phi_i}{\phi_j})_{i,j=1}^N \, \in \R^{N \times N}
 	\]
 	(Online:) Zu $\mu \in \mathcal{P}$ berechne $A_N(\mu)$ und $\underbar u_N(\mu)$ durch Online-Phase von $(P_N(\mu)$
 	\[
@@ -943,7 +944,7 @@ Offensichtlich Berechnung von Riesz-Repräsentant notwendig, dies geschieht durc
 
 \begin{proof}
 	\begin{align*}
-		||u_N||^2 = <\sum_n u_{Nn} \phi_n \, , \, \sum u_{Nn'} \phi_{n'}> = \sum_{n, n'} u_{Nn} u_{Nn'} <\phi_n, \phi_{n'}> = \underbar u_N^T \cdot K_N \cdot \underbar u_N
+		||u_N||^2 = \dotp{\sum_n u_{Nn} \phi_n \, }{ \, \sum u_{Nn'} \phi_{n'}} = \sum_{n, n'} u_{Nn} u_{Nn'} \dotp{\phi_n}[{\phi_{n'}} = \underbar u_N^T \cdot K_N \cdot \underbar u_N
 	\end{align*}	
 	analog für Energienorm mit $A_{N,s} := \frac{1}{2} (A_N(\mu) + A_N(\mu)^T)$
 \end{proof}
@@ -1049,10 +1050,10 @@ In gewissen Fällen kann eine größere und damit bessere Schranke angegeben wer
 \paragraph{demos\_chapter3(4)} Beispiel-Lauf von Reduktionsschritten in RBmatlab.
 
 \begin{itemize}
-	\item Vorteilhafte Eigenschaften einer Basis $\phi_N$: orthogonal für numerische Stabilität, Hierarchie, so dass Basisvektoren nach Relevanz geordnet sind, d.h. $(X_{N'})_{N'=1}^{N}$, $X_{N'} = \op{span}\{\phi_1, \dots, \phi_{N'}\}$ soll Sequenz von ``optimalen'' Räumen sein, damit durch Variation von $N'$ eine Fehlerkontrolle erlaubt.
+	\item Vorteilhafte Eigenschaften einer Basis $\Phi_N$: orthogonal für numerische Stabilität, Hierarchie, so dass Basisvektoren nach Relevanz geordnet sind, d.h. $(X_{N'})_{N'=1}^{N}$, $X_{N'} = \op{span}\{\phi_1, \dots, \phi_{N'}\}$ soll Sequenz von ``optimalen'' Räumen sein, damit durch Variation von $N'$ eine Fehlerkontrolle erlaubt.
 	\item Probleme (\ref{eq:3.7}), (\ref{eq:3.8}) stellen schwierige nichtlineare Optimierungsprobleme dar. Um zu praktischer Basisgenerierung zu kommen, werden verschiedene Vereinfachungen gemacht:
 	\begin{itemize}
-		\item ``Snapshotbasierte'' Räume: Statt $Y \subset X$ beliebig, wird $Y = \op{span}\{u(\mu^i)\}_{i=1}^N$ mit unbekanntem $\mu$ gesucht. %% Ist es unbekanntes mü ???%%
+		\item ``Snapshotbasierte'' Räume: Statt $Y \subset X$ beliebig, wird $Y = \op{span}\{u(\mu^i)\}_{i=1}^N$ mit unbekanntem $\{\mu^i\}_{i=1}^N$ gesucht. 
 		\item ``Diskretisierung des Parameterraumes''. Statt $\mu \in \mathcal{P}$ wird Maximum bzw. Mittelung nur über $\mu \in \mathcal{S}_{train}$ durchgeführt, wobei $\mathcal{S}_{train} = \{\mu^i\}_{i=1}^n \subset \mathcal{P}$ \emph{endliche} Menge von Trainingsparametern $\mu$ (z.\,B. Punkte eines äquidistanten Gitters oder zufällig gewählte Parameter oder mittels adaptiven Verfahren gewählt.
 		\item Statt eines Fehlermaßes, welches echte Lösung $u(\mu)$ erfordert, wird häufig ein Fehlerschätzer gewählt, welcher sehr viel schneller auswertbar ist.
 		\item Das resultierende vereinfachte Optimierungsproblem kann approximativ minimiert werden, indem statt simultan über $\{\mu^i\}_{i=1}^N$ zu optimieren, einzelne Basisvektoren der Reihe nach durch Optimierung bestimmt werden (``Greedy-Verfahren'')
@@ -1077,35 +1078,35 @@ die \emph{Kolmogorov $n$-Weite} der Menge $\mathcal{M}$. Als Abschwächung defin
 \begin{bem} \beginwithlistbem
 	\begin{itemize}
 		\item $d_n$, $\bar{d}_n$ fallen monoton.
-		\item $d_n$, $\bar{d}_n$ sind rein approximationstheoretische Maße, deren ?? die Approximierbarkeit von $\mathcal{M}$ mit linearen Unterräumen charakterisiert unabhängig von der RB-Approximation
+		\item $d_n$, $\bar{d}_n$ sind rein approximationstheoretische Maße, deren Abfall die Approximierbarkeit von $\mathcal{M}$ mit linearen Unterräumen charakterisiert, unabhängig von der RB-Approximation
 		\item Wenn wir für ein $(\mathcal{P}(\mu))$ Konvergenz oder sogar Konvergenzrate von $d_n(\mathcal{M})$ zeigen können, so erhalten wir ebenso Konvergenz mit mind derselben Rate via Céa \ref{3.9} für die RB-Approximation
 		\[
-			|| u(\mu) - u_N(\mu) || \leq \frac{\gamma(\mu)}{\alpha(\mu)} \inf_{v \in X_N} || u(\mu) - v || \leq ??
+			|| u(\mu) - u_N(\mu) || \leq \frac{\gamma(\mu)}{\alpha(\mu)} \underbrace{\inf_{v \in X_N} || u(\mu) - v ||}_{d(X_N,\mathcal{M})} \leq \frac{\bar{\gamma}}{\bar{\alpha}} d_n(\mathcal{M})
 		\]
 		\item Beziehung $d_n$ zu $\bar{d}_n$. Es gilt trivialerweise
 		\[
 			d_0(\mathcal{M}) = \bar{d}_0(\mathcal{M}) = d(0,\mathcal{M}) = \sup_{v \in \mathcal{M}} ||v||,
 		\]
 		\[
-			d_n(\mathcal{M}) \leq \bar{d}_0(\mathcal{M}) \qquad \forall n \in \N,
+			d_n(\mathcal{M}) \leq \bar{d}_n(\mathcal{M}) \qquad \forall n \in \N,
 		\]
 		falls $n_0 := \dim(\op{span}(\mathcal{M})) < \infty, \,\, d_n(\mathcal{M}) = \bar{d}_n(\mathcal{M}) = 0 \,\, \forall n \geq n_0$
 		\item Präzise Werte für $d_n$ sind selten bekannt. Für endliche Menge oder Einheitskugeln können aber exakte Werte der Schranken für $d_n$ angegeben werden.
-		\item Beispiel: $\mathcal{M} := \{v \in X|||v|| \leq 1\}$ erfüllt $d_n(\mathcal{M}) = d_n(\mathcal{M}) = 1$ für alle $n < \dim(X)$ und $d_n(\mathcal{M}) = d_n(\mathcal{M}) = 0$ für $n \geq \dim(X)$.
-		\item Beispiel: $\mathcal{M} := [−1, 1]^m \subset X := R^m$ erfüllt $d_n(\mathcal{M}) = d_n(\mathcal{M}) = \sqrt{m−n}$ für alle $n \leq m$ und $d_n(\mathcal{M}) = d_n(\mathcal{M}) = 0$ für $n \geq m$.
-		\item Beispiel: ``Müsli-Schachtel'': $\mathcal{M}:=\prod_{i \in \N} [-2^i,2^i] \subset ?? \Rightarrow d_n(\mathcal{M}) \leq ??$
+		\item Beispiel: $\mathcal{M} := \{v \in X|||v|| \leq 1\}$ erfüllt $d_n(\mathcal{M}) = \bar{d}_n(\mathcal{M}) = 1$ für alle $n < \dim(X)$ und $d_n(\mathcal{M}) = \bar{d}_n(\mathcal{M}) = 0$ für $n \geq \dim(X)$.
+		\item Beispiel: $\mathcal{M} := [−1, 1]^m \subset X := R^m$ erfüllt $d_n(\mathcal{M}) = \bar{d}_n(\mathcal{M}) = \sqrt{m−n}$ für alle $n \leq m$ und $d_n(\mathcal{M}) = \bar{d}_n(\mathcal{M}) = 0$ für $n \geq m$.
+		\item Beispiel: ``Müsli-Schachtel'': $\mathcal{M}:=\prod_{i \in \N} [-2^i,2^i] \subseteq l_2 \Rightarrow d_n(\mathcal{M}) \leq C \cdot 2^{-n}$, exponentielle Konvergenz
 	\end{itemize}
 \end{bem}
 
 \begin{defn}[Gram-Matrix]
-Zu $\{u_i\}_{i=1}^n \subset X$ definieren wir die \emph{Gram-Matrix} als $K:=(<u_i,u_j>_X)_{i,j=1}^n \in \R^{n \times n}$
+Zu $\{u_i\}_{i=1}^n \subset X$ definieren wir die \emph{Gram-Matrix} als $K:=(\dotp{u_i}{u_j}_X)_{i,j=1}^n \in \R^{n \times n}$
 \end{defn}
 
 \begin{lemma}[Eigenschaften von $K$]
 Für $K$ Gram-Matrix von $\{u_i\}_{i=1}^n$ gilt
 \begin{enumerate}
 	\item $K$ ist symmetrisch und positiv semidefinit.
-	\item $\op{Rang}(K) = \dim \op{span}\{u_i\}_{i=1}^n$
+	\item $\op{Rang}(K) = \dim (\op{span}\{u_i\}_{i=1}^n)$
 	\item $\{u_i\}_{i=1}^n$ linear unabhängig $\Leftrightarrow K$ positiv definit
 \end{enumerate}
 \end{lemma}
@@ -1117,12 +1118,33 @@ Für $K$ Gram-Matrix von $\{u_i\}_{i=1}^n$ gilt
 \begin{bem}[Geometrische Information in $K$]
 $K$ enthält sehr viel Information der $\{u_i\}_{i=1}^n$, insbesondere kann man mittels $K$ eine isometrische Einbettung in $\R^n$ erzeugt werden, d.\,h. es existiert $\{x_i\}_{i=1}^n \in \R^n$ mit 
 \[
-	<x_i,x_j>_{\R^n} = <u_i,u_j>_X
+	\dotp{x_i}{x_j}_{\R^n} = \dotp{u_i}{u_j}_X
 \] 
 und 
 \[
 	||x_i - x_j ||_{\R^n} = ||u_i - u_j||_X
 \]
+
+Sie $K = UDU^T$ Eigenwertzerlegung mit $D= \op{diag}(\lambda_1,\dots,\lambda_n)$. Setze $(x_1,\dots,x_n):=D^{\frac{1}{2}}U^T$.
+Dann:
+\begin{align*}
+	\dotp{x_i}{x_j}_{\R^n} &= [(D^{\frac{1}{2}}U^T)_{i,j}]^T[(D^{\frac{1}{2}}U^T)_{i,j}]  \\
+	&= (UD^{\frac{1}{2}})_{i,j} (D^{\frac{1}{2}} U^T)_{i,j} \\
+	&= (U)_{i,j} D^{\frac{1}{2}} D^{\frac{1}{2}} (U^T)_{i,j} = (UDU^T)_{ij} = (K)_{ij} =\dotp{u_i}{u_j}_X
+\end{align*}
+
+und
+
+\begin{align*}
+	||x_i-x_j||_{\R^n}^2 &= \dotp{x_i}{x_i}_{\R^n} - 2 \dotp{x_i}{x_j}_{\R^n} + \dotp{x_j}{x_j}_{\R^n} \\
+	&= \dotp{u_i}{u_i}_{X} - 2 \dotp{u_i}{u_j}_{X} + \dotp{u_j}{u_j}_{X} = ||u_i-u_j||_X
+\end{align*}
+
+Damit können viele lineare Operationen auf $\{u_i\}_{i=1}^n$ durch geeignete Operation mit $K$ ausgedrückt werden. Z.\,B. Normberechnung in $\op{span}\{u_i\}_{i=1}^n$: (siehe auch Offline/Online für Normen)
+\[
+	v= \sum\limits_{i=1}^n v_i u_i \,\,\,\, , \,\,\,\, \underbar v= (v_i)_{i=1}^n \in \R^n \qquad \Rightarrow \qquad ||v||_X^2 = \underbar v^T K \cdot \underbar v
+\]
+
 \end{bem}
 
 \subsection{Basisgenerierung}
@@ -1144,9 +1166,18 @@ Motivation für Snapshot-basierte Verfahren:
 		oder beliebiges anderes Distanzmaß.
 \end{itemize}
 
-%% LÜCKE!!
-\begin{satz}
+Wir haben bereits gesehen, dass in bestimmten Fällen fehlerfreie Approximation durch geeignete RB-Räume möglich ist
+
+\begin{satz}[Optimales $X_N$ für Thermischer Block, $B_1 = 1$]
+Sie $p \in \N, \, B_1=1, \, B_2 = p, \, \mu^i := (\mu_{min},\dots,\mu_{min})^T + e_i \cdot (\mu_{max} - \mu_{min}), i=1,\dots,p$. Dann ist $X_N := \op{span}(u(\mu^i))_{i=1}^p$ optimal in dem Sinne, dass
+\[
+	\inf_{v \in X_N} ||u(\mu) - v|| = \inf_{v \in X_N} ||u(\mu) - v||_{\mu} = 0 \qquad \forall \mu \in \mathcal{P}
+\] 
 \end{satz}
+
+\begin{proof}
+Übung.
+\end{proof}
 
 \begin{satz}[Optimales $X_N$ für $Q_a=1$]
 	Sei $Q_a=1$ und o.B.d.A.\ $a(u,v;\mu) = \Theta_a^1(\mu) a^1(u,v)$ und $\Theta_a^1(\mu) > 0$. Seien $\set{\mu^i}_{i=1}^{Q_f}$ derart, dass $\set{f(\pdot;\mu^i)}_{i=1}^{Q_f}$ linear unabhängig. Dann erfüllt der Lagrange RB-Raum $X_N = \spn\seq{u(\mu^i)}_{i=1}^{Q_f}$, $\dim X_N = Q_f$ und
@@ -1299,6 +1330,7 @@ Ziel ist Beweis von \ref{3.36}, hierzu benötigen wir jedoch einige Notationen u
 \end{itemize}
 
 \begin{lemma}[Lösungsdarstellung]
+\label{3.38}
 	Die Lösung von \eqref{eq:3.10}, \eqref{eq:3.11} ist explizit gegeben durch
 	\begin{equation}
 		\hat u(\hat\mu) = \sum_{j=1}^H f_j \Upsilon_j g(\hat\mu,\lambda_j) \label{eq:3.14}
@@ -1325,6 +1357,7 @@ Ziel ist Beweis von \ref{3.36}, hierzu benötigen wir jedoch einige Notationen u
 \end{bem}
 
 \begin{lemma}[Energienorm-Darstellung in ONB]
+\label{3.39}
 	Mit $\mu = \tau^{-1}(\hat\mu)$ gilt für eine Funktion $w = \sum_{i=1}^H w_i \Upsilon_i$
 	\[
 		\norm{w}_\mu^2 = \sum_{i=1}^H \frac{w_i^2}{g(\hat\mu,\lambda_i)}
@@ -1340,6 +1373,7 @@ Ziel ist Beweis von \ref{3.36}, hierzu benötigen wir jedoch einige Notationen u
 Wir benötigen (grobe) Schranken für $g$ und seinen Ableitungen bezüglich $z$.
 
 \begin{lemma}[Schranken für $g$, $\frac{\partial^i}{\partial z^i} g$]
+\label{3.40}
 	Für alle $z \in \hat\p$, $\sigma \in \Lambda = [0,1]$ gilt
 	\begin{enumerate}
 		\item
@@ -1401,6 +1435,646 @@ Wir benötigen (grobe) Schranken für $g$ und seinen Ableitungen bezüglich $z$.
 			&= \underbrace{\beta_2^j \sigma e^z g^2(z,\sigma)}_{k = 2} + \sum_{k=3}^{j+1} \left( \beta_k^j(k-1) - \beta_{k-1}^j(k-1) \right) \sigma^{(k-1)} e^{(k-1)z} g^k(z,\sigma)\\
 			&\quad \underbrace{- \beta_{j+1}^j (j+1) \sigma^{j+1} e^{(j+1)z} g^{j+2}(z,\sigma)}_{``k=j+2``}
 		\end{align*}
-		{\bf \ldots TODO (nächste Vorlesung)}
+	Für $j \geq 1$ setze $S_j := \sum\limits_{k=2}^{j+1} |\beta_k^j|$ und zeige per Induktion, dass
+	\[
+		S_j \leq 2^j \cdot j! \qquad j \geq 1
+	\]
+	Für j = 1 ist $S_j =1 \leq 2^1 \cdot 1! = 2$ also Induktionsanfang.
+	Gelte Behauptung für $j \geq 1$. Dann gilt:
+	\begin{align*}
+		|\beta_2^{j+1}| &= 1 \\
+		|\beta_k^{j+1}| &< (j+1)(|\beta_k^j| + |\beta_{k-1}^j|) \qquad k=3,\dots,j+1 \\
+		|\beta_{j+2}^{j+1}| &= (j+1) |\beta_{j+1}^j| \\
+		\Rightarrow S_{j+1} = \sum\limits_{k=2}^{j+2} |\beta_k^{j+1}| &\leq 2 (j+1) S_j \overset{i.A.}{\leq} 2 (j+1) 2^j \cdot j! = 2^{j+1} (j+1)!
+	\end{align*}
+	Damit folgt (iii):
+	\begin{align*}
+	|\frac{\partial^i}{\partial z^i} g(z,\sigma)| &= |\sum\limits_{k=2}^{j+1} \beta_k^j \sigma^{(k-1)} e^{(k-1)z} g^k(z,\sigma)| \\
+	&\leq \underbrace{(\sum\limits_{k=2}^{j+1} |\beta_k^j|)}_{\leq 2^j \cdot j!} \underbrace{\sup_k |\sigma^{(k-1)} e^{(k-1)z} g^k(z,\sigma)|}_{\leq 1 \cdot e^{j_{\mu_{max}}^1} \cdot \mu_{max}^{j+1} = \mu_{max} (\mu_{max}^2)^j} \\
+	&\leq (2 \mu_{max}^2)^j \cdot j! \cdot \mu_{max}
+	\end{align*}
 	\end{proof}
 \end{lemma}
+
+\begin{bem}
+$g(\hat{\mu}, \lambda_i)$ sind gemäß \ref{3.38} Koeffizienten für $\hat{u}(\hat{\mu})$ in ONB Entwicklung. Entsprechend sind $\frac{\partial^j}{\partial z^j} g(z,\sigma)$ für $z=\hat{\mu}, \, \sigma = \lambda_i$ die Koeffizienten der Sensitivitätsableitung $\frac{\partial^j}{\partial \hat{\mu}^j} \hat{u}(\hat{\mu})$ in der ONB Entwicklung, also impliziert Lemma \ref{3.40} eine Beschränktheit der Sensitivitätsableitungen.
+\end{bem}
+
+\begin{lemma}[Darstellung von Fkt. aus $X_N$]
+\label{3.41}
+Für Koeffizientenfunktionen $\tilde{C_n}: \hat{\mathcal{P}} \rightarrow \R, \, n=1,\dots,N$
+\[
+	\hat{w}_N(\hat{\mu}):= \sum\limits_{n=1}^N \tilde{C_n} (\hat{\mu})\hat{u}(\hat{\mu}^n)
+\]
+%?? ln hier???
+mit $\hat{\mu}^n := \ln\, \mu^n$ ist also $\hat{w}_N(\hat{\mu}) \in X_N$. Dann lässt sich $\hat{w}_N$ darstellen als
+\[
+	\hat{w}_N(\hat{\mu}) = \sum\limits_{i=1}^H f_i \Upsilon_i \tilde{g}_N(\hat{\mu},\lambda_i)
+\]
+wobei $\tilde{g}_N(\hat{\mu}, \sigma) := \sum\limits_{n=1}^N \tilde{C}_n(\hat{\mu}) g(\hat{\mu}^n,\sigma)$
+\begin{proof}
+	Aus Lösungsdarstellung \ref{3.38} folgt
+	\[
+		u(\mu^n) = \hat{u}(\hat{\mu}^n) = \sum\limits_{i=1}^H f_i \Upsilon_i  g(\hat{\mu}^n,\lambda_i) \qquad ,n=1,\dots,N
+	\]
+	Also ist
+	\[
+		\hat{w}_N(\hat{\mu}) = \sum_n \tilde{C}_n(\hat{\mu})\sum\limits_{i=1}^H f_i \Upsilon_i  g(\hat{\mu}^n,\lambda_i) = \sum\limits_{i=1}^H f_i \Upsilon_i  \underbrace{\sum\limits_{n=1}^N \tilde{C}_n(\hat{\mu}) g(\hat{\mu}^n,\sigma)}_{= \tilde{g}_N(\hat{\mu},\sigma)}
+	\]
+\end{proof}
+\end{lemma}
+
+Wir benötigen noch Lagrange-Interpolation in M aufeinanderfolgenden Punkten $\{\hat{\mu}^i,\dots,\hat{\mu}^{i+M-1}\}$: Sie $h \in C^M(\hat{\mathcal{P}})$ zu interpolierende Funktion. Es bezeichne $I_M^i : C^0 (\hat{\mathcal{P}}) \rightarrow P_{M-1}(\hat{\mathcal{P}})$ Polynominterpolation zu $\{\hat{\mu^{i+m-1}}_{m=1}^M\}$ für $M \geq 2$ und $i \in \{1,\dots,N\}$ s.\,d. $i+M \leq N+1$.
+
+Sei $L_M^{i;m} \in P_{M-1}(\hat{\mathcal{P}})$ Lagrange-Polynom zu den Stützstellen, d.\,h.
+\[
+	L_M^{i;m}(\hat{\mu}^{i+m'-1}) = \delta_{m m'} \qquad \text{für} \,\,\, 1 \leq m, m' \leq M
+\]
+Dann ist der Interpolant darstellbar als
+\[
+	(I_M^i h)(\hat{\mu}) = \sum\limits_{m=1}^M L_M^{i;m}(\hat{\mu})h(\hat{\mu}^{i+m-1})
+\]
+Für den Interpolationsfehler gilt in $\hat{\mu} \in [\hat{\mu}^i, \mu^{i+M-1}]$
+\begin{align}
+	|h(\hat{\mu} - (I_M^i h)(\hat{\mu})| &\leq \underbrace{\frac{\prod\limits_{m=1}^M |\hat{\mu}-\hat{\mu}^{i+m-1}|}{M!}}_{\leq \frac{(\hat{\mu}^{i+M-1} - \hat{\mu}^i)^M}{M!} = \frac{[(M-1)\delta_N]^M}{M!}} \sup_{\hat{\mu}'} |h^{(M)}(\hat{\mu}')| \leq \frac{[(M-1)\delta_N]^M}{M!}  \sup_{\hat{\mu}'} |h^{(M)}(\hat{\mu}')|
+	\label{eq:3.18}
+\end{align}
+
+(endlich:)
+\begin{proof} Satz \ref{3.36}
+\\ Idee: zeige Existenz eines $\hat{w}_N(\hat{\mu}) \in X_N$ s.\,d. (mit $\mu := \tau^{-1}(\hat{\mu})$)
+\begin{align}
+\label{eq:3.19}
+	\frac{|| \hat{u}(\hat{\mu}) - \hat{w}_N (\hat{\mu}) ||_{\mu}}{|| \hat{u}(\hat{\mu}) ||_{\mu}} \leq \mu_{max}^2 \cdot e^{\frac{-(N-1)}{N_0 - 1}} \qquad \forall N \geq N_0
+\end{align}
+Denn dann folgt Behauptung via $||\hat{u}(\hat{\mu})||_{\mu} = || u(\mu) ||_{\mu}$ und
+\[
+	|| u(\mu) - u_N(\mu) ||_{\mu} = \inf_{v \in X_N} || u(\mu) - v ||_{\mu} \leq || u(\mu) - \hat{w}_N(\hat{\mu}) ||_{\mu} = || \hat{u}(\hat{\mu}) - \hat{w}_N(\hat{\mu}) ||_{\mu}
+\]
+Für Konstruktion eines $\hat{w}_N(\hat{\mu})$ reicht es, die Koeffizienten $\tilde{C}_n(\hat{\mu})$ zu definieren (siehe \ref{3.41}): Sei $\hat{\mu} \in \mathcal{P}$ gegeben und $M \in \{2,\dots,N\}$ wähle $i$ s.\,d. $\hat{\mu} \in [\hat{\mu}^2,\hat{\mu}^{i+M-1}] =: J_M^i$, also $|J_M^i| = (M-1) d_N$
+
+Definiere nun $\tilde{C}_n$ durch Lagrange-Polynome zu $\{\hat{\mu}^{i+m-1}\}_{m=1}^M$:
+\[
+\tilde{C}_n(\hat{\mu}) = \begin{cases}
+				0 & \text{falls} \,\,\, n< i \,\,\, \text{oder} \,\,\, n \geq i+M\\
+				L_M^{i;n-i+1} (\hat{\mu}) & \text{falls} \,\,\, i \leq n \leq i+M-1
+			\end{cases}
+\]
+Dann ist zugehöriges $\tilde{g}_N(\hat{\mu}, \sigma)$ aus \ref{3.41} Interpolierende im Sinne von
+\[
+	\tilde{g}_N(\hat{\mu}, \sigma) = (I_M^i g(\pdot,\sigma))(\hat{\mu})
+\]
+denn
+\[
+	\tilde{g}_N(\hat{\mu}, \sigma) \overset{\ref{3.41}}{=} \sum\limits_{n=1}^N \tilde{C}_n (\hat{\mu}) g(\hat{\mu}^n,\sigma) = \sum\limits_{n=i}^{i+n-1} L_M^{i;n-i+1} (\hat{\mu}) g(\hat{\mu}^n,\sigma) = (I_M^i g(\pdot,\sigma))(\hat{\mu})
+\]
+also insbesondere $\tilde{g}_N(\hat{\mu}^n, \sigma) = g(\hat{\mu}^n, \sigma)$.
+
+Betrachtet man die linke Seite von (\ref{eq:3.19}) für $\hat{w}_N (\hat{\mu})$: Mit \ref{3.41} \& \ref{3.38} \& \ref{3.39} folgt
+\begin{align}
+	\frac{||\hat{u}(\hat{\mu}) - \hat{w}_N (\hat{\mu}) ||_{\mu}^2}{|| \hat{u}(\hat{\mu}) ||_{\mu}^2} &\overset{\ref{3.39}}{=} \frac{\sum\limits_{i=1}^H \frac{f_i^2 (g(\hat{\mu},\lambda_i) - \tilde{g}_N (\hat{\mu},\lambda_i))^2}{g(\hat{\mu},\lambda_i)}}{\sum\limits_{i=1}^H \frac{f_i^2 g(\hat{\mu},\lambda_i)^2}{g(\hat{\mu},\lambda_i)}} \notag \\ 
+	&= \frac{\sum\limits_{i=1}^H f_i^2 g(\hat{\mu},\lambda_i)^2 \frac{(g(\hat{\mu},\lambda_i) - \tilde{g}_N (\hat{\mu},\lambda_i))^2}{g(\hat{\mu},\lambda_i)^2} \frac{1}{g(\hat{\mu},\lambda_i)}}{\sum\limits_{i=1}^H \frac{f_i^2 g(\hat{\mu},\lambda_i)^2}{g(\hat{\mu},\lambda_i)}} \notag \\
+	&\leq \sup_{z,\sigma} \frac{(g(z,\sigma - \tilde{g}_N(z,\sigma))^2}{g(z,\sigma)^2} \cdot \frac{\sum\limits_{i=1}^H f_i^2 \frac{g(\hat{\mu},\lambda_i)^2}{g(\hat{\mu},\lambda_i}}{\sum\limits_{i=1}^H f_i^2 \frac{g(\hat{\mu},\lambda_i)^2}{g(\hat{\mu},\lambda_i}} \notag \\
+	&\leq \Big( \sup_{z,\sigma} \frac{1}{g(z,\sigma)^2} \Big) \Big( \sup_{z,\sigma} (g(z,\sigma - \tilde{g}_N(z,\sigma))^2 \Big) \notag \\
+	&\overset{\ref{3.40} ii)}{\leq} \mu_{max}^2 \big( \sup_{z,\sigma} |g(z,\sigma - \tilde{g}_N(z,\sigma)| \big)^2
+	\label{eq:3.20}
+\end{align}
+Für Fehler rechts erhalte mittels Interpolationsfehlerabschätzung:
+\begin{align}
+	|g(z,\sigma - \tilde{g}_N(z,\sigma)| &= | g(z,\sigma) - \big(I_M^i g(\pdot, \sigma) \big) (z)| \notag \\
+	& \overset{(\ref{eq:3.18})}{\leq} \frac{\big((M-1)\delta_N \big) ^M}{M!} \sup_{\hat{\mu}'} \underbrace{| \frac{\partial^M}{\partial \hat{\mu}^M} g(\hat{\mu}', \sigma) |}_{\leq \bar{C}C^M M! \text{ wegen \ref{3.40} ii)}} \notag \\
+	&= \frac{\big((M-1)\delta_N \big) ^M}{M!} \cdot \bar{C}C^M M! \notag \\
+	&= \big( C(M-1)\delta_N \big)^M \cdot \bar{C}
+	\label{eq:3.21}
+\end{align}
+Bisher: $M$ beliebig. Finde nun $M_{opt} \in \{2,\dots,N\}$, welches den Fehler ``klein'' macht. Suche zunächst ein reelles $\bar{M}_{opt} \in [2,N] \subset \R$. Hierzu setze
+\[
+	\bar{M}_{opt} := 1+ \frac{1}{C e \delta_N}
+\]
+Wir sehen mit Abbkürzung $\lambda := \ln \mu_{max} - \ln \mu_{min} = 2 \ln \mu_{max}$
+\begin{align*}
+	\frac{1}{C e \delta_N} \geq 1 \iff  1 \geq C e \frac{\ln \mu_{max} - \ln \mu_{min}}{N-1} &\iff N -1 \geq C \cdot e \cdot \lambda \\
+	&\iff N \geq C e \lambda + 1
+\end{align*}
+Also ist mit Forderung $N_0 \geq C \cdot e \cdot \lambda + 1$ ist $\bar{M}_{opt} \geq 2$.
+Weiter:
+\begin{align*}
+	1 + \frac{1}{C e \delta_N} &\iff \frac{1}{C e \delta_N} \iff 1 \leq (N-1)(C e \delta_N) \\
+	&\iff 1 \leq (N-1) C \cdot e \frac{\lambda}{N-1} \iff 1 \leq C e \lambda \\
+	&\overset{\ref{3.40}}{\iff} 1 \leq 2 \mu_{max}^2 \cdot e \cdot 2 \ln \mu_{max}
+\end{align*}
+Also ist für $\mu_{max}$ genügend groß $\bar{M}_{opt} \leq N$.
+
+Insgesamt nun also $\bar{M}_{opt} \in [2,N]$.
+
+Wegen $C(\bar{M}_{opt} - 1) \delta_N = C \frac{1}{C e \delta_N} \cdot \delta_N = \frac{1}{e}$ folgt
+\[
+	\Big(C (\bar{M}_{opt} - 1) \delta_N \Big)^{\bar{M}_{opt} -1} = \left( \frac{1}{e} \right)^{\frac{1}{C e \delta_N}} = e^{- \frac{1}{C e \delta_N}} = e^{- \frac{N-1}{C e \lambda}} \leq e^{- \frac{N-1}{N_0 -1}}
+\]
+falls $C e \lambda \leq N_0 -1$, d.\,h. $N_0 \geq C e \lambda + 1$ (identische Forderung an $N_0$ wie zuvor). Setze nun $M_{opt} := \lfloor \bar{M}_{opt} \rfloor$ größte ganze Zahl kleiner/gleich $\bar{M}_{opt}$
+\[
+	\Rightarrow M_{opt} \in \{2,\dots,N\}
+\]
+\[
+	\text{wg.} M_{opt} \leq \bar{M}_{opt} \Rightarrow C (M_{opt} - 1) \delta_N \leq C (\bar{M}_{opt} - 1 ) \delta_N \big( = \frac{1}{e} < 1 \big)
+\]
+\[
+	\text{und} M_{opt} > \bar{M}_{opt} - 1
+\]
+folgt
+\begin{align}
+	\big( C ( M_{opt} - 1) \delta_N \big)^{M_{opt}} \leq \big( C ( \bar{M}_{opt} - 1) \delta_N \big)^{\bar{M}_{opt}} \leq e^{- \frac{N - 1 }{N_0 - 1}}
+	\label{eq:3.22}
+\end{align}
+Damit insgesamt
+\begin{align*}
+	\frac{||\hat{u}(\hat{\mu}) - \hat{w}_N (\hat{\mu}) ||_{\mu}}{|| \hat{u}(\hat{\mu}) ||_{\mu}} &\overset{(\ref{eq:3.20})}{\leq} \mu_{max} \sup_{z,\sigma} |g(z,\sigma - \tilde{g}_N(z,\sigma)| \\
+	&\overset{(\ref{eq:3.21})}{\leq} \mu_{max} \underbrace{\bar{C}}_{= \mu_{max}} \cdot \big( C (M_{opt} - 1) \delta_N \big)^{M_{opt}} \overset{(\ref{eq:3.22})}{\leq} \mu_{max}^2 e^{- \frac{N - 1}{N_0 - 1}}
+\end{align*}
+also (\ref{eq:3.19}) und damit Satz \ref{3.36} gezeigt.
+\end{proof}
+
+\begin{defn}[Gram-Schmidt]
+	Seien $\{u_i\}_{i=1}^n \in X$ lin. unabh. Dann ist \emph{Gram-Schmidt Basis} $\Phi_{GR} := \{\phi_1,\dots, \phi_n\}$ definiert durch
+\[
+	\bar{\phi}_m := u_m - \sum\limits_{i=1}^{m-1} \dotp{u_n}{\phi_i}\phi_i \qquad, \qquad \phi_m := \frac{\bar{\phi}_m}{||\bar{\phi}_m||} \qquad, \qquad m=1,\dots,n	
+\]
+und $X_{GR}$ der zugehörige \emph{Gram-Schmidt RB-Raum}
+\end{defn}
+
+\begin{lemma}[Eigenschaften von $\Phi_{GR}$] \beginwithlist
+\begin{enumerate}
+	\item $\Phi_{GR}$ ist ONB
+	\item $\op{span}\{u_i\}_{i=1}^n = X_{GR}$
+\end{enumerate}
+\begin{proof}
+	\begin{enumerate}
+		\item Normiertheit klar nach Definition \\
+		Orthogonalität per Induktion: \\
+		Sei $\dotp{\phi_i}{\phi_j} = 0 \,\,\, \forall \,\,\, j < i$ \\
+		Dann gilt für $j < i+1$:
+		\begin{align*}
+			\dotp{\bar{\phi}_{i+1}}{\phi_j} &= \dotp{u_{i+1}}{\phi_j} - \sum\limits_{k=1}^{(i+1) -1} \dotp{u_{i+1}}{\phi_k} \underbrace{\dotp{\phi_k}{\phi_j}}_{\delta_{kj} \text{ sowohl für} j<i \text{ als auch} j=i}	 \\
+			&= \dotp{u_{i+1}}{\phi_j} - \dotp{u_{i+1}}{\phi_j}= 0
+		\end{align*}
+		also auch $\dotp{\phi_{i+1}}{\phi_j} = \dotp{\frac{\bar{\phi}_{i+1}}{||\phi_{i+1} ||}}{\phi_j} = 0$
+		\item ``$\supseteq$'' klar nach Konstruktion \\
+		``$=$'' folgt durch Dimensionsbetrachtung:
+		\[
+			\dim \op{span} \{\phi_i\}_{i=1}^n = n = \dim \op{span} \{\u_i\}_{i=1}^n
+		\]
+	\end{enumerate}
+\end{proof}
+\end{lemma}
+
+\begin{bem} \beginwithlistbem
+	\begin{itemize}
+		\item Algorithmus liefert also ONB, garantiert Stabilität des RB-Verfahren für symmetrisches $a(\pdot,\pdot)$ gemäß \ref{3.7}
+		\item Es existiert nur triviale Approximationsaussage, z.\,B. wegen ii):
+		\[
+			\max_{j=1,\dots,m} \inf_{v \in X_{GR}} ||u_j - v|| = 0
+		\]
+		Für Teilbasis $\Phi_{GR,m} := \{\phi_1,\dots,\phi_m\}\, , \, m < n$ werden $\{u_i\}_{i=1}^m$ exakt approximiert über $\{u_i\}_{i=m+1}^n$ weiß man nichts.
+		\item Basis hängt von Reihenfolge der $\{u_i\}_{i=1}^n$ ab, macht also nur Sinn, wenn diese eine natürliche Reihenfolge haben.
+		\item Gram Schmidt Orthonormierung folgt häufig als ``Postprocessing'' für anderweitig erzeugte Basis, z.\,B. Lagrange-, Greedy-Basis, etc.
+	\end{itemize}
+\end{bem}
+
+\begin{satz}[Berechnung von $\Phi_{GR}$ über Gram-Matrix]
+	Seien $\{u_i\}_{i=1}^m \subset X$ lin. unabh., $K = (\dotp{u_i}{u_j})_{i,j=1}^n$ mit Cholesky-Zerlegung $K=LL^T$, d.\,h. $L$ untere $\Delta$-Matrix mit positiver Diagonalen. Definiere $A=(a_{ij})_{i,j=1}^n := (L^T)^{-1}$. Dann ist die Gram-Schmidt ONB $\Phi_{GR}$ äquivalent berechenbar durch
+	\[
+		\phi_j = \sum\limits_{i=1}^j a_{ij} u_i \qquad \text{für}	\qquad 1 \leq j \leq n
+	\]
+\begin{proof}
+	Übung.
+\end{proof}
+\end{satz}
+
+\subsubsection*{Proper Orthogonal Decomposition (POD)}
+
+\begin{defn}[Korrelationsoperator]
+\label{3.45}
+Sei $\{u_i\}_{i=1}^n \subset X$. Dann definieren wir den \emph{empirischen Korrelationsoperator} $R \in L(X,X)$ durch
+\[
+	Ru := \frac{1}{n} \sum\limits_{i=1}^n \dotp{u_i}{u} u_i \qquad \forall \,\, u \in X
+\]
+\end{defn}
+
+\begin{bem} \beginwithlistbem
+	\begin{itemize}
+		\item Linearität von $R$ ist klar, Beschränktheit folgt wegen
+		\[
+			||Ru|| \leq \frac{1}{n} \sum ||u_i||^2 ||u|| \Rightarrow ||R|| = \sup_{u \neq 0} \frac{||Ru||}{||u||} \leq \frac{1}{n} \sum ||u_i||^2 < \infty
+		\]
+		also $R \in L(X,X)$
+		\item Wir nennen ein $A \in L(X,X)$ \emph{kompakt} falls abgeschlossenes Bild der offenen Einheitskugel, d.\,h. $\overline{A(B_1(0))}$, kompakt ist
+		\item Wir nennen $A \in L(X,X)$ selbstadjungiert (genauer Hilbertraum-selbstadjungiert), falls $\dotp{Au}{v} = \dotp{u}{Av} \,\,\,\, \forall \,\, u,v \in X$
+	\end{itemize}
+\end{bem}
+
+\begin{satz}[Spektralsatz]
+\label{3.46}
+Sie $A \in L(X,X)$ kompakt \& selbstadjungiert, dann existiert endliche oder abzählbar unendliche orthonormmiertes System von Eigenvektoren $\{\phi_i\}_{i \in I}$, $I \subseteq \N$ zu Eigenwerten $\{\lambda_i\}_{i \in I} \subset \R \backslash \{0\}$ mit
+\[
+	Au = \sum_{i \in I} \lambda_i \dotp{u}{\phi_i} \phi_i \qquad \forall \,\, u \in X
+\]
+Falls $I$ unendlich, so $\lim\limits_{i \rightarrow \infty} \lambda_i = 0$.
+\begin{proof}
+	z.\,B. Alt: ``lineare Funktionalanalysis'' Satz 12.12
+\end{proof}
+\end{satz}
+
+\begin{satz}[POD-Basis]
+Zu $\{u_i\}_{i=1}^n$ mit $R$ aus \ref{3.45} existiert orthonormierte Menge $\{\phi_i\}_{i=1}^{n'}$ von $n' \leq n$ Eigenvektoren zu reellen Eigenwerten $\lambda_1 \geq \lambda_2 \geq \dots \geq \lambda_{n'} > 0$ mit
+\begin{align}
+	Ru = \sum\limits_{i=1}^{n'} \lambda_i \dotp{\phi_i}{u} \phi_i
+	\label{eq:3.23}
+\end{align}
+Für $m = 1,\dots,n'$ definieren $\Phi_{POD} := \Phi_{POD,m} := \{\phi_i\}_{i=1}^m$ als \emph{POD-Basis} und $X_{POD} := X_{POD,m} := \op{span} \Phi_{POD,m}$ als POD-Raum.
+\begin{proof}
+	$R$ hat endlich dimensionales Bild, also $\overline{R(B_1(0))}$ abgeschlossen, beschränkt im endlich dimensionalen Raum, also kompakt. $R$ ist selbstadjungiert, denn $\dotp{Ru}{v} = \frac{1}{n} \sum\limits_{i=1}^n \dotp{u_u}{u} \dotp{u}{v} = \dotp{u}{Rv}$. Also existiert nach Spektralsatz \ref{3.46} entsprechend endliches ONS, das (\ref{eq:3.23}) erfüllt. Dies kann insbesondere nicht unendlich sein, wegen endlichem Bild.
+\end{proof}
+\end{satz}
+
+\begin{bem} \beginwithlistbem
+	\begin{itemize}
+		\item Die Projektion $X \rightarrow X_{POD}$ wird in der statistischen Datenanalyse auch Hotelling-Transformation, Principal Component Analysis (PCA) oder Karhunen-Loève-Trans\-formation genannt.
+		\item Bezeichnung POD, als ``proper'', ist Anlehnung an das französische ``valeur propre'' für Eigenwert.
+		\item Wir nennen Basisvektoren von $\Phi_{POD}$ auch POD-Moden.
+	\end{itemize}
+\end{bem}
+
+\paragraph*{Illustration}
+
+\begin{itemize}
+	\item $\{\phi_i\}_{i=1}^{n'}$ ist ONB für $\op{span} \{u_i\}_{i=1}^n$ aber nicht eindeutig (VZ oder vertauschen bei mehrfachen Eigenwerten)
+	\item $\phi_1$ ist Richtung höchster Varianz von $\{u_i\}_{i=1}^n$ \\
+	$\phi_2$ ist Richtung höchster Varianz von $\{P_{x_{POD,1}}^\perp u_i\}_{i=1}^n$
+	\item Koordinaten der Daten in der POD-Basis sind unkorreliert $\rightarrow$ Übung.
+	\item $\{\phi_i\}$, $\{\sqrt{\lambda_i}\}$ sind die Hauptachsen bzw. Achsenabschnitte des Ellipsoids $\{\dotp{u}{R^{-1}u}=1\}$
+	\item Falls $X=\R^H$ und $\{u_i\}_{i=1}^n$ Realisierungen von $n$ unabhängigen, identisch normalverteilten Zufallsvariablen mit Verteilung $\mathcal{N}(\mu,\Sigma) := C \cdot \exp \big(-(x-\mu)^T \Sigma (x-\mu) \big)$ mit Mittelwert $\mu = 0$, so ist $R \in \R^{H \times H}$ guter Schätzer für $\Sigma$, insbesondere $R \rightarrow \Sigma$ konvergiert für $n \rightarrow \infty$ in geeignetem Sinne.
+\end{itemize}
+
+\begin{figure}[H]
+  \centering\small
+    \includegraphics[width = 0.5 \textwidth]{Bilder/IllustrationPOD.png}
+  \caption{Ellipsoide aus Kovarianzoperator}{(aus B. Haasdonk, Reduzierte-Basis-Methoden, Skript zur Vorlesung SS 2011, Universität Stuttgart, IANS-Report 4/11, 2011.)}
+  \label{fig:IllustrationPOD}
+\end{figure}
+
+\begin{satz}[Berechnung von $\Phi_{POD}$ über Gram-Matrix]
+	Sei $\{u_i\}_{i=1}^n \subset X$ und $K = \big( \dotp{u_i}{u_j}  \big)_{i,j=1}^n$. Dann sind äquivalent:
+	\begin{enumerate}
+		\item $\phi \in X$ ist Eigenvektor von $R$ zu Eigenwert $\lambda > 0$ mit Norm $1$ und einer Darstellung
+		\[
+			\phi = \sum a_i u_i \qquad \text{ mit o.\,B.\,d.\,A. } a \in \ker(K)^{\perp}
+		\]
+		\item $a= (a_i)_{i=1}^n \in \R^n$ ist Eigenvektor von $\frac{1}{n} K$ zu $\lambda > 0$ mit Norm $\frac{1}{\sqrt{n \lambda}}$
+	\end{enumerate}
+\begin{proof}
+	ii) $\Rightarrow$ i)
+	
+	Sei $a$ Eigenvektor von $\frac{1}{n} K$ zu Eigenwert $\lambda$ mit $||a|| = \frac{1}{\sqrt{n \lambda}}$ also
+	\[
+		\lambda a = \frac{1}{n} K a
+	\]
+	Multiplikation der $i$-ten Kompoenten mit $u_i$ und Summieren ergibt
+	\[
+		\sum\limits_{i=1}^n u_i \lambda a_i = \sum\limits_{i=1}^n u_i \frac{1}{n} \underbrace{\big( \sum\limits_{j=1}^n \dotp{u_i}{u_j} a_j \big)}_{(K a)_i}
+	\]
+	Mit $\phi := \sum u_i a_i$ gilt also
+	\[
+		\lambda \phi = \frac{1}{n} \sum\limits_{i=1}^n u_i \dotp{u_i}{\phi} = R \phi
+	\]
+	Also $\phi$ Eigenvektor von $R$ zu Eigenwert $\lambda$. Für Norm folgt
+	\[
+		||\phi||^2 = \dotp{\sum a_i u_i}{\sum a_j u_j} = a^T \underbrace{K a}_{n \lambda a} = n \lambda \cdot ||a||^2 = 1
+	\]
+	K ist symmetrisch, also existiert vollständiges ONS von Eigenvektoren. $\ker(K)$ wird aufgespannt von EV zu EW 0, also $a \perp \ker(K)$, $a$ EV zu $\lambda > 0$.
+	
+	i) $\Rightarrow$ ii):
+	
+	Sie $\phi$ EV von $R$ zu EW $\lambda > 0$ und $|| \phi || = 1$. Sei $\bar{a} \in \R^n$ mit $\phi = \sum
+	 \bar{a}_i u_i$ (existiert weil $\phi \in \op{Bild} (R) = \op{span} \{u_i\}_{i=1}^n$). Verschiebungen von $\bar{a}$ um $a^0 \in \ker(K)$ erhalten $\phi$:
+	 \begin{align*}
+	 	\phi ' := \sum (\bar{a}_i + a_i^0) u_i \Rightarrow \dotp{\phi '}{u_k} &= \dotp{\sum\limits_{i=1}^n \bar{a}_i u_i}{u_k} + \dotp{\sum_i a_i⁰0 u_i}{u_k} \\
+	 	&= \dotp{\phi}{u_k} + \underbrace{\sum\limits_{i=1}^n a_i^0 \dotp{u_i}{u_k}}_{K a^0 =0} \,\,\,\, , \,\, k=1,\dots,n
+	 \end{align*}
+	 Also $\phi ' = \phi$.
+	 
+	 Wähle speziell $a := \bar{a} - P \bar{a}$, $P$ orthogonale Projektion auf $\ker(K)$.
+	 \[
+	 	\Rightarrow a \in \ker(K)^{\perp} \text{ , } P \bar{a} \in \ker(K) \,\,\, \Rightarrow \,\,\, \phi = \sum \bar{a}_i u_i = \sum a_i u_i
+	 \]
+	 i) $\Rightarrow$ ii) o.B.d.A. $a \in \ker(K^{\perp}$
+	 
+	 Da $\phi \in V$ zu $\lambda > 0$ gilt:
+	 \[
+	 	\underbrace{\frac{1}{n} \sum\limits_{i=1}^n \dotp{u_i}{\sum\limits_{j=1}^n a_i u_j}}_{R \phi} u_i = \lambda \phi = \lambda \sum_j a_j u_j
+	 \]
+	 Testen mit $u_k$ liefert
+	 \[
+	 	\frac{1}{n} \underbrace{\sum_j \dotp{u_i}{u_j} \dotp{u_i}{u_k} a_j}_{(K^2 a)_k} = \lambda \underbrace{\sum_j a_j \dotp{u_j}{u_k}}_{(Ka)_k}
+	 \]
+	 Also $\frac{1}{n} K^2 a= \lambda Ka$ also $Ka$ EV von $\frac{1}{n} K$ zu EW $\lambda$. Dann ist schon $a$ EV, denn $a \in \ker(K)^{\perp}$:
+	 \[
+	  (\ast) \,\,\, Ka (\frac{1}{n} K - \lambda) a = 0
+	 \]
+	 $a \in \ker(K^{\perp})$, $Ka \in \ker(K^{\perp})$ wegen Symmetrie $\dotp{Ka}{v} = \dotp{a}{Kv} = 0 \,\,\,\, \forall v \in \ker(K)$
+	 
+	 $\Rightarrow (\frac{1}{n} K - \lambda) a \in \ker(K)^{\perp}$
+	 
+	 aber auch wg. $(\ast)$ $(\frac{1}{n} K - \lambda)a \in \ker(K)$
+	 
+	 $\Rightarrow (\frac{1}{n} K - \lambda) a = 0$ also $a$ EV von $\frac{1}{n}K$ zu $\lambda$.
+	 
+	 Wie im ersten Teil gilt
+	 \[
+	 	1 = || \phi ||^2 = \sum a_i a_j \dotp{u_i}{u_j} = a^T K a = a^T \cdot n \lambda a = n \lambda a ||a||^2
+	 \]
+	 \[
+		\Rightarrow ||a||= \frac{1}{\sqrt{n \cdot \lambda}}	 
+	 \]
+\end{proof}
+\end{satz}
+
+\begin{bem}
+	Falls $X$ endlichdimensional $\dim(X) = H$, kann daher POD entweder als teures EWP f ür $R$ in $X$ (Komplexität $\mathcal{O}(H^3))$ oder, meist günstiger, als EWP für $K$ (Komplexität $\mathcal{O}(n^3))$ ermittelt werden.
+	
+	Bezeichnung für letzteres ist auch ``method of snapshots'' (Sirovich, 1987) oder Kernel-PCA (Schollkopf \& Smola, 2002).
+	POD kann auch über Singulärwertzerlegung der Koeffizientenmatrix  berechnet werden:
+\end{bem}
+
+\begin{satz}[Berechnung für $X=\R^H$ via SVD]
+	Sei $X=\R^H$ mit $\dotp{\pdot}{\pdot} = \dotp{\pdot}{\pdot}_{\R^H}$. $U = [u_1,\dots,u_n] \in \R^{H \times n}$ Snapshot-Matrix mit Rang $U = n'$ und
+	\[
+		U = \Phi S V^T
+	\]
+	eine verkürzte SVD, d.\,h. $\Phi \in \R^{H \times n'}$, $V \in \R^{n \times n'}$ orthonormale Spalten und $S= \op{diag}(\sigma_1,\dots, \sigma_{n'}) \in \R^{n' \times n'}$ ($\sigma_i$: Singulärwerte) mit $\sigma_1 \geq \sigma_2 \geq \dots \geq \sigma_{n'} \geq 0$.
+	
+	Dann ist $\Phi_{POD,n'} = \Phi$.
+	\begin{proof}
+	Sei $\Phi = (\bar{\phi_1},\dots,\bar{\phi_n})$. Nach Definition gilt $Ru = \frac{1}{n} U U^T U \,\,\, \forall u \in \R^H$. Damit ist $\bar{\phi_i}$ EV von $R$ zu $i$-ten Eigenwert $\frac{1}{n} \sigma_i^2$:
+	\begin{align*}
+		R \bar{\phi_i} &= \frac{1}{n} U U^T \bar{\phi_i} = \frac{1}{n} \Phi S \underbrace{V^T V}_{I} S \underbrace{\Phi^T \bar{\phi_i}}_{e_i \in \R^{n'}} \\
+		&= \frac{1}{n} \Phi \underbrace{S^2 e_i}_{\sigma_i^2 e_i} = \frac{1}{n} \sigma_i^2 \bar{\phi_i}
+	\end{align*}
+	Die EW $\frac{1}{n} \sigma_i^2$ sind monoton fallend, also identisch sortiert wie EW von $R$, das heißt $\lambda_i = \frac{1}{n} \sigma_i^2$ und $\phi_i = \bar{\phi_i}$.
+	\end{proof}
+\end{satz}
+
+\begin{bem} \beginwithlistbem
+	\begin{itemize}
+		\item obiges ist sehr eingänglich (``1-Zeilenbeweis''), aber algorithmisch nicht unbedingt besser, weil SVD auch durch EWP definiert (Numerik I)
+		\item Verallgemeinerung für allg. HR $X$ $\rightarrow$ Übung (Blatt 5)
+	\end{itemize}
+\end{bem}
+
+\begin{satz}[Approximationsfehler für $X_{POD,m}$]
+Sei $\{u_i\}_{i=1}^n \subset X$ und für $Y \subset X$ Unterraum ist mittlerer quadratischer Fehler $J(Y) := \frac{1}{n} \sum\limits_{i=1}^n || u_i - P_y u_i||^2$. Dann gilt für den POD-Raum
+\[
+	J(X_{POD,m}) = \sum\limits_{i=m+1}^{n'} \lambda_i \qquad \text{ für } m=1,\dots,n'
+\]
+mit $\lambda_i$ EW von $R$.
+\begin{proof}
+	Sei $\Psi = \{\Psi_1,\dots,\Psi_m\}$ ONB für $Y$. Dann folgt
+	\begin{align*}
+		J(Y) &= \frac{1}{n} \sum\limits_{i=1}^n ||u_i - P_y u_i||^2 = \frac{1}{n} \sum\limits_{i=1}^n || u_i - \sum\limits_{j=1}^m \dotp{\Psi_j}{\u_i} \Psi_j ||^2 \\
+		&= \frac{1}{n} \sum\limits_{i=1}^n ||u_i||^2 - \frac{2}{n} \sum\limits_{i=1}^n \sum\limits_{j=1}^m \dotp{u_i}{\Psi_j}^2 + \frac{1}{n} \sum\limits_{i=1}^n \sum\limits_{j,k} \dotp{\Psi_j}{u_i} \dotp{u_i}{\Psi_k} \underbrace{\dotp{\Psi_j}{\Psi_k}}_{= \sigma_jk} \\
+		&= \frac{1}{n} \sum\limits_{i=1}^n ||u_i||^2 - \frac{1}{n} \sum\limits_{i=1}^n \sum\limits_{j=1}^m \dotp{u_i}{\Psi_j}^2
+	\end{align*}
+	Wegen $u_i \in \op{Bild} (R) = X_{POD,n'}$ ist $u_i = \sum\limits_{j=1}^{n'} \dotp{\phi_j}{u_i} \phi_j$
+	\[ 
+		||u_i||^2 = \sum\limits_{j,k=1}^{n'} \dotp{\phi_j}{u_i} \dotp{\phi_k}{u_i} \underbrace{\dotp{\phi_j}{\phi_k}}_{= \sigma_{jk}} = \sum\limits_{j=1}^{n'} \dotp{\phi_j}{u_i}^2
+	\]
+	also mittlerer quadratischer Projektionsfehler:
+	\begin{align*}
+		J(X_{POD,m}) &= \frac{1}{n} \sum\limits_{i=1}^n \sum\limits_{j=1}^{n'} \dotp{\phi_j}{u_i}^2 - \frac{1}{n} \sum\limits_{i=1}^n \sum\limits_{j=1}^m \dotp{u_i}{\phi_j}^2 \\
+		&= \Big(  \frac{1}{n} \sum\limits_{i=1}^n \sum\limits_{j=m+1}^{n'} \dotp{\phi_j}{u_i}^2  \Big) = \frac{1}{n} \sum\limits_{i=1}^n \sum\limits_{j=m+1}^{n'} \dotp{\phi_j}{u_i} \dotp{\phi_j}{u_i} \\
+		&= \sum\limits_{j=m+1}^{n'} \dotp{\phi_j}{\frac{1}{n} \sum\limits_{i=1}^n \dotp{\phi_j}{u_i} u_i} \\
+		&= \sum\limits_{j=m+1}^{n'} \dotp{\phi_j}{\underbrace{R \phi_j}_{= \lambda_j \phi_j}} = \sum\limits_{j=m+1}^{n'} \lambda_j
+	\end{align*}
+\end{proof}
+\end{satz}
+
+\begin{satz}[Bestapproximation durch $X_{POD,m}$]
+	Unter allen Räumen der Dimension $m$ ist $X_{POD,m}$ bzgl. $J$ optimal
+	\[
+		j(X_{POD,m}) = \inf\limits_{\substack{Y \subset X \\ \dim Y = m}} J(Y)
+	\]
+	\begin{proof}
+		Übung.
+	\end{proof}
+\end{satz}
+
+\begin{bem}[Zusammenfassung] \beginwithlistbem
+	\begin{itemize}
+		\item POD liefert also orthonormale Basis, garantiert Stabilität des RB-Verfahrens (bei symmetrischem $a(\pdot,\pdot)$
+		\item Es existieren Approximationsaussagen bzgl. des mittleren quadratischen Projektionsfehlers, sogar Optimalität nachweisbar.
+		Die POD Teilbasen ermöglichen Approximation \underline{aller} Snapshots mit Fehlerkontrolle der abgeschnittenen Eigenwerte.
+		\item Die POD-Basis hängt nicht von Reihenfolge der Snapshots ab.
+		\item Die POD-Basen sind hierarchisch:
+		\[
+			\Phi_{POD,m} \subseteq \Phi_{POD,m'} \qquad \text{ für } m \leq m'
+		\]
+		\item Die POD kann auch zur Erweiterung einer bestehenden ONB $\Phi$ verwendet werden, indem $\{\tilde{u}_i\}_{i=1}^n$, $\tilde{u}_i = u_i - P_{\op{span}(\Phi)} u_i$ und eine POD Basis $\tilde{\Phi}_{POD}$ hierfür berechnet wird. Dann ist $\Phi \cup \tilde{\Phi}_{POD}$ eine erweiterte/neue ONB.
+		\item Man kann POD auch als inkrementelles Verfahren mit 1D-Minimierung von $J(Y)$ verstehen.
+		
+		Sei $\{u_i\}_{i=1}^n \subset X$. Dann definiere
+		\begin{align*}
+			\bar{\phi}_1 &:= POD_1 (\{u_i\}_{i=1}^n) := \op{arg inf}\limits_{\substack{\phi \in X \\ ||\phi||=1}} \frac{1}{n} \sum\limits_{i=1}^n ||u_i - \dotp{u_i}{\phi_i} \phi_i||^2 \\
+			\bar{X}_1 &:= \op{span} (\bar{\phi}_1) \\
+			\text{ und für } i=2,\dots,n' \\
+			\bar{\phi}_i &:= POD_1(\{u_i - P_{\bar{X}_{i-1}}u_i\}), \\
+			\bar{X_i} &:= \op{span} (\bar{\phi_1},\dots,\bar{\phi_i})
+		\end{align*}
+		Dann ist $(\bar{\phi_1},\dots,\bar{\phi_m})$ POD-Basis (aus $m$ Moden/Basisvektoren) (bis auf Rotation, Vorzeichen).
+	\end{itemize}
+\end{bem}
+
+\subsubsection*{Greedy-Verfahren}
+
+\begin{defn}[Greedy-Verfahren]
+	Sei $S_{train} \subset \mathcal{P}$ ``Trainingsmenge'' von Parametern, $\Delta (Y,\mu) \in \R^+$ für Teilräume $Y \subset X$ und Parameter $\mu \in \mathcal{P}$ ein ``Fehlerindikator'' und $\epsilon_{tol} > 0$ eine Fehlertoleranz. Die Greedy-Basen $\Phi_{GRE,m}$, Greedy-Raum $X_{GRE,m}$ und Sample-Menge $S_m$ für $m=0,\dots,N$ sind iterativ definiert durch
+	\[
+		S_0 = \emptyset \,\, , \,\, X_{GRE,0} = \{0\} \,\, , \,\, \Phi_{GRE,0} = \emptyset \,\, , \,\, m:=0
+	\]
+Solange $\epsilon_m := \max\limits_{\mu \in S_{train}} \Delta(X_{GRE,m},\mu) > \epsilon_{tol}$
+\begin{align*}
+	\mu^{(m+1)} &:= \op{max arg}\limits_{\mu \in S_{train}} \Delta(X_{GRE,m},\mu) \\
+	S_{m+1} &:= S_m \cup \{\mu^{(m+1)}\} \\
+	\phi_{m+1} &:= u(\mu^{(m+1)} \text{ Lösung von } (P(\mu^{(m+1)})) \\
+	\Phi_{GRE,m+1} &:= \Phi_{GRE,m} \cup \{\phi_{m+1}\} \\
+	X_{GRE,m+1} &:= X_{GRE,m} + \op{span}(\phi_{m+1}) \\
+	m \leftarrow m+1
+\end{align*}
+setze schließlich $N:=m$
+\end{defn}
+
+\begin{bem} \beginwithlistbem
+	\begin{itemize}
+		\item Erste  Verwendung von Greedy-Verfahren für RB: Veroy, Prud'homme, Rovas, Patera 2003, seitdem ``Standard''
+		\item $\Phi_{GRE,m}$ ist Lagrange-RB zur Sample-Menge $S_m$, i. a. nicht orthonormal. Kann für numerische Stabilität mit Gram-Schmidt orthonormalisiert werden.
+		\item Basen sind hierarchisch: $\Phi_{GRE,m} \subset \Phi_{GRE,m'}$, $m \leq m'$
+		\item In Literatur wird Suche nach $\mu^{(1)}$ häufig umgangen, indem dieses beliebig aus $S_{train}$ gewählt wird.
+		\item $S_{train}$ wird häufig als strukturierte oder zufällige Menge aus $\mathcal{P}$ mit \emph{endlich} vielen Samples gewählt.
+		\item Falls $S_{train}$ zu klein, kann das RB-Modell overfitting aufweisen, d.\,h.
+		\[
+			\sup\limits_{\mu \in \mathcal{P}} || u(\mu) - u_N(\mu) || >> \sup\limits_{\mu \in S_{train}} || u(\mu) - u_N(\mu) ||
+		\]
+		\item Greedy-Verfahren ist also akkummulatives Verfahren, welches iterativ den ``schlechtest''-aufgelösten Parameter $\mu^{(m+1)}$ wählt, $u(\mu^{(m+1)}$ berechnet, und als neuen Basisvektor hinzufügt. Insofern kann dies als approximative Lösung des Optimierungsproblems
+		\[
+			\min\limits_{\substack{Y \subset X \\ \dim Y = N}} \max\limits_{\mu \in \mathcal{P}} \Delta (Y,\mu)
+		\]
+	interpretiert werden: Statt maximieren über $\mathcal{P} \leadsto	$ maximieren über $S_{train}$, statt minimieren über $X \subset X \leadsto$ iterative Sequenz von Räumen $Y = X_{GRE,m}$.
+	\end{itemize}
+\end{bem}
+
+\begin{lemma}[Fehlerindikatoren, Terminieren des Verfahrens] \beginwithlist
+\begin{enumerate}
+	\item Falls  $|S_{train}| = n < \infty$ und für alle $\mu \in \mathcal{P}$ und $Y \subset X$ gilt
+	\[
+		u(\mu) \in Y \,\, \Rightarrow \,\, \Delta(Y,\mu) = 0
+	\]
+	so terminiert das Greedy-Verfahren mit $N \leq n$ und
+	\[
+		\max\limits_{\mu \in S_{train}} \Delta(X_{GRE, n} , \mu) \leq \epsilon_{tol}
+	\]
+	\item Dies erfüllen z.\,B.
+	\[
+		\Delta(Y,\mu) := ||u(\mu) - u_N(\mu)||
+	\]
+	\[
+		\Delta(Y,\mu) := ||u(\mu) - P_y u(\mu)||
+	\]
+	\[
+		\Delta(Y,\mu) := \Delta_N^{en} (\mu)
+	\]
+	oder andere Fehlerschätzer, wobei $X_N = Y$ gesetzt wird.
+\end{enumerate}
+\begin{proof}
+	Übung.
+\end{proof}
+\end{lemma}
+
+\begin{kor}[Fehleraussage]
+	Für $\Delta(Y,\mu) := ||u(\mu) - u_N(\mu)||$ oder $\Delta(Y,\mu) := \Delta_{N'}$ gilt für $N' = 1,\dots,N$
+	\[
+		\max\limits_{\mu \in S_{train}} ||u(\mu) - u_{N'}(\mu)|| \leq \epsilon_{N'}
+	\]
+	\begin{proof}
+		Klar nach Konstruktion.
+	\end{proof}
+\end{kor}
+
+\begin{bem}[Wahl der Fehlerindikatoren] \beginwithlistbem
+	\begin{itemize}
+		\item Greedy-Verfahren hervorragendes Einsatzfeld für Fehlerschätzer, denn $\Delta_N(\mu)$ kann sehr schnell für alle $\mu \in S_{train}$ ausgerechnet werden, ohne dass alle $u(\mu)$, $\mu \in S_{train}$ berechnet werden müssen (im Gegensatz zu POD). Dadurch können sehr große Mengen $S_{train}$ behandelt werden. Dies erhöht die Erwartung, dass $\Phi_{GRE,N}$ auch für neue Parameter $\mu \in \mathcal{P} \backslash S_{train}$ eine gute Approximation liefert.
+		\item Wahl: $\Delta(Y,\mu) := ||u(\mu) - P_y u(\mu)||$, orthogonaler Projektionsfehler
+		
+		Motivation: Falls dies klein, so ist mit Céa auch RB-Fehler klein
+		
+		Nachteile: Teuer auszuwerten, hochdimensionale Operation erfordert alle Snapshots $u(\mu)$, $\mu \in S_{train}$ müssen vorliegen, Größe von $S_{train}$ hiermit eingeschränkt.
+		
+		Vorteil: Terminieren ist garantiert. Approximationsraum ist entkoppelt von RB-Approximation, d.\,h. Verfahren kann angewandt werden ohne Vorliegen des RB-Verfahren und ohne Fehlerschätzer.
+		\item Wahl: $\Delta(Y,\mu) := ||u(\mu) - u_N(\mu)||$, RB-Fehler
+		
+		Motivation: Dies ist die ultimative Größe, welche kontrolliert werden muss, z.\,B. (\ref{eq:3.7}).
+		
+		Nachteile: Wie bei Projektionsfehler: teuer, alle Snapshots $\mu \in S_{train}$ vorberechnen, $S_{train}$ Größe eingeschränkt.
+		
+		Vorteile: Terminieren ist garantiert, Verfahren kann mit RB-Verfahren angewandtwerden, für welche keine FS vorliegen.
+		\item Wahl: $\Delta(Y,\mu) = \Delta_N (\mu)$ [oder Energie-/rel. Fehlerschätzer]
+		
+		Nachteil: Falls Fehlerschätzer den Fehler stark überschätzt, kann der RB-Raum evtl. größer als nötig sein.
+		
+		Vorteile: schnell auswertbar, unabhängig von $H$ denn Offline-Online. Es müssen nur $N$ Snapshots berechnet werden, $|S_{train}|$ kann sehr groß gewählt werden, Terminieren kann garantiert werden.
+		\item Ziel-orientierte Indikatoren: Falls $\Delta(Y,\mu)$ als Ausgabefehler $|s(\mu) - s_N(\mu)|$ oder -Schranke $\Delta_N,s$ gewählt wird, nennt man das Verfahren ``goal-oriented''. Die Basis wird potentiell sehr klein und kann Ausgabe gut approximieren. Die Feldvariable $u$ wird jedoch nicht notwendigerweise gut approximiert.
+		\item Falls $\Delta(Y,\mu)$ als Feldvariablen-Fehler $||u(\mu)-u_N(\mu)||$, PRojektionsfehler oder -schätzer gewählt wird, ist Verfahren nicht goal-oriented, die Basis wird größer sein, aber sowohl $u$ als auch $v$, als auch beliebig andere Funktionale $\tilde{s}$ gut approximiert.
+	\end{itemize}
+\end{bem}
+
+\begin{bem}[Reihenfolge] \beginwithlistbem
+	\begin{itemize}
+		\item Greedy-Basis hängt meistens nicht von Reihenfolge der Parameter $S_{train}$ ab. Nur falls zufällig das Maximum von $\Delta(Y,\mu)$ mehrdeutig ist $\leadsto$ Praktische Lösung: Wähle ersten Parameter, der maximales $\Delta(Y,\mu)$ erzeugt.
+	\end{itemize}
+\end{bem}
+
+\begin{bem}[Bestimmung der Approximationsgüte/Overfitting]
+In Terminologie der Statistik/Maschinellen Lernens ist $S_{train}$ eine \emph{Trainingsmenge} und $\epsilon_N$ aus Greedy-Verfahren der sogenannten \emph{Trainingsfehler}. $S_{train}$ muss $\mathcal{P}$ gut repräsentieren, sollte möglichst groß gewählt werden. Falls $S_{train}$ zu klein, oder unrepräsentativ für $\mathcal{P}$ kann Overfitting auftreten.
+
+Somit ist kleiner Trainingsfehler nicht hinreichend für gutes Modell. Modelle sollen daher nicht alleine anhand von Trainings-, sondern anhand unabhängiger Testmengen:
+\[
+	\epsilon_{test} = \max\limits_{\mu \in S_{train}} \Delta(X_N,\mu) \qquad \text{, meistens zufällige Parametermenge}
+\]
+\end{bem}
+
+\begin{bem}[Monotonie] \beginwithlistbem
+	\begin{itemize}
+		\item Im Allgemeinen gilt nicht $\Delta(X_N,\mu) \geq \Delta(X_{n+1},\mu)$
+		\item Es kann daher vorkommen, dass $(\epsilon_n)_{n=1}^N$ nichtmonoton ist.
+		\item Falls Beziehung zu Bestapproximation gilt, d.\,h. für ein $C > 0$ unabhängig von $n$ gilt:
+		\[
+			\Delta(X_n,\mu) \leq C \cdot \inf\limits_{v \in X_n} ||u(\mu) - v||
+		\]
+		kann zumindest eine Beschränkung oder asymptotischer Abfall erwartet werden.
+		\item In bestimmten Fällen kann Monotonie bewiesen werden:
+	\end{itemize}
+\end{bem}
+
+\begin{satz}[Monotonie von $(\epsilon_n)$]
+Das Greedy-Verfahren erzeugt monoton fallende Sequenzen $(\epsilon_n)_{n\geq 1}$ falls:
+\begin{enumerate}
+	\item $\Delta (Y,\mu) := ||u(\mu) - P_{X_n}u(\mu)||$ oder
+	\item $(P)$ ist compliant, d.\,h. $l=f$ und $a$ symmetrisch und $\Delta(Y,\mu) = ||u(\mu) - u_N(\mu)||_{\mu}$
+\end{enumerate}
+\begin{proof}
+	\begin{enumerate}
+	\item klar
+	\item folgt aus \ref{3.11}
+	\end{enumerate}
+\end{proof}
+\end{satz}
+
+\begin{bem}[Konvergenz des Greedy-Verfahrens] \beginwithlistbem
+	\begin{itemize}
+		\item Einige Jahre lang war Greedy-Verfahren ein in der Praxis gut funktionierendes Verfahren, jedoch ohne theoretische Erklärung wann/warum es funktioniert.
+		\item Notwendiges Kriterium für Erfolg des Greedy-Verfahren: Kolmogorov $n$-Weite von $\mathcal{M}$ muss (schnell) abfallen. Sei $\Delta(Y,\mu)$ so gewählt, dass $\Delta(Y,\mu) \geq || u(\mu - P_yu(\mu)||$
+		\begin{align*}
+			&\Rightarrow \sup\limits_{\mu \in \mathcal{P}} \Delta(Y,\mu) \geq \inf\limits_{\substack{Y \subset X \\ \dim Y = n}} \sup\limits_{\mu \in \mathcal{P}} ||u(\mu) - P_yu(\mu)|| = d_n(\mathcal{M}) \\
+		\end{align*}
+		$\Rightarrow$ Falls $\Phi_{GRE,n}$ gut, muss $d_n(\mathcal{M})$ klein sein. Falls $d_n(\mathcal{M})$ nicht klein, kann $\Phi_{GRE,n}$ keine gute Approximation liefern.
+		
+		\item Spannend ist umgekehrte Frage, ob abfallendes $d_n$ auch hinreichend für Gelingen des Greedy-Verfahrens.
+		\item Antwort auf diese Fragen wurden in letzten Jahren gegeben:
+		
+		(BMPPT 2012): Buffa, Maday, Patera, Prud'homme, Turinici: A-priori convergence of the greedy algorithm for the parameterized reduced basis method
+		
+		M2AN, 46:595-..., 2012		
+		
+		(BCDDPW): Binev, Cohen, Dahmen, DeVore, Petrova, Wojtaszczyk: Convergence Rates for Greedy Algorithms in Reduced Basis Methods
+		
+		SIAM J. Math. Anal., 43(3), 1455..., 2011.
+		\item Die Hoffnung, ein Ergebnis der Form $\epsilon_n \leq c d_1(\mathcal{M})$ zu erhalten kann (ohne weitere Annahme) leider nicht erreicht werden. Dies sieht man durch Vergleich von
+		\[
+			\bar{d}_n(\mathcal{M}) = \inf\limits_{\substack{Y \subset \op{span}(\mathcal{M}) \\ \dim Y = n}} d(Y,\mathcal{M}) \qquad \text{und} \qquad d_n(\mathcal{M})
+		\]
+		Theorem 4.1 in (BCDDPW2011) besagt:
+		\begin{enumerate}
+			\item Für jedes $\mathcal{M}$ und $n \geq 0$ gilt $\bar{d}_n(\mathcal{M}) \leq (n+1) d_n(\mathcal{M})$
+			\item Für jedes $n > 0$ und $\epsilon > 0$ existiert $\mathcal{M}$, s.\,d.
+			\[
+				\bar{d}_n(\mathcal{M}) \geq (n-1-\epsilon)d_n(\mathcal{M})
+			\]
+			\end{enumerate}
+		Wegen $\epsilon_n \geq \bar{d}_n(\mathcal{M})$ und ii) ist ``direkter Vergleich'' von $\epsilon_n$ und $d_n(\mathcal{M})$ mit $C$ unabhängig von $n$ nicht möglich.
+		\item Lösung ist zusätzliche Annahmen von Raten des Abfalls von $d_n$, damit können ähnliche Abfallraten für $\epsilon_n$ gezeigt werden, z.\,B. zeigen (BMPPT2012):
+		
+		Für $S_{train} = \mathcal{P}$ und $\Delta(Y,\mu) = ||u(\mu) - P_yu(\mu)||$:
+		\[
+			\epsilon_n \leq 2^{n+1}(n+1) d_n(\mathcal{M})
+		\]
+		Falls $d_n$ schnell genug abfällt (z.\,B. exponentiell $d_n(\mathcal{M}) \leq C \cdot e^{-\alpha n})$ so folgt dann auch exponentieller Abfall von $\epsilon_n$ (mit anderem $\alpha$)
+		\item Ein verbessertes Ergebnis (ohne Faktor $(n+1)$) und ein Ergebnis für Fall algebraischer (polynomiell in $N^{-1}$) Konvergenz liefert (BCDPW), welches wir in unserer Notation formulieren (ohne Beweis).
+	\end{itemize}
+\end{bem}

@@ -2,6 +2,7 @@
 \label{sec-3}
 
 \subsection{Primales RB-Problem}
+\label{sec-3.1}
 
 \begin{defn}[Reduzierte Basis, RB-Räume]
 	Sei $S_N = \set{\mu_1,\cdots,\mu_N} \subset \p$ Menge von Parametern mit (o.B.d.A.) linear unabhängigen Lösungen $\set{u(\mu_i)}_{i=1}^N$ von $\prob[\mu_i]$.
@@ -382,9 +383,9 @@
 				\]
 				Damit folgt
 				\[
-					\norm{e}_\mu^2 = a_s(e,e) = a(e,e) = r(v) = \dotp{v_r}{e} \leq \norm{v_r} \norm{e} \leq \frac{\norm{v_r}}{\sqrt{\alpha_{LB}(\mu)}}
+					\norm{e}_\mu^2 = a_s(e,e) = a(e,e) = r(e) = \dotp{v_r}{e} \leq \norm{v_r} \norm{e} \leq \frac{\norm{v_r}}{\sqrt{\alpha_{LB}(\mu)}} \norm{e}_\mu
 				\]
-				Division durch $\norm{e}_\mu$ liefert die Behauptung i).
+				Division durch $\norm{e}_\mu$ liefert Behauptung i).
 			\item Koerzivität liefert
 				\[
 					\alpha_{LB}(\mu) \norm{e}^2 \leq a(e,e) = r(e) = \dotp{v_r}{e} \leq \norm{v_r} \norm{e}
@@ -590,7 +591,7 @@
 	\end{itemize}
 \end{bem}
 
-\begin{satz}[Ausgabefehlerschranke und Effektivität, compliant Fall]
+\begin{satz}[Ausgabefehlerschranke und Effektivität, compliant Fall] \label{3.18}
 	Sei $a(\pdot,\pdot;\mu)$ symmetrisch, $l=f$. Dann erhalte verbesserte Ausgabeschranke
 	\[
 		0 \leq s(\mu) - s_N(\mu) \leq \bar \Delta_{N,s}(\mu) := \frac{\norm{v_r}^2}{\alpha_{LB}}
@@ -777,7 +778,7 @@ Online-Phase:
 \[
 	\underbar f_N (\mu) := \sum_q \Theta_f^q(\mu) \underbar f_N^q \, , \qquad \underbar l_N (\mu) := \sum_q \Theta_l^q(\mu) \underbar l_N^q
 \]
-Dies liefert genau das diskrete System $A_N(\mu) \underbar u_N = f_N(\mu)$ aus \ref{3.6} welches nach $\underbar u_N$ geläst wird und $u_N(\mu), s_N(\mu)$ ergibt
+Dies liefert genau das diskrete System $A_N(\mu) \underbar u_N = f_N(\mu)$ aus \ref{3.6} welches nach $\underbar u_N$ gelöst wird und $u_N(\mu), s_N(\mu)$ ergibt
 \end{kor}
 
 \begin{proof}
@@ -832,7 +833,7 @@ Dies liefert genau das diskrete System $A_N(\mu) \underbar u_N = f_N(\mu)$ aus \
 	\end{enumerate}
 \end{bem}
 
-\subsection{Offline-/Online- Zerlegung für Fehlerschranken/Effektivitätsschranken}
+\subsubsection*{Offline-/Online- Zerlegung für Fehlerschranken/Effektivitätsschranken}
 
 Für schnelle Berechnung der Fehlerschranken \& Effektivitätsschranken benötigen wir Zerlegung für
 \begin{itemize}
@@ -933,7 +934,7 @@ Offensichtlich Berechnung von Riesz-Repräsentant notwendig, dies geschieht durc
 	\[
 		K_N := (\dotp{\phi_i}{\phi_j})_{i,j=1}^N \, \in \R^{N \times N}
 	\]
-	(Online:) Zu $\mu \in \mathcal{P}$ berechne $A_N(\mu)$ und $\underbar u_N(\mu)$ durch Online-Phase von $(P_N(\mu)$
+	(Online:) Zu $\mu \in \mathcal{P}$ berechne $A_N(\mu)$ und $\underbar u_N(\mu)$ durch Online-Phase von $(P_N(\mu))$
 	\[
 		|| u_N(\mu)||_X = \sqrt{\underbar u_N^T \, K_N \, \underbar u_N}
 	\]
@@ -944,7 +945,7 @@ Offensichtlich Berechnung von Riesz-Repräsentant notwendig, dies geschieht durc
 
 \begin{proof}
 	\begin{align*}
-		||u_N||^2 = \dotp{\sum_n u_{Nn} \phi_n \, }{ \, \sum u_{Nn'} \phi_{n'}} = \sum_{n, n'} u_{Nn} u_{Nn'} \dotp{\phi_n}[{\phi_{n'}} = \underbar u_N^T \cdot K_N \cdot \underbar u_N
+		||u_N||^2 = \dotp{\sum_n u_{Nn} \phi_n \, }{ \, \sum u_{Nn'} \phi_{n'}} = \sum_{n, n'} u_{Nn} u_{Nn'} \dotp{\phi_n}{\phi_{n'}} = \underbar u_N^T \cdot K_N \cdot \underbar u_N
 	\end{align*}	
 	analog für Energienorm mit $A_{N,s} := \frac{1}{2} (A_N(\mu) + A_N(\mu)^T)$
 \end{proof}
@@ -1002,7 +1003,7 @@ In gewissen Fällen kann eine größere und damit bessere Schranke angegeben wer
 \end{satz}
 
 \begin{proof}
-	Sie $K = L L^T$ (z.\,B. Cholesky oder Matrix-Wurzel) und verwende $\underbar v = L^t \underbar u$:
+	Sie $K = L L^T$ (z.\,B. Cholesky oder Matrix-Wurzel) und verwende $\underbar v = L^T \underbar u$:
 	\begin{align*}
 		\alpha (\mu) &= \inf\limits_{u \in X} \frac{a(u,u;\mu)}{||u||^2} = \inf\limits_{\underbar u \in \R^H} \frac{\underbar u^T A(\mu) \underbar u}{\underbar u^T K \underbar u} \\
 		&= \inf\limits_{\underbar u \in \R^H} \frac{\underbar u^T A_s(\mu) \underbar u}{\underbar u^T K \underbar u} \\
@@ -1027,9 +1028,9 @@ In gewissen Fällen kann eine größere und damit bessere Schranke angegeben wer
 \begin{satz}[``Max-$\Theta$''-Verfahren für $\gamma_{UB}(\mu)$, symmetrisches $a(\pdot , \pdot)$]
 	Sei $a$ symmetrisch, koerziv, separierbar parametrisch mit $a^q$ positiv semidefinit und $\Theta_a^q > 0 \, \, \forall q,u$ \\
 	(Offline:) Sei $\bar{\mu} \in \mathcal{P}$ und $\gamma(\bar{\mu})$ berechnet \\
-	(Online:) Setze für $\mu \ in \mathcal{P}: \gamma_{UB}(\mu) := \gamma(\bar{\mu}) \max\limits_q \frac{\Theta_a^q(\mu)}{\Theta_a^q(\bar{\mu})}$. Dann gilt 
+	(Online:) Setze für $\mu \in \mathcal{P}: \gamma_{UB}(\mu) := \gamma(\bar{\mu}) \max\limits_q \frac{\Theta_a^q(\mu)}{\Theta_a^q(\bar{\mu})}$. Dann gilt 
 	\[
-		\gamma_{UB}(\mu) \leq \gamma_{UB} (\mu) < \infty
+		\gamma(\mu) \leq \gamma_{UB} (\mu) < \infty
 	\]
 \end{satz}
 
@@ -1040,7 +1041,7 @@ In gewissen Fällen kann eine größere und damit bessere Schranke angegeben wer
 \begin{bem}[Komplexitäten]
 	Durch die angegebenen Berechnungsverfahren ist vollständige Offline-/Online-Zerlegung der RB-Lösung, Fehlerschranken und Effektivitätsschranken erreicht (Offline unabh. von $\mu$, Online unabh. von $H$). Komplexitäten für $\Delta_N(\mu), \Delta_{N,s}(\mu)$:
 	\begin{itemize}
-		\item Offline: $\O(H^3 + H^2 (Q_f + Q_l + N Q_a) + H Q_l^2 + H(Q_f + NQ_a)^2$ für EWP für $\alpha(\bar{\mu})$,
+		\item Offline: $\O(H^3 + H^2 (Q_f + Q_l + N Q_a) + H Q_l^2 + H(Q_f + NQ_a)^2)$ für EWP für $\alpha(\bar{\mu})$,
 			Riesz-Repräsentanten für $f^q$, $l^q$, $a^q(\phi_n,\pdot)$ und Matrix $G_l$ und $G_r$
 		\item Online: $\O((Q_f+N Q_a)^2 + Q_l^2 + Q_a)$ für Berechnung von $\norm{v_r(\pdot;\mu)}$, $\norm{l(\pdot;\mu)}_{X'}$ und $\alpha_{LB}(\mu)$ durch Min-$\Theta$.
 			Problematisch ist quadratische Abhängigkeit von $Q_f$, $Q_l$, $N Q_a$, welches diese Größen in der Praxis stark einschränkt.
@@ -2213,3 +2214,366 @@ $\Rightarrow$ Exponentielle Konvergenz, aber schlechtere Exponenten für größe
 			Ref.: Urban, Volkwein, Zeeb: Greedy Sampling using Nonlinear Optimization. Kapitel in: Quarteroni, Rozza: Reduced Order Methods for Modeling and Computational Reduction, Springer MS\&A Serie, 2014.
 	\end{itemize}
 \end{bem}
+
+\begin{bem}[Partitionsansätze]
+	Bei komplexen Problemen kann die für gewünschtes $\epsilon_{tol}$ erforderliche Basisgröße $N$ zu groß sein.
+	Generell verhalten sich $\epsilon_{tol}$ und $N$ gegenläufig und können nicht unabhängig gewählt werden.
+
+	Idee: Partitionierung des Parametergebiet durch Bisektions- oder strukturierte Gitter.
+	Für jedes Teilgebiet wird eine Basis mit dem Greedy-Verfahren erzeugt.
+	Diese Basen sind jeweils kleiner als einzelne globale Basis.
+	In der Online-Phase wird zu $\mu \in \p$ das geeignete Teilgebiet bestimmt und dessen RB zur Simulation verwendet.
+	Indem das Parametergitter adaptiv genügend fein gewählt wird, kann sowohl $\epsilon_{tol}$ als auch die maximale Basisgröße $N_{max}$, d.h.\ Online-Laufzeit vorgeschrieben werden.\\
+	``Haken'': Offline-Phase teuer (Rechenzeit \& Daten)\\
+	Ref.:
+	\begin{enumerate}[a)]
+		\item Bisektionsgitter: Eftang, Patera, Ronquist: An ``hp'' Certified Reduced Basis Method for Parametrized Elliptic Partial Differential Equations. SJSC, 32(6) : 3170-3200, 2010.
+		\item Hexaeder-Gitter: [HDO11]
+	\end{enumerate}
+\end{bem}
+
+\subsection{Primal-Duale RB-Verfahren}
+\label{sec-3.5}
+
+\subsubsection*{Motivation}
+\begin{itemize}
+	\item Erinnerung: Für nichtsymmetrische, non-compliant Probleme konnten wir nur $\Delta_{N,s}(\mu)$ bereitstellen, welcher nur linear in $\norm{v_r}$ skaliert und wir haben die Unmöglichkeit von Effektivitätsschranken für die Ausgabe gesehen (ohne weitere Annahmen).
+	\item Stattdessen für compliant Fall skaliert $\bar\Delta_{N,s}$ quadratisch mit $\norm{v_r}$ und wir konnten Effektivitätsschranken zeigen.
+	\item Dieser Abschnitt: Verbesserte Ausgabeschätzung für allgemeine nichtsymmetrische oder nicht-compliant Probleme (aber immer noch keine Effektivitätsschranken)
+	\item $\prob$ und $\rprob$ werden weiter benötigt als ``primale Probleme''.
+\end{itemize}
+
+\begin{defn}[Duales volles Problem $\dprob$]
+	Seien $a$, $f$, $l$ wie in $\prob$ gegeben. Dann ist für $\mu \in \p$ gesucht $u^\du(\mu) \in X$ als Lösung von
+	\[
+		a(v,u^\du(\mu);\mu) = -l(v;\mu) \quad \forall x \in X
+	\]
+\end{defn}
+
+\begin{bem} \beginwithlistbem
+	\begin{itemize}
+		\item Offensichtlich ``negatives Ausgabefunktional'' als rechte Seite und Vertauschen der Test- / Lösungsargumente in $a(\pdot,\pdot)$.
+		\item Wohlgestelltheit für $a$ koerziv: Existenz \& Eindeutigkeit \& Stabilität via Lax-Milgram.
+		\item Duales Problem wird nur formell als Referenz verwendet zu welchem wir den dualen Fehlerabschätzer verwenden.
+		\item Literatur zu diesem Abschnitt:
+
+			[Ro03]: Rovas: Reduced-Basis Output Bound Methods for Parametrized Partial Differential Equations, PhD-Thesis, MIT, 2003.
+	\end{itemize}
+\end{bem}
+
+\subsubsection*{Dualer RB-Raum}
+
+\begin{itemize}
+	\item Wir nehmen an, dass wir einen dualen RB-Raum gewählt haben:
+		\[
+			X_N^\du \subset X, \quad X_N^\du = \spn{\varphi^\du}, \quad \dim{X_N^\du} = N^\du
+		\]
+		welcher duale Lösungen $u^\du(\mu)$ gut approximiert.
+	\item Es ist i.A.\ $X_n^\du \neq X_N$, $N^\du \neq N$, $X_N^\du$ kann durch Greedy / POD etc.\ Verfahren aus Snapshots $u^\du(\mu)$ erzeugt werden.
+\end{itemize}
+
+\begin{defn}[Primal-Duales RB-Problem $\pdprob$]
+	Sei ein Problem $\prob$ gegeben, $X_N$, $X_N^\du$ primaler \& dualer RB-Raum.
+	Zu $\mu \in \p$ sei $u_N(\mu) \in X_N$ \emph{primale RB-Lösung} wie in $\rprob$, d.h.
+	\[
+		a(u_N(\mu),v;\mu) = f(v;\mu) \quad \forall v \in X_N
+	\]
+	$u_N^\du(\mu) \in X_N^\du$. Sei \emph{duale RB-Lösung}, d.h.\ $a(v,u_N^\du(\mu);\mu) = -l(v;\mu)$, $\forall v \in X_N^\du$, und die RB-Ausgabe $s_N'(\mu) \in \R$ gegeben durch
+	\begin{equation} \label{eq:3.25}
+		s_N'(\mu) = l(u_N(\mu);\mu) - r(u_N^\du(\mu);\mu)
+	\end{equation}
+	wobei $r(\pdot;\mu) \in X'$ das \emph{primale Residuum}, d.h.\ $r(v;\mu) = f(v;\mu) - a(u_N(\mu),v;\mu)$.
+	Weiter benötigen wir das \emph{duale Residuum} $r^\du(\pdot;\mu) \in X'$ definiert durch
+	\[
+		r^\du(v;\mu) := -l(v;\mu) - a(v,u_N^\du(\mu);\mu) \quad \forall v \in X
+	\]
+\end{defn}
+
+\begin{bem} \beginwithlistbem
+	\begin{itemize}
+		\item Wohlgestelltheit wieder klar mit Lax-Milgram.
+		\item In FEM-Literatur existiert der Begriff ``dual-weighted residual'' (DWR), ähnlich wie oben das Residuum und mit dualer Lösung kombiniert in \eqref{eq:3.25}.
+		\item Im Vergleich zu $\rprob$ haben wir $s_N'(\mu) = s_N(\mu) - r(u_N^\du(\mu);\mu)$, somit stellt $r(u_N^\du)$ ein Korrekturterm dar, der die verbesserte Ausgabeschätzung liefert.
+		\item Wie im primalen Fall ist auch duales Residuum rechte Seite der dualen Fehlergleichung
+			\[
+				a(v,u^\du(\mu)-u_N^\du(\mu);\mu) = r^\du(v;\mu) \quad \forall v \in X
+			\]
+		\item Reproduktion von Lösungen gilt analog zu $\rprob$:
+
+			Falls $u(\mu) \in X_N$, $u_N^\du(\mu) \in X_N^\du$
+			\[
+				\Rightarrow u_N(\mu) = u(\mu), \quad u_N^\du(\mu) = u^\du(\mu)
+			\]
+			und $s_N'(\mu) = s(\mu)$. Letzteres sieht man:
+			\[
+				s(\mu)-s_N'(\mu) = l(u) - l(\underbrace{u_N}_{u}) + r(u^\du) = f(\underbrace{u^\du}_{a(u,u^\du)}) - a(\underbrace{u_N}_{u}, u^\du) = 0
+			\]
+	\end{itemize}
+\end{bem}
+
+\begin{satz}[Beziehung zur Bestapproximation] \beginwithlist
+	\begin{enumerate}
+		\item Für den dualen Fehler gilt
+			\[
+				\norm{u^\du(\mu)-u_N^\du(\mu)} \leq \frac{\gamma(\mu)}{\alpha(\mu)} \inf_{v \in X_N^\du} \norm{u^\du(\mu)-v}
+			\]
+		\item Für den Ausgabefehler gilt
+			\begin{equation} \label{eq:3.26}
+				\begin{aligned}
+					|s(\mu)-s_N'(\mu)| &= |a(u-u_N,u^\du-u_N^\du)| \leq \gamma(\mu) \norm{u-u_N} \norm{u^\du-u_N^\du}\\
+					&\leq \frac{\gamma(\mu)^3}{\alpha(\mu)^2} \inf_{v \in X_N} \norm{u-v} \cdot \inf_{v \in X_N^\du} \norm{u^\du-v}
+				\end{aligned}
+			\end{equation}
+	\end{enumerate}
+
+	\begin{proof} \beginwithlistbew
+		\begin{enumerate}
+			\item Céa
+			\item
+				\begin{equation} \label{eq:3.27}
+					\begin{aligned}
+						s(\mu) - s_N'(\mu) &= l(u)-l(u_N)+r(u_N^\du)\\
+						&= \underbrace{l(u-u_N)}_{-a(u-u_N,u^\du)} + \underbrace{f(u_N^\du)}_{a(u,u_N^\du)} - a(u_N,u_N^\du)\\
+						&= -a(u-u_N,u^\du)+a(u-u_N,u_N^\du)\\
+						&= -a(u-u_N,u^\du-u_N^\du)
+					\end{aligned}
+				\end{equation}
+				Somit erste Gleichheit in \eqref{eq:3.26}, Ungleichheit in \eqref{eq:3.27} dann klar wegen Stetigkeit und 2$\times$Céa.
+		\end{enumerate}
+	\end{proof}
+\end{satz}
+
+In a-priori-Schranke \eqref{eq:3.26} sehen wir den ``multiplikativen Effekt'', somit ist $s_N'$ tatsächlich gute Schätzung und es besteht die Hoffnung dies durch a-posteriori Schranken zu verifizieren.
+Zunächst ganz analog zu primalem Problem eine a-posteriori Schranke für dualen Fehler:
+
+\begin{satz}[Duale a-posteriori Fehlerschranke \& Effektivitätsschranke] \beginwithlist
+	\begin{enumerate}
+		\item
+			\[
+				\norm{u^\du(\mu)-u_N^\du(\mu)} \leq \Delta_N^\du(\mu) := \frac{\norm{r^\du(\mu)}_{X'}}{\alpha_{LB}(\mu)}
+			\]
+		\item
+			\[
+				\eta_N^\du(\mu) := \frac{\Delta_N^\du(\mu)}{\norm{u^\du(\mu)-u_N^\du(\mu)}} \leq \frac{\gamma_{UB}(\mu)}{\alpha_{LB}(\mu)} \leq \frac{\bar\gamma}{\bar\alpha}
+			\]
+	\end{enumerate}
+
+	\begin{proof}
+		Genauso wie für $\rprob$.
+	\end{proof}
+\end{satz}
+
+Damit folgt gewünschte Schranke für Ausgabefehler:
+
+\begin{satz}[Primal-dualer Ausgabefehlerschätzer]
+	Für alle $\mu$ gilt
+	\[
+		|s(\mu)-s_N'(\mu)| \leq \Delta_{N,s}'(\mu) := \frac{\norm{r(\mu)}_{X'} \cdot \norm{r^\du(\mu)}_{X'}}{\alpha_{LB}(\mu)}
+	\]
+
+	\begin{proof}
+		Mit \eqref{eq:3.26} folgt mit $e := u-u_N$, $e^\du = u^\du-u_N^\du$
+		\[
+			|s-s_N'| = |a(e,e^\du)| = |r(e^\du)| \leq \norm{r}_{X'} \cdot \norm{e^\du} \leq \norm{r}_{X'} \Delta_N^\du = \frac{\norm{r} \norm{r^\du}}{\alpha_{LB}} = \Delta_{N,s}'
+		\]
+	\end{proof}
+\end{satz}
+
+\begin{bem} \beginwithlist
+	\begin{itemize}
+		\item Also ``multiplikativer Effekt'' in $\Delta_{N,s}'$ erreicht.
+		\item Dies liefert ein Kriterium zur Wahl von $N$, $N^\du$:
+			Wähle diese s.d.\ $\norm{r} \approx \norm{r^\du}$, damit quadratischer Effekt auch numerisch realisiert wird.
+		\item Man kann feststellen, dass ähnlich zu $\Delta_{N,s}$ auch $\Delta_{N,s}'$ ohne weitere Annahmen keine Effektivitätsschranke liefert: $\Delta_{N,s}'$ kann ungleich $0$ sein, während $s-s_N'=0$.
+
+			Wähle $v_l \perp v_f \in X \setminus \{0\}$, $X_N = X_N^\du \perp \{v_f,v_l\}$
+			\[
+				a(u,v) := \dotp{u}{v}, \quad f(v) := \dotp{v_f}{v}, \quad l(v) := \dotp{v_l}{v}
+			\]
+			\begin{align*}
+				\Rightarrow& u = v_f, \; u^\du = -v_l, \; u_N = 0, \; u_N^\du = 0, \; e = v_f, \; e^\du = -v_l & \\
+				\Rightarrow& r \neq 0, \; r^\du \neq 0 \quad \Rightarrow \quad \Delta_{N,s}' \neq 0
+			\end{align*}
+			aber $s-s_N'=-a(e,e^\du)=\dotp{v_f}{v_l}=0$.
+		\item Erinnerung:
+			Im Compliant Fall hatten wir definiert/gezeigt in \ref{3.18}
+			\[
+				0 \leq s-s_N \leq \bar\Delta_{N,s}(\mu) := \frac{\norm{r}^2}{\alpha_{LB}}
+			\]
+			und Effektivitätsschranke erreicht.
+		\item Im compliant Fall ist primal-dualer Ansatz überflüssig, denn für $X_N = X_N^\du$:
+			\[
+				s_N'(\mu) = s_N(\mu) \quad \text{und} \quad \Delta_{N,s}'(\mu) = \bar\Delta_{N,s}(\mu)
+			\]
+			Mit $l=f$ und Symmetrie folgt: $a(v,u) = a(u,v) = f(v) = l(v)$
+			\[
+				\Rightarrow u = -u^\du, \text{ analog } u_N = -u_N^\du
+			\]
+			also $r(v) = f(v)-a(u_N,v) = l(v) + a(u_N^\du,v) = l(v)+a(v,u_N^\du) = -r^\du(v)$
+			\[
+				\Rightarrow \norm{r} = \norm{r^\du} \quad \Rightarrow \quad \Delta_{N,s}' = \bar\Delta_{N,s}
+			\]
+			Weiter ist $r(u_N^\du) = -r(u_N) = 0 \; \Rightarrow \; s_N' = l(u_N)-r(u_N^\du) = l(u_N) = s_N$.
+	\end{itemize}
+\end{bem}
+
+\begin{bem}[Basisgenerierung] \beginwithlistbem
+	\begin{itemize}
+		\item Erste Möglichkeit:
+			Separate Greedy-Verfahren für $X_N$, $X_N^\du$ mit \emph{identischem} $\epsilon_{tol}$, um quadratischen Effekt zu bewirken.
+		\item Zweite Möglichkeit:
+			Kombiniertes Greedy-Verfahren zur simultanen Erzeugung von $X_N$, $X_N^\du$, indem $\Delta_{N,s}'$ als Fehlerschätzer gewählt wird und $u(\mu^{(n)})$, $u^\du(\mu^{(n)})$ als Anreicherung in $X_N$, $X_N^\du$ hinzugefügt werden.
+	\end{itemize}
+\end{bem}
+
+\begin{bem}[Offline-Online für $s_N'$]
+	Im Fall separierbarer Parameterabhängigkeit folgt Offline/Online für $A_N$, $f_N$, $l_N$, $\norm{r}^2$, $\norm{r^\du}^2$ analog zu §\ref{sec-3.3}.
+	Zerlegung für Korrekturterm in $s_N'(\mu)$ ergibt sich ähnlich aus $u_N^\du = \sum u_{N,n}^\du \phi_n^\du$ mit dualer Basis $\Phi^\du = \set{\phi_1^\du,\ldots,\phi_{N^\du}^\du}$, $\ubar u_N^\du = \seq{u_{N,n}^\du}_{n=1}^{N^\du}$
+	\[
+		r(u_N^\du) = \sum_{q=1}^{Q_r} \Theta_r^q(\mu) r^q(u_N^\du) = \sum_{q=1}^{Q_r} \sum_{n=1}^{N^\du} \Theta_r^q(\mu) \, u_{N,n}^\du(\mu) \underbrace{r^q(\phi_n^\du)}_{\dotp{v_r^q}{\phi_n^\du}}
+	\]
+	$\Rightarrow$ Offline: $G_{r,\du} := \seq{\dotp{v_r^q}{\phi_n^\du}}_{q=1,n=1}^{Q_r,N^\du}$\\
+	Online: $r(u_N^\du) = \Theta_r^q(u)^T G_{r,\du} \ubar u_N$
+\end{bem}
+
+\subsection{Geometrieparametrisierung}
+
+\subsubsection{Motivation}
+
+\begin{itemize}
+	\item Neben Koeffizientenfunktionen in elliptischen PDEs oder Randwerten können auch Geometrieparametrisierungen behandelt werden.
+	\item Hohe Anwendungsrelevanz: Beispiel Fahrzeugkarosserie oder Flügelprofil zur Optimierung des Widerstandsbeiwerts.
+	\item Problem: Zu $\mu \in \p$ sei Gebiet $\Omega(\mu) \in \R^d$ und Lösungsraum $X(\mu) := H_0^1(\Omega(\mu))$ parameterabhängig. Löse $\prob$ nach $u(\mu) \in X(\mu)$.
+	\item Hindernis: Snapshots $u(\mu)$ lassen sich nicht linear kombinieren, Konstruktion eines $X_N$ unklar.
+	\item Idee/Lösung: Wahl eines Referenzparameter $\hat\mu \in \p$, Referenzgeometrie $\hat\Omega := \Omega(\hat\mu)$ und $T(\mu) : \hat\Omega \to \Omega(\mu)$ invertierbare Abbildung. (``Geometrieabbildung'', ``Referenzabbildung'')
+
+		{\large\bf TODO: Skizze Referenzabbildung}
+	\item Mittels $T(\mu)$ oder $T^{-1}(\mu)$ sind Lösungen vergleichbar:
+		\[
+			x \in \Omega(\mu) \quad \Leftrightarrow \quad T^{-1}(x;\mu) =: \hat x \in \hat\Omega
+		\]
+		Falls $T$ geeignete Regularität, so ist für $u$:
+		\[
+			\hat u(\hat x; \mu) := u(T(\hat x;\mu);\mu) \quad \Rightarrow \quad \hat u(\pdot;\mu) \in X(\hat \mu)
+		\]
+	\item Definiere $\hat X := X(\hat \mu)$, zu $\mu \in \p$ suche $\hat u(\mu) \in \hat X$ als Lösung eines geeigneten $\refprob$, dann $u(x;\mu) := \hat u(T^{-1}(x;\mu);\mu)$ Lösung von $\prob$.
+	\item Damit ist RB-Behandlung klar.
+		Suche $\hat X_N \subset \hat X$ und RB-Lösung $\hat u_N(\mu) \in \hat X_N$ wie in §\ref{sec-3.1}-\ref{sec-3.5}.
+		Dann ist $u_N(x;\mu) := \hat u_N(T^{-1}(x;\mu);\mu) \approx u(\mu)$.
+\end{itemize}
+
+\paragraph{Referenz:} [RHP08]: Rozza, Huynh, Patera: Reduced Basis Approximation and A Posteriori Error Estimation for Affinely Parametrized Elliptic Coercive Partial Differential Equations - Application to Transport and Continuum Mechanics, Archives of Computational Methods in Engineering, 15(3) : 229-275, 2008.
+
+\begin{defn}[Stückweise affine Geometrietransformation]
+	Sei $\Omega(\mu) \subseteq \R^d$ parameterabhängiges Gebiet mit Partition $\set{\Omega_k(\mu)}_{k=1}^K$, d.h.:
+	\[
+		\Omega_k(\mu) \cap \Omega_{k'}(\mu) = \emptyset \text{ für } k = k', \quad \text{und} \quad \overline{\Omega(\mu)} = \bigcup_{k=1}^{K} \overline{\Omega_k(\mu)}
+	\]
+	Wähle $\hat\mu \in \p$ und $\hat \Omega := \Omega(\hat\mu)$, $\hat\Omega_k := \Omega_k(\hat\mu)$.
+	Wir nennen $T(\mu) : \hat\Omega \to \Omega(\mu)$ stückweise affine Geometrietransformation falls ex.\ $T_k(\mu): \hat\Omega_k \to \Omega_k(\mu)$ affin und bijektiv, d.h.
+	\[
+		T_k(\hat x;\mu) := M_k(\mu) \cdot \hat x + t_k(\mu), \quad M_k(\mu) \in \R^{d \times d} \text{ regulär}, t_k(\mu) \in \R^d
+	\]
+	und $T$ ist stückweise durch $\set{T_k}$ definiert via $T(\mu)|_{\hat\Omega_k}=T_k(\mu)$ und ist für jedes $\mu$ stetig auf $\bigcup_{k=1}^K \partial\hat\Omega_k$ fortsetzbar, d.h.
+	\[
+		T_k(\hat x;\mu) = T_{k'}(\hat x;\mu) \quad \forall \hat x \in \partial\hat\Omega_k \cap \partial\hat\Omega_{k'}
+	\]
+\end{defn}
+
+\begin{bem} \beginwithlistbem
+	\begin{itemize}
+		\item Insbesondere also $T(\mu) \in C(\hat\Omega,\Omega(\mu))$, also stetig bzgl.\ $x$ (nicht notwendig bzgl.\ $\mu$).
+		\item Unter $T_k$ für $\hat\Omega_k \subseteq \R^2$ ist Bild von Dreieck ein Dreieck, entsprechend Formerhaltung von $n$-Eck, Parallelogramm, Ellipsen.
+			In höheren Dimensionen analog für Simplex, Parallelepiped, Ellipsoid.
+		\item Als $\hat\Omega_k \subseteq \R^2$ werden meist Dreiecke, Rechtecke, Parallelogramme oder allgemeiner ``elliptic triangles'' oder ``curvy triangles''.
+
+			{\large\bf TODO: Skizze Dreieck/Parallelogramm/elliptic triangles...}
+		\item Um $T_k$ zu bestimmen, reicht es, in $\Omega \subseteq \R^2$ 3 korrespondierende nicht ko-lineare Punkte zu kennen ($3 \times 2$ Gleichungen für $4+2$ Unbekannte), in $\Omega \subseteq \R^3$ entsprechend 4 nicht ko-planare Punkte ($4 \times 3$ Gleichungen für $9+3$ Unbekannte)
+		\item Wir nennen $\{\hat\Omega_k\}_{k=1}^K$ auch ``Makro-Gitter'' der Geometrieparametrisierung.
+			Typischerweise wird FEM-Gitter eine Verfeinerung dieses Gitters sein.
+		\item Stückweise affine Geometrieparametrisierungen sind kompatibel mit Sobolev/FEM-Lösungsraum:
+			\[
+				\hat u \in H_0^1(\hat\Omega) \quad \Leftrightarrow \quad u := \hat u \circ T^{-1}(\mu) \in H_0^1(\Omega(\mu))
+			\]
+			Falls $\mathcal{T}_h$ das aus $\hat{\mathcal{T}}_h$ mit $T(\mu)$ transformierte Gitter ist, gilt
+			\[
+				\hat u_h \in \mathbb{P}_{m,0}(\hat{\mathcal{T}}_h) \quad \Leftrightarrow \quad u_h := \hat u_h \circ T^{-1}(\mu) \in \mathbb{P}_{m,0}(\mathcal{T}_h)
+			\]
+			weil Polynome von Grad $m$ unter affinen Abbildungen wieder Polynome von Grad $m$ ergeben.
+	\end{itemize}
+\end{bem}
+
+\subsubsection*{Beispiele}
+
+\begin{enumerate}
+	\item {\large\bf TODO: Skizze} Falls $\hat\Omega$, $\Omega(\mu)$, $\Omega_k$ Rechtecke sind, so sind auch $\Omega_k(\mu)$ notwendig Rechtecke, denn für $T_k$ nur achsenparallele Streckung möglich (keine Rotation oder Scherung des mittleren Quadrates).
+	\item {\large\bf TODO: Skizze} Durch Dreiecke sind auch Rotationen / Scherungen des mittleren Quadrats möglich. Man wird meist $T(\mu)$ auch stetig bzgl.\ $\mu$ wählen, z.B.\ $\mu \hat{=}$ Punktkoordinate, Verschiebungsparameter, Rotationswinkel oder Skalierungsfaktor, etc.
+		Das mögliche Intervall für Rotationswinkel des mittleren Quadrats ist durch Regularitätsanforderung der $M_k$ (Nichtdegenerieren der $\Omega_k$) beschränkt, z.B.\ hier keine Drehung um 90° möglich, weil ``mittlere'' Dreiecke an jeder Kante degenerieren.
+	\item Durch genügend feines Makro-Gitter und Verwendung von Zwischenschichten kann Rotationswinkel \emph{beliebig} vergrößert werden:
+
+		Kreisring mit Radien $r_2 < r_1$
+
+		{\large\bf TODO: Skizze}
+
+		$T(\mu)$ Rotation des inneren Kreises um Winkel $\mu \in (-\phi_{min},+\phi_{max})$ mit $\phi_{max}=\phi_{max}(\frac{r_1}{r_2})$ realisierbar, analog $\phi_{min}(\frac{r_1}{r_2})$.
+		Durch genügend viele Punkte auf beiden Kreisen ist stückweise affine Geometrieparametrisierung definierbar, welche Makro-Dreiecksgitter regulär transformiert.
+		Bei Verwendung von $L$ solcher Ringe ist also insgesamt Rotation um $\mu \in (-L\phi_{min},+L\phi_{max})$ für inneres $n$-Eck realisierbar.
+		Durch konforme Fortsetzung der Triangulierung der Scheiben auf Innen- \& Außengebiet ist somit beliebige Rotation in Beispiel ii) möglich.
+
+		{\large\bf TODO: Skizze}
+\end{enumerate}
+
+\subsubsection*{Transformation auf Referenzgebiet}
+
+\begin{itemize}
+	\item Sei allgemeine elliptische PDE zweiter Ordnung gegeben.
+		Zu $\mu \in \p$ suche $u : \Omega(\mu) \to \R$ als Lösung von
+		\begin{align*}
+			-\nabla \cdot (A(\mu) \nabla u) + \nabla \cdot ( b(\mu) u ) + c(\mu) u &= q(\mu) &\text{auf } \Omega(\mu)\\
+			u &= 0 &\text{auf } \partial\Omega(\mu)
+		\end{align*}
+	\item Schwache Form: Zu $\mu \in \p$ suche $u \in H_0^1(\Omega(\mu))$ sodass
+		\[
+			\int_{\Omega(\mu)}(A(\mu)\nabla u) \cdot \nabla v - u( b(\mu) \cdot v) + c(\mu) u v = \int_\Omega q v \quad \forall v \in H_0^1(\Omega(\mu))
+		\]
+		\[
+			\Leftrightarrow \underbrace{\int_{\Omega(\mu)} (\nabla u^T, u) \underbrace{\begin{pmatrix} A(\mu) & 0 \\ b(\mu)^T & c \end{pmatrix}}_{B(\mu)} \begin{pmatrix}\nabla v \\ v\end{pmatrix}}_{a(u,v;\mu)} = \underbrace{\int_\Omega q v}_{f(v;\mu)} \quad \forall v \in H_0^1(\Omega(\mu))
+		\]
+	\item Dies ist Instanz von $\prob$ wenn noch beliebiges Ausgabefunktional gewählt wird.
+		Wir ignorieren die Ausgabe hier.
+	\item Unter geeigneten Bedinungen an $B(\mu)$ ist $\prob$ koerzives Problem mit stetiger Linear-/Bilinearform auf $X(\mu)$. (siehe NumPDE 14/15)
+	\item Transformation der Gradienten auf $\Omega_k$:
+
+		Sei $\hat u(\hat x) \in H_0^1(\hat \Omega)$, $u(x) := \hat u(T^{-1}(x;\mu))$, $x \in \Omega_k$
+		\begin{align*}
+			\Rightarrow \; \nabla_x u(x) &= (\D_x u)^T = (\D_{\hat x} \hat u(T^{-1}(x;\mu)) \cdot \D_x T^{-1}(x;\mu))^T \\
+			&= (\nabla_x \hat u(\underbrace{T^{-1}(x;\mu)}_{\hat x})^T \cdot M_k^{-1})^T = M_k^{-T} \cdot \nabla_{\hat x} \hat u(\hat x)
+		\end{align*}
+	\item Transformation der Bilinearform-Komponenten:
+
+		Mit $v := \hat v \circ T^{-1}$
+		\begin{align*}
+			&\int_{\Omega_k} (\nabla u^T, u) B(\mu) \begin{pmatrix} \nabla v \\ v \end{pmatrix} dx\\
+			&= \int_{\hat\Omega_k} (\nabla_{\hat x} \hat u^T, \hat u) \begin{pmatrix} M_k^{-1} & 0 \\ 0 & 1 \end{pmatrix} B(\mu) \begin{pmatrix} M_k^{-T} & 0 \\ 0 & 1 \end{pmatrix} \begin{pmatrix} \nabla_{\hat x} \hat v \\ \hat v \end{pmatrix} |\det M_k| d \hat x
+		\end{align*}
+		analog Linearform.
+\end{itemize}
+
+\begin{satz}[Transformation auf Referenzgebiet, $\refprob$]
+	Zu $\mu \in \p$ löst $u(\mu) \in X(\mu)$ das Problem $a(u(\mu),v;\mu) = f(v;\mu)$, $\forall v \in X(\mu)$ mit
+	\[
+		a(u,v;\mu) = \sum_{k=1}^K \int_{\Omega_k(\mu)} (\nabla u^T, u) B(\mu) \begin{pmatrix} \nabla v \\ v \end{pmatrix}, \quad f(v;\mu) = \sum_{k=1}^{K} \int_{\Omega_k(\mu)} q(\mu) v
+	\]
+	genau dann, wenn $\hat u(\hat x; \mu) := u(T(\hat x;\mu);\mu)$ löst
+	\[
+		\hat a(\hat u(\mu), \hat v; \mu) = \sum_{k=1}^{K} \int_{\hat \Omega_k} (\nabla \hat u^T, \hat u) \hat B^k(\mu) \begin{pmatrix} \nabla \hat v \\ \hat v \end{pmatrix} = \sum_{k=1}^K \int_{\Omega_k} \hat q^k(\mu) \hat v =: \hat f(\hat v; \mu) \quad \forall \hat v \in \hat X
+	\]
+	mit
+	\[
+		\hat B^k(\mu) = \begin{pmatrix} M_k(\mu)^{-1} & 0 \\ 0 & 1 \end{pmatrix} B(\mu) \begin{pmatrix} M_k(\mu)^{-T} & 0 \\ 0 & 1 \end{pmatrix} |\det M_k|
+	\]
+	und
+	\[
+		\hat q^k(\mu) := q(\mu) \cdot |\det M_k(\mu)|
+	\]
+\end{satz}

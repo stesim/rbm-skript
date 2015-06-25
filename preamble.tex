@@ -67,7 +67,10 @@
 %%\renewcommand*\arraystretch{1.5}
 %\newcommand{\C}{\operatorname{C}}
 %\renewcommand{\epsilon}{\varepsilon}
-\renewcommand{\phi}{\varphi}
+\let\origphi\phi
+\let\phi\varphi
+\let\varphi\origphi
+%\renewcommand{\phi}{\varphi}
 %\renewcommand{\Re}{\operatorname{Re}}
 %\renewcommand{\Im}{\operatorname{Im}}
 %\renewcommand{\d}{\; \mathrm{d}}
@@ -85,6 +88,10 @@
 \newcommand{\op}{\operatorname}
 \newcommand{\prob}[1][\mu]{\big(P(#1)\big)}
 \newcommand{\rprob}[1][\mu]{\big(P_N(#1)\big)}
+\newcommand{\du}{\mathrm{du}}
+\newcommand{\dprob}[1][\mu]{\big(P^\du(#1)\big)}
+\newcommand{\pdprob}[1][\mu]{\big(P_N'(#1)\big)}
+\newcommand{\refprob}[1][\mu]{\big(\hat P(#1)\big)}
 \newcommand{\set}[1]{\left\{#1\right\}}
 \newcommand{\spn}{\operatorname{span}}
 \newcommand{\seq}[1]{\left(#1\right)}

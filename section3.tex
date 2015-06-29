@@ -1622,7 +1622,7 @@ und $X_{GR}$ der zugehörige \emph{Gram-Schmidt RB-Raum}
 		\item ``$\supseteq$'' klar nach Konstruktion \\
 		``$=$'' folgt durch Dimensionsbetrachtung:
 		\[
-			\dim \op{span} \{\phi_i\}_{i=1}^n = n = \dim \op{span} \{\u_i\}_{i=1}^n
+			\dim \op{span} \{\phi_i\}_{i=1}^n = n = \dim \op{span} \{u_i\}_{i=1}^n
 		\]
 	\end{enumerate}
 \end{proof}
@@ -1840,7 +1840,7 @@ mit $\lambda_i$ EW von $R$.
 \begin{proof}
 	Sei $\Psi = \{\Psi_1,\dots,\Psi_m\}$ ONB für $Y$. Dann folgt
 	\begin{align*}
-		J(Y) &= \frac{1}{n} \sum\limits_{i=1}^n ||u_i - P_y u_i||^2 = \frac{1}{n} \sum\limits_{i=1}^n || u_i - \sum\limits_{j=1}^m \dotp{\Psi_j}{\u_i} \Psi_j ||^2 \\
+		J(Y) &= \frac{1}{n} \sum\limits_{i=1}^n ||u_i - P_y u_i||^2 = \frac{1}{n} \sum\limits_{i=1}^n || u_i - \sum\limits_{j=1}^m \dotp{\Psi_j}{u_i} \Psi_j ||^2 \\
 		&= \frac{1}{n} \sum\limits_{i=1}^n ||u_i||^2 - \frac{2}{n} \sum\limits_{i=1}^n \sum\limits_{j=1}^m \dotp{u_i}{\Psi_j}^2 + \frac{1}{n} \sum\limits_{i=1}^n \sum\limits_{j,k} \dotp{\Psi_j}{u_i} \dotp{u_i}{\Psi_k} \underbrace{\dotp{\Psi_j}{\Psi_k}}_{= \sigma_jk} \\
 		&= \frac{1}{n} \sum\limits_{i=1}^n ||u_i||^2 - \frac{1}{n} \sum\limits_{i=1}^n \sum\limits_{j=1}^m \dotp{u_i}{\Psi_j}^2
 	\end{align*}
@@ -2577,3 +2577,67 @@ Damit folgt gewünschte Schranke für Ausgabefehler:
 		\hat q^k(\mu) := q(\mu) \cdot |\det M_k(\mu)|
 	\]
 \end{satz}
+
+\begin{bem}[Separierbare Parameterabhängigkeit] \beginwithlistbem
+	\begin{itemize}
+		\item Durch Vorgabe von $M_k(\mu) \in \R^{d \times d}$ ist also $M_k^{-1} (\mu) \in \R^{d \times d}$ explizit bekannt, ebenso $|\det M_k(\mu)|$, also die Matrixeinträge/Determinante als Koeffizientenfunktion verwendbar.
+		\item Mit  $B(\mu)$ separierbar parametrisch ist also auch $\hat{B}^k (\mu)$ separierbar parametrisch mit $Q_{\hat{B}} \leq (d^2 +1)Q_B$, mit $q(\mu)$ separierbar parametrisch ist auch $\hat{q}^k (\mu)$ separierbar parametrisch mit $Q_{\hat{q}} = Q_q$.
+		\item Durch Ausmult. ist auch $\hat{a}$ separierbar parametrisch
+		\[
+			\big( \hat{a}^q(\hat{u},\hat{v}) \big)_{q=1}^{Q_{\hat{a}}} := \big( \int\limits_{\hat{\Omega_1}} \frac{\partial}{\partial \hat{x}_1} \hat{u} \frac{\partial}{\partial\hat{x}_1} \hat{v} \cdot \hat{B}_{1 1}^{1,1} , \dots , \int\limits_{\hat{\Omega_1}} \frac{\partial}{\partial \hat{x}_1} \hat{u} \frac{\partial}{\partial\hat{x}_1} \hat{v} \cdot \hat{B}_{1 1}^{1,q_{\hat{B}}} , \dots , \int\limits_{\hat{\Omega_k}} \hat{u} \hat{v} \cdot \hat{B}_{(d+1), (d+1)}^{K,Q_{\hat{B}}}  \big)
+		\]
+		mit $Q_{\hat{a}} = (d+1)^2 K \cdot Q_{\hat{B}}$ und entsprechenden Koeff. $\left( \Theta_{\hat{a}}^q \right)_{q=1}^{Q_{\hat{a}}}$, die sich aus $M_k(\mu)$, $\Theta_{B_ij^k}^q (\mu)$, etc. ergeben.
+		\item $Q_{\hat{a}}$ kann sehr groß sein. Diese Anzahl kann reduziert werden, falls es Koeff. $\Theta _{\hat{a}}^q (\mu)$ gibt, die
+		\begin{itemize}
+			\item Null sind, z.\,B. bei eingeschränkten Transformationen (nur Skalierung, nur Translation) $\Rightarrow (M_k)_{1,2} = (M_k)_{2,1} = 0$
+			\item linear abhängig sind. Falls z.\,B. $\Theta_{\hat{a}}^q (\mu) = C \cdot \Theta_{\hat{a}}^{q'} (\mu)$
+			\[
+				\Rightarrow \Theta_{\hat{a}}^q (\mu) \hat{a}^q (\pdot,\pdot) + \Theta_{\hat{a}}^{q'} (\mu) \hat{a}^{q'} (\pdot,\pdot) = \underbrace{\Theta_{\hat{a}}^{q'} (\mu)}_{\rightarrow \text{1 Komponente statt 2}} ( C \hat{a}^q(\pdot,\pdot) + \hat{a}^{q'} (\pdot,\pdot) )
+			\]
+			also $Q_{\hat{a}}$ reduziert.
+		\end{itemize}
+		\item ``Zusammenfassen'' von linear abh. Termen kann automatisiert werden durch symbolische Arithmetik $\leadsto$ rbMIT Software-Paket
+		\item Für mögl. kleines $Q_{\hat{a}}$ ist nicht unbedingt kleines $K$ sinnvoll, sondern möglichst identisch transformierte Teilgebiete.
+		\item $K=16$ Zerlegung führt auf kleineres $Q_{\hat{a}}$ als $K=8$ Zerlegung.
+		
+		{\large\bf TODO: Skizze}
+	\end{itemize}
+\end{bem}
+
+\begin{bem}[Inhomogene Neumann-Randbedingung]
+(bzw. ähnliche Argumentation bei Fluss-Kurven-Integralen als Ausgabe)
+
+Sei $\partial \Omega = \Gamma_D \cup \Gamma_N$ mit $\Gamma_N \neq \emptyset$ Neumann Rand, $g_N: \Gamma_N \rightarrow \R$ Neumann RW.
+
+Für $v \in H_{\Gamma_D}^1 (\Omega(\mu))$ lautet $(P(\mu))$ rechts:
+\[
+	f(v;\mu) = \int\limits_{\Gamma_N} g_N v
+\]
+Ein Fluss-Kurvenintegral als Ausgabe z.\,B.
+\[
+	l(v;\mu) = \int\limits_{\Gamma_N} (A(\mu) \Delta v)\cdot n
+\]
+\begin{itemize}
+	\item Für  Transformation dieser Integrale ist Rand-Geom. abb $T_{\Gamma} : \hat{\Gamma_N} \rightarrow \Gamma_N (\mu)$ und entsprechende Jacobi-Matrix/Determinante
+	\item Problem besteht, falls $\Gamma_N$ gekrümmt
+		
+		$\Rightarrow n=n(x;\mu)$ ortsabhängig.
+		
+		$\Rightarrow$ Randintegralterm trotz separierbarem $A(\mu)$ eventuell nicht mehr separierbar parametrisch. Explizite Referenzabbildung notwendig und ``hochdimensional''. Auswertung des Integrals, d.\,h. ohne Offline-Online-Zerlegung.
+\end{itemize}
+\end{bem}
+
+\begin{bem}[Fehlermaße] \beginwithlistbem
+	\begin{itemize}
+		\item Im Raum $\hat{X} = X(\hat{\mu})$ hat Norm $|| (\hat{u}(\mu)||_{H^1(\hat{\Omega})}$ keine physikalische Bedeutung für Funktionen $u(x;\mu) := \hat{u} T^{-1}(x;\mu);\mu)$, kann sich wesentlich von von $||u(\mu)|||_{H^1(\Omega(\mu))}$ unterscheiden.
+		\item Die Energie(norm?) ist plausibler, kann jedoch bei starken Größenvariationen von $\Omega(\mu)$ unterschiedliche Größenordnungen annehmen.
+		\item Im Greedy-Verfahren macht relativer  Energienorm-Fehler/-Schätzer Sinn, da dieser Größenvariationen von $\Omega (\mu)$ ausgleicht.
+	\end{itemize}
+\end{bem}
+
+\begin{bem}[Weitere Möglichkeiten der Geometrieparametrisierung] \beginwithlistbem
+	\begin{itemize}
+		\item In der Literatur existieren weitere Methoden, anstelle der stückweise affinen Geometrieparametrisierung: z.\,B. ``Free-Form-Deformation'' (Gitterförmig angeordnete Kontrollpunkte für Interpolation mit Bernstein-Polynomen), ``Radiale Basisfunktionen Interpolation'' (beliebige Platzierung von wenigen Kontrollpunkten und RBF Interpolation der Koordinatenfunktionen), `Transfinite Mapping''
+		\item Diese AAnsätze führen meist auf nicht-separierbare Parameterabhängigkeit in $(\hat{P}(\mu))$. Mit Techniken aus § \ref{sec-4} (z.\,B. ``empirische Interpolationen'') sind approx. separierbare Darstellungen konstruierbar.
+	\end{itemize}
+\end{bem}

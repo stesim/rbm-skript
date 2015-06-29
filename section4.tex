@@ -1,0 +1,58 @@
+\section{Allgemeinere Lineare Probleme}
+\label{sec-4}
+
+\subsection{Allgemeine Parameterabhängigkeit}
+\label{sec-4.1}
+
+Es folgt zunächst eine allgemeine Approximationsmethode für parametrische Funktionen, welche anschließend für RB-Behandlung von allgemeinen parametrisierten Problemen verwendet werden kann.
+
+\subsubsection*{Empirische Interpolation (EI)}
+
+\paragraph*{Motivation}
+
+\begin{itemize}
+	\item § \ref{sec-3} zeigte Relevanz der separierbaren Parameterabhängigkeit für effiziente Offline/Online-Zerlegung und Glattheit der Lösung $u(\mu)$ bzgl. $\mu$.
+	\item Gesucht: Approximationsverfahren für parametrische Funktion
+	\[
+		g: \Omega \times \mathcal{P} \rightarrow \R
+	\]
+	der Form
+	\[
+		g(x;\mu) \approx I_{\mu} (g(\pdot;\mu))(x) = \sum\limits_{m=1}^M \Theta_g^m(\mu) g^m(x)
+	\]
+	mit skalaren Funktionen $\Theta_g^m(\mu)$ und ``kollaterale reduzierter Basis'' $Q_{\mu} = \{g^m\}_{m=1}^M$
+	\item Statt allg. approx. Räume (z.\,B. FEM-Räume, zu hohe Dimension) oder Taylor-Ansatz (nur lokale Approx.) wird wieder Snapshot-basierter Ansatz gewählt, d.\,h. $Q_M \subset \op{span} \{g(\pdot,\mu)|_{\mu \in S_{train} \subset \mathcal{P}} \}$
+	\item Die empirische Interpolation ist eine Mögllichkeit. Details finden sich in
+	\begin{itemize}
+		\item [BMNP04] Barrault, Maday, Nguyen, Patera: An ‘empirical interpolation’ method: application to efficient reduced-basis discretization of partial differential equations
+		\item [MNPP07] Maday, Nguyen, Patera, Pau: A general, multipurpose interpolation procedure: the magic points
+	\end{itemize}
+\end{itemize}
+
+\begin{defn}[Empirische Interpolation]
+	Sei $G \subset C^0(\bar{\Omega},\R)$ Menge von zu interpolierenden Funktionen. Für $\mu \in \N$, $M \leq \dim(\op{span}(G))$ definiere rekursiv Interpolationspunktemenge $T_{\mu} \subset \bar{\Omega}$ und die kollaterale Basis $Q_{\mu} \subset \op{span} (G)$
+	\begin{align*}
+	M = 1: \tilde{q}_1 &:= \op{argmax}_{g \in G} ||g||_{\infty} \\
+	x_1 &:= \op{argmax}_{x \in \bar{\Omega}} |\tilde{q}_1 (x)| \\
+	T_1 &:= \{x_1\} \\
+	q_1 &:= \frac{\tilde{q}_1}{\tilde{q}_1 (x_1)} \\
+	Q_1 &:= \{q_1\}
+	\end{align*}
+	\begin{align*}
+	M > 1: \tilde{q}_M &:= \op{argmax}_{g \in G} ||g-I_{M-1}(g)||_{\infty} \\
+	r_M &:= \tilde{q}_M - I_{M-1} \tilde{q}_M \\
+	x_M &:= \op{argmax}_{x \in \bar{\Omega}} |r_M (x)| \\
+	T_M &:= T_{M-1} \cup \{x_M\} \\
+	q_M &:= \frac{r_M}{r_M (x_{\mu}} \\
+	Q_M &:= Q_{M-1} \cup \{ q_M \}
+	\end{align*}
+	wobei $I_M : C^0(\bar{\Omega},\R) \rightarrow \op{span}(Q_{\mu})$ den Interpolationsparameter zu Punkten $T_M$ bezeichnet, d.\,h. $I_M(g)(x_i) = g(x_i) \,\, \forall \,\, g \in C^0(\bar{\Omega},\R)$, $i=1,\dots,M$.
+\end{defn}
+
+\begin{bem} \beginwithlistbem
+	\begin{itemize}
+		\item In der Praxis werden obige Optimierungsprobleme zur Bestimmung von $\tilde{q}_m$, $x_m$ durch einfache lineare Suche realisiert, indem endliche $\bar{\Omega}$ und $G$ betrachtet werden.
+		\item Es sind Mehrdeutigkeiten von  $\tilde{q}_m$ und $x_m$ möglich, welche durch Aufzählung der Mengen und ``Wahl des ersten Auftretens'' eindeutig werden.
+		\item Die Basis $Q_M$ ist weder orthogonal noch nodal, aber hierarchisch, d.\,h. $Q_{M-1} \subseteq Q_M$.
+	\end{itemize}
+\end{bem}

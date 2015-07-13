@@ -57,21 +57,223 @@ Es folgt zunächst eine allgemeine Approximationsmethode für parametrische Funk
 	\end{itemize}
 \end{bem}
 
+\begin{bem} \beginwithlistbem
+	\begin{itemize}
+		\item $Q_M$ sind beschränkt
+		\[
+			1 = q_m(x_m) = || q_m||_{\infty}
+		\]
+		Für analytische Untersuchungen wird später die nodale Basis $\zeta_M \subset \op{span} (Q_M)$ zu Knoten $T_M$ betrachtet, welche jedoch nicht mehr hierarchisch sind, d.\,h. $\zeta_{M-1} \not\subseteq \zeta_M$
+		\item Die Erzeugung von $Q_M$ und $T_M$ kann als Greedy-Minimierungsstrategie  für
+		
+		 $\min\limits_{\substack{X_M \subset \op{span}(G) \\ \dim(X_M) = M \\ T_M \subset \bar{\Omega} \\ |T_M| = M}} \max\limits_{g \in G} ||g - I_M (g) ||_{\infty}$ interpretiert werden.
+		
+		Es kann jedoch kein monotoner Fehlerabfall garantiert werden.
+	\end{itemize}
+\end{bem}
 
+\begin{satz}[Berechnung der Interpolation]
+Seien $T_M = \{x_1,\dots,x_M\}$ und $Q_M = \{q_1,\dots,q_M\}$ gemäß Def. \ref{4.1} gegeben. Dann ist die Matrix $\underline{Q}_M := (\underline{q}_j(x_i))_{i,j=1}^M \in \R^{M \times M}$ eine untere Dreiecksmatrix mit 1-Diagonale, also regulär.
+Sei $g \in C^0 (\bar{\Omega},\R), \underline{g}_M = (g(x_i))_{i=1}^M \in \R^M, \underline{\alpha}_M := (\alpha_i)_{i=1}^M \in \R^M$ Lösung von
+\[
+	\underline{Q}_M \underline{\alpha}_M = \underline{g}_M
+\]
+Dann ist die Interpolierte von $g$ gerade
+\begin{align} \label{eq:4.1}
+I_M (g) = \sum\limits_{i=1}^M \alpha_i \underline{q}_i
+\end{align}
+\begin{proof}
+Seien $i,j = 1,\dots,M$
+\begin{align*}
+&i=j: (\underline{Q}_M)_{ii} = \underline{q}_i(x_i) = \frac{r_i(x_i)}{r_i(x_i)} = 1 \\
+&j>i: (\underline{Q}_M)_{ij} = \underline{q}_j(x_i) = \frac{r_j(x_i)}{r_i(x_j)} = 0 \\
+&\text{weil } r_j(x_i) = \underline{\tilde{q}}^{(x_i)} - I_{j-1}(\underline{\tilde{q}}_j)(x_i) = 0 \text{ da } I_{j-1} \text{ Interpolierende zu } T_{j-1} \text{ und } x_i \in T_{j-1}.
+\end{align*}
+Also $\underline{Q}_M$ untere Dreiecksmatrix mit 1-Diagonale.
 
-\begin{satz}
+Für \ref{eq:4.1} zeige Übereinstimmung von beiden Seiten in allen Interpolationspunkten $T_M$:
+
+Für $i=1,\dots,M$ ist
+\[
+	\sum\limits_{j=1}^M \alpha_j \underline{q}_j(x_i) = \sum\limits_{j=1}^M \alpha_j (\underline{Q}_M)_{ij} = (\underline{Q}_M \underline{\alpha}_M)_i = (g_M)_i = g(x_i) = I_M(g)(x_i)
+\]
+\end{proof}
 \end{satz}
-\begin{satz}
+
+\paragraph*{Beispiel (EI für Polynome)}
+Sie $G= \{1,x,x^2\}$ Monome auf $\bar{\Omega} = [-1,1]$.
+\begin{figure}[H]
+  \centering\small
+    \includegraphics[width = 0.9 \textwidth]{Bilder/EI_Polynome.png}
+  \label{fig:EI_Polynome}
+\end{figure}
+Dann ist
+\[
+	\underline{\tilde{q}}_1 := \op{argmax}\limits_{g \in G} ||g||_{\infty} \text{ beliebig, z.\,B. } \underline{\tilde{q}}_1(x) = 1
+\]
+und
+\[
+	x_1 = \op{argmax}_{x \in [-1,1]} |\underline{\tilde{q}}_1(x) \text{ beliebig, z.\,B. } x_1 = -1
+\]
+somit ergibt sich 
+\[
+\underline{q}_1(x) = \frac{\underline{\tilde{q}}_1(x)}{\underline{\tilde{q}}_1(x_1)} = 1
+\]
+Dann ist
+\[
+	\underline{\tilde{q}}_2 := \op{argmax}\limits_{g \in G} ||g - I_1(g)||_{\infty} = x,
+\]
+\[
+	r_2 = \underline{\tilde{q}}_2 - I_1(\underline{\tilde{q}}_2) = x + 1,
+\]
+\[
+	x_2 := \op{argmax}\limits_{x \in [-1,1]} |r_2(x)| = 1 \text{ und }
+\]
+\[
+	\underline{q}_2(x) = \frac{r_2(x)}{r_2(x_2)} = \frac{1}{2} (x+1)
+\]
+schließlich
+\[
+	\underline{\tilde{q}}_3 := \op{argmax}\limits_{g \in G} ||g - I_2(g)||_{\infty} = x^2
+\]
+\[
+	r_3 = x^2-1 \,\,\, , \,\,\, x_3 := \op{argmax}\limits_{x \in [-1,1]} |r_3(x)| = 0
+\]
+\[
+	\underline{q}_3(x) = \frac{r_3(x)}{r_3(x_3)} = 1 - x^2
+\]
+\begin{center}
+ \begin{tabular}{|c|c|c|c|c|}
+ \hline
+  $i$ & $x^i$ & $||x||_{\infty}$ & $||x^i - I_1(x^i)||_{\infty}$ & $||x^i - I_2(x^i)||_{\infty}$ \\ \hline
+  $0$ & $1$ & $1$ & $||1-1||_{\infty} = 0$ & $0$ \\ \hline
+  $1$ & $x$ & $1$ & $||x-(-1)||_{\infty} = 2$ & $0$ \\ \hline
+  $2$ & $x^2$ & $1$ & $||x^2-1||_{\infty} = 1$ & $||x^2 - 1||_{\infty} = 1$ \\ \hline
+ \end{tabular}
+\end{center}
+
+\paragraph*{Numerisches Beispiel} demos\_chapter4(1)
+
+$G= \{x^i\}_{i=0}^{29}$
+
+\begin{itemize}
+ \item $\Rightarrow$ alle $q_i$ beschränkt, $||q_i||_{\infty} = 1$
+ \item Fehler fällt nicht monoton
+ \item $\cos^{-1}(T_M)$ ist etwa äquidistant, $T_M$ approximieren also qualitativ die Tschebyscheff-Knoten, die für polynomiale Interpolation als beste Wahl bekannt sind $\Rightarrow T_M$ sind sogennante ``Magic Points'' weil sie ``auf magische Weise'' wichtige Bereiche von $\Omega$ identifizieren.
+\end{itemize}
+
+\paragraph*{Eigenschafen der EI}
+
+Wir untersuchen zunächst Stabilität der Interpolation. Dies geschieht durch Untersuchung der Lebesgue-Konstante (siehe Numerik I).
+
+\begin{satz}[Lebesgue-Konstante]
+Sie  $I_M:C^0(\Omega,\R) \rightarrow X_M := \op{span} (\zeta_i)_{i=1}^M \in C^0(\bar{\Omega},\R)$ Interpolationsoperator zu den Punkten $\{x_i\}_{i=1}^M$ und $\{\zeta\}_{i=1}^M$ nodal, d.\,h. $\zeta_i(x_j) = \delta_{ij}$, $I_M (u) = \sum\limits_{i=1}^M \zeta u(x_i)$. Dann ist
+\[
+	\Lambda_M := \max\limits_{x \in \bar{\Omega}} \sum\limits_{i=1}^M |\zeta_i (x)|
+\]
+die Lebesgue-Konstante der Interpolation.
+\begin{enumerate}[i)]
+	\item Es gilt
+	\[
+		|| u - I_M(u)||_{\infty} \leq (1 + \Lambda_M) \inf\limits_{v \in X_M} ||u-v||_{\infty}
+	\]
+	$\forall u \in C^0(\bar{\Omega},\R)$
+	\item Für EI gilt
+	\[
+		\Lambda_M \leq 2^M -1
+	\]
+\end{enumerate}
+\begin{proof}
+\begin{enumerate}[i)]
+	\item Sei $u \in C^0 (\bar{\Omega},\R), x \in \bar{\Omega}$ und $v = \sum a_i \zeta_i \in X_M$.
+	
+	Dann ist
+\begin{align}	
+	|u(x) - I_M(u)(x)| = |u(x) - \underbrace{\sum\limits_{i=1}^M a_i \zeta_i(x)}_{v(x)} + \underbrace{\sum\limits_{i=1}^M a_i \zeta_i(x)}_{v(x)} - \underbrace{\sum\limits_{i=1}^M u(x_i) \zeta_i(x)}_{I_M(u)(x)}| \notag \\ \leq |u(x) - v(x)| + |\sum\limits_{i=1}^M \zeta_i(x) \cdot (a_i - u(x_i))| \label{eq:4.2}
+	\end{align}
+	Für letzten Term gilt wegen $\{\zeta_i\}$ nodal
+	\begin{align*}
+	|\sum\limits_{i=1}^M \zeta_i(x) \cdot (a_i - u(x_i))| &= |\sum\limits_{i=1}^M \zeta_i(x) \cdot ((\underbrace{\sum\limits_{j=1}^M a_j \zeta_j(x_i))}_{a_i} - u(x_i))| \\
+	&\leq \sum\limits_{i=1}^M |\zeta_i(x)| |v(x_i) - u(x_i)| \\
+	&\leq \underbrace{(\max\limits_x \sum\limits_{i=1}^M |\zeta_i(x)|)}_{= \Lambda_M} \cdot ||u-v||_{\infty}
+	\end{align*}
+	Also für (\ref{eq:4.2}):
+	\[
+		||u-I_M(u)||_{\infty} \leq ||u-v||_{\infty} + \Lambda_M ||u-v||_{\infty} = (1 + \Lambda_M) ||u-v||_{\infty}
+	\]
+	nach Infimum über $v \in X_M$ folgt Behauptung.
+	\item $\rightarrow$ Übung.
+\end{enumerate}
+\end{proof}
 \end{satz}
-\begin{satz}
+
+\begin{bem} \beginwithlistbem
+	\begin{itemize}
+		\item Obige Abschätzung für $\Lambda_M$ ist sehr pessimistisch, in der Praxis meist bessere Raten/Lebesgue-Konstanten (langsameres Wachstum), jedoch ist die Schranke scharf, d.\,h. es ex. Beispiele mit $\Lambda_M = 2^M-1$.
+		\item Für gewisse Mengen $G$ ist sogar exponentielle Konvergenz des Interpolationsfehleres beweisbar, wie in folgendem Satz. Dort auftretende Forderung ist ``Beschränktheit durch Müslipackung'', d.\,h. Polytop mit exponentiell abfallenden Seitenlängen.
+	\end{itemize}
+\end{bem}
+
+\begin{satz}[Exponentielle Konvergenz der EI]
+Falls es Sequenz von exponentiell approx. Unterräumen gibt, d.\,h. $Z_1 \subset Z_2 \subset \dots \subset Z_M \dots \subset \op{span}(G), \dim Z_M = M$ und ex. $c > 0, \alpha > \log 4$ so dass $\inf\limits_{v \in Z_M} ||u-v|| \leq c \cdot e^{-\alpha M} \,\,\, \forall \, u \in G, M \in \N$, dann findet der EI-Basiskonstruktionsprozess ``fast so gute Räume'' indem
+\[
+	||u-I_M(u)|| \leq c \cdot e^{-(\alpha - log 4)M}.
+\]
+\begin{proof}
+	siehe MNPP07
+\end{proof}
 \end{satz}
-\begin{satz} \label{4.5}
+
+Neben solchen a priori-Aussagen ist auch a posteriori-Fehlerkontrolle möglich.
+
+\begin{satz}[A posteriori-Fehlerschätzer für EI] \label{4.5}
+Seien $I_M, I_{M'}: C^0 (\bar{\Omega},\R) \rightarrow \op{span} (G)$ EI-Operatoren für $M' > M$, $Q_M \subset Q_{M'} = \{q_i\}_{i=1}^{M'}, T_M \subset T_{M'} = \{x_i\}_{i=1}^{M'}$.
+
+Sei $\underline{Q} := (\underline{q}_i(x_i))_{i,j=M+1}^{M'}$. Für $g \in G$ sei $\underline{g} := (g(x_i)) - I_M(g)(x_i))_{i=M+1}^{M'}$ und $\underline{\alpha}' := \{\alpha_i '\}_{i=M+1}^{M'} := \underline{Q}^{-1} \underline{g}'.$
+
+Falls $g \in \op{span}(Q_{M'}),$ so gelten folgende a posteriori-Fehlerschranken für den Interpolationsfehler:
+\begin{align*}
+||g-I_M(g)||_{\infty} &\leq \Delta_{M,M',\infty} (g) := ||\underline{\alpha}'||_1 = \sum\limits_{i=M+1}^{M'}|\alpha_i '| \\
+||g-I_M(g)||_{L^2} &\leq \Delta_{M,M', L^2} (g) := \sqrt{(\underline{\alpha}')^T K_Q \underline{\alpha}'}
+\end{align*}
+mit $K_Q := (\int\limits_{\Omega} q_i q_j)_{i,j=M+1}^{M'}$
+\begin{proof}
+Nach Def. der EI gilt
+\[
+	I_M(g) = \sum\limits_{i=1}^M \alpha_i \underline{q}_i \,\, , \,\, I_{M'}(g) = \sum\limits_{i=1}^{M'} \alpha_i ' \underline{q}_i
+\]
+mit $\underline{Q}_M \underline{\alpha}_M = \underline{g}_M$ und $\underline{Q}_{M'} \underline{\alpha}_{M'} = \underline{g}_{M'}$
+mit $\underline{\alpha}_M = (\alpha_i)_{i=1}^M, \underline{\alpha}_{M'} = (\alpha_i ')_{i=1}^{M'}$.
+
+Da $\underline{Q}_M$ oberer linker Block von $\underline{Q}_{M'}$ und $\underline{Q}$ unterer rechter Block von $\underline{Q}_{M'}$, und jeweils untere Dreiecksmatrizen gilt $\alpha_i = \alpha_i '$, $i=1,\dots,M$ und $g-I_M(g) = I_{M'}(g) - I_M(g) = \sum\limits_{i=M+1}^{M'} \alpha_i ' \underline{q}_i$
+
+Für $L^{\infty}$-Norm folgt $||g-I_M(g)||_{\infty} \leq \sum\limits_{i=M+1}^{M'} | \alpha_i ' | \underbrace{||\underline{q}_i||_{\infty}}_{1} = ||\underline{\alpha}'||_1$
+
+Für $L^2$-Norm gilt $||g-I_M(g)||_{2} = \left(\sum\limits_{i,j=M+1}^{M'} \alpha_i ' \alpha_j ' \int\limits_{\bar{\Omega}} \underline{q}_i \underline{q}_j \right)^{\frac{1}{2}} = \Delta_{M,M',L^2}(g)$
+\end{proof}
 \end{satz}
-\begin{satz}
+
+\begin{satz}[Erhaltungseigenschaft]
+Sie $f \in [C^0(\bar{\Omega},\R)]'$ und $f(g) = 0 \,\, \forall \, g \in G$.
+
+Dann ist auch $f(I_M(g)) = 0 \,\, \forall \, g \in G$.
+\begin{proof}
+wg. Linearität folgt $f(\sum \beta_i g_i) = 0 \,\, \forall \, \beta_i \in \R, g_i \in G$
+\[
+	\Rightarrow f(g) = 0 \,\, \forall \, g \in \op{span}(G)
+\]
+Nach Konstruktion ist $Q_M \subseteq \op{span}(g)$, also $f(\underline{q}_i) = 0, i=1,\dots,M$, also auch $f(I_M(g)) = f(\sum \alpha_i \underline{q}_i) = 0 \,\, \forall \, g \in G$
+\end{proof}
 \end{satz}
-%%%%%%%%%%%%%%%%%%%%%%
-%% Lücke
-%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{bem} Anschauliche Beispiele
+	\begin{itemize}
+		\item[-] Falls $g(\bar{x}) = 0 \,\, \forall \, g \in G \Rightarrow I_M(g) (\bar{x})=0$ via $f \equiv$ Punktauswertung in $\bar{x}$.
+		\item[-] Falls $g \in G$ haben Mittelwert $0$, d.\,h. $\int\limits_{\Omega} g(x) dx = 0 \,\, \forall \, g \in G$
+		
+		$\Rightarrow \int\limits_{\Omega} I_M(g) = 0 \,\, \forall \, g \in G.$
+	\end{itemize}
+\end{bem}
 
 \paragraph*{Anwendung in RB-Methoden}
 Falls eine Koeffizientenfunktion nicht separierbar parametrisch ist, erzeuge mittels EI eine separierbar parametrische Approximation.

@@ -1,0 +1,133 @@
+\section{Nichtlineare Probleme}
+\label{sec-5}
+
+\begin{satz}
+\end{satz}
+
+\begin{satz}
+\end{satz}
+
+\begin{satz}
+\end{satz}
+
+\begin{satz} \label{5.4}
+\end{satz}
+
+\begin{satz}
+\end{satz}
+
+\begin{satz} \label{5.6}
+\end{satz}
+
+\begin{align}
+	\label{eq:5.1}
+	a + b = c\\
+	\label{eq:5.2}
+	a + b = c\\
+	\label{eq:5.2'}
+	a + b = c \tag{5.2'}\\
+	\label{eq:5.3}
+	a + b = c\\
+	\label{eq:5.4}
+	a + b = c\\
+\end{align}
+
+\begin{bem} \beginwithlistbem
+	\begin{itemize}
+		\item $\beta_{LB}$ im Zähler sieht zunächst seltsam aus. Weil $\tau \in [0,1]$ ist $(1-\sqrt{1-\tau}) \in [0,1]$, also insbesondere $\sqrt{(\pdot)}$ wohldefiniert und
+			\[
+				\Delta_N \leq \frac{\beta_{LB}}{2 L_{DF}} \tau = \frac{\beta_{LB}}{2 L_{DF}} \cdot \frac{4 \epsilon L_{DF}}{\beta_{LB}^2} = \frac{2 \epsilon}{\beta_{LB}}
+			\]
+			Also gewohnte Struktur: Residuum durch Stabilitätskonstante, jedoch Faktor 2.
+	\end{itemize}
+\end{bem}
+
+\begin{proof}
+	Ähnlich zu \ref{5.4}, statt festem Radius betrachte Kugel mit variablem Radius $\alpha$.
+	Weil $DF$ Lipschitz-stetig, ist $H(x)= x-(DF|_{u_N})^{-1} H(x)$ Kontraktion auf $B(u_N,\alpha)$ falls $\alpha \leq \frac{\beta_{LB}}{2 L_{DF}} = \frac{\beta_{LB}}{4 \gamma_a} =: \hat\alpha$:\\ \\
+	Für $x$, $x' \in B(u_N,\alpha)$ ist mit \eqref{eq:5.2'}
+	\[
+		\norm{H(x)-H(x')} \stackrel{\eqref{eq:5.2'}}{\leq} \overbrace{\gamma}^{\leq \frac{1}{\beta_{LB}}} \underbrace{L(\alpha)}_{\mathclap{\leq L_{DF} \alpha \leq L_{DF} \cdot \frac{\beta_{LB}}{2 L_{DF}}}} \leq \frac{1}{\beta_{LB}} \cdot L_{DF} \cdot \frac{\beta_{LB}}{2 L_{DF}} \norm{x-x'} = \frac{1}{2} \norm{x-x'}
+	\]
+	Suche nun Bedingung für $\alpha$ sodass $H$ Selbstabbildung auf $B(u_N,\alpha)$. Mit \eqref{eq:5.2} folgt für $x \in B(u_N,\alpha)$
+	\begin{align*}
+		\norm{H(x)-u_N} &\leq \underbrace{\gamma}_{\leq \frac{1}{\beta_{LB}}} \left( \int_0^1 \norm{DF|_{u_N} - DF|_{u_N+t(x-u_N)}}_{X;X'} \right) \underbrace{\norm{x-u_N}}_{\leq \alpha} + \gamma \cdot \epsilon\\
+		&\leq \frac{1}{\beta_{LB}} L_{DF} \alpha^2 + \frac{1}{\beta_{LB}} \epsilon
+	\end{align*}
+	Falls also
+	\begin{equation} \label{eq:5.5}
+		\frac{L_{DF}}{\beta_{LB}} \alpha^2 + \frac{\epsilon}{\beta_{LB}} \leq \alpha
+	\end{equation}
+	so ist $H$ Selbstabbildung.
+	\begin{align*}
+		\eqref{eq:5.5} \quad \Leftrightarrow \quad &\alpha^2 - \frac{\beta_{LB}}{L_{DF}} \alpha + \frac{\beta_{LB}}{L_{DF}} \cdot \frac{\epsilon}{\beta_{LB}} \leq 0\\
+		\Leftrightarrow \quad &\alpha \in [\alpha_-,\alpha_+] \text{ mit } \alpha_\pm := \frac{\beta_{LB}}{2 L_{DF}} \pm \sqrt{\frac{\beta_{LB}^2}{4L_{DF}^2}-\frac{\epsilon}{L_{DF}}}\\
+		&\alpha_\pm = \hat\alpha \left( 1 \pm \sqrt{1-\frac{\epsilon}{L_{DF} \hat\alpha^2}} \right) = \hat\alpha ( 1 \pm \sqrt{1-\tau})
+	\end{align*}
+	weil
+	\[
+		\frac{\epsilon}{L_{DF} \hat\alpha^2} = \frac{\epsilon}{L_{DF}} \cdot \frac{4 L_{DF}^2}{\beta_{LB}^2} = \frac{4 L_{DF}}{\beta_{LB}^2} \epsilon = \tau \leq 1
+	\]
+	also $\alpha_\pm$ wohldefiniert.\\
+	\\
+	Für $\alpha \in [\alpha,\hat\alpha]$ ist $H$ Selbstabbildung und Kontraktion.
+	Für kleinstes $\alpha = \alpha_-$ erhalte beste Schranke, also ex.\ $u \in B(u_N,\alpha_-)$ mit
+	\[
+		\norm{u-u_N} \leq u_N = \alpha_-
+	\]
+	Für Effektivitätsschranke setze $e := u-u_N$.
+	Sei $v_r \in X$ Riesz-Repräsentant des Residuums
+	\[
+		\dotp{v_r,v} = F(u_N)(v)
+	\]
+	Benötigt Fehler-Residuums-Beziehung für quadratisches Problem
+	\begin{align*}
+		F(u_N) &= a(u_N,u_N,\pdot) - b(u_N,\pdot) - \underbrace{f(\pdot)}_{\mathclap{= a(u,u,\pdot)-b(u,\pdot)}}\\
+		&= 2 a(u_N,u_N,\pdot) - 2 a(u_N,u,\pdot) - a(u_N,u_N,\pdot)\\
+		&\qquad + 2 a(u_N,u,\pdot) - a(u,u,\pdot) - b(u-u_N,\pdot)\\
+		&= -2 a(u_N,e,\pdot) - b(e,\pdot) - a(e,e,\pdot)\\
+		&= -DF|_{u_N}(e) - a(e,e,\pdot)
+	\end{align*}
+	\begin{align*}
+		\Rightarrow \norm{v_r}^2 &= \dotp{v_r,v_r} = F(u_N)(v_r) = -DF|_{u_N}(e)(v_r) - a(e,e,v_r)\\
+		&\leq \gamma_{DF}(u_N) \norm{e} \norm{v_r} + \gamma_a \norm{e} \norm{v_r}\\
+		\Rightarrow \norm{v_r} &\leq \gamma_{DF}(u_N) \norm{e} + \gamma_a \norm{e}^2
+	\end{align*}
+	Mit $\norm{v_r} = \epsilon$ und $\Delta_N \stackrel{\eqref{eq:5.4}}{\leq} \frac{2 \epsilon}{\beta_{LB}}$ folgt
+	\[
+		\Delta_N \leq \frac{2 \norm{v_r}}{\beta_{LB}} \leq \frac{2}{\beta_{LB}} \gamma_{DF} \norm{e} + \frac{2}{\beta_{LB}} \gamma_a \underbrace{\norm{e}^2}_{\leq \Delta_N \cdot \Delta_N}
+	\]
+	Wegen
+	\[
+		\frac{2}{\beta_{LB}} \gamma_a \Delta_N \leq \frac{2 \gamma_a}{\beta_{LB}} \cdot \frac{2 \epsilon}{\beta_{LB}} = \frac{4 \gamma_a \epsilon}{\beta_{LB}^2} = \frac{1}{2} \tau \leq \frac{1}{2}
+	\]
+	folgt
+	\[
+		\Delta_N \leq \frac{2}{\beta_{LB}} \gamma_{DF} \norm{e} + \frac{1}{2} \Delta_N \quad \Rightarrow \quad \frac{1}{2} \Delta_N \leq \frac{2}{\beta_{LB}} \gamma_{DF} \norm{e}
+	\]
+	\[
+		\Rightarrow \frac{\Delta_N}{\norm{e}} \leq \frac{4 \gamma_{DF}(u_N)}{\beta_{LB}}
+	\]
+\end{proof}
+
+\begin{bem} \beginwithlistbem
+	\begin{itemize}
+		\item Lokale Existenz und Eindeutigkeit und Fehlerschranken gilt analog für allgemeinere Nichtlinearitäten $F$, welche Lipschitz-stetige Ableitungen besitzen.
+			Nur die Effektivitätsschranke in \ref{5.6} verwendet die Struktur des quadratischen nichtlinearen Problems.
+		\item Ausgabe-Fehlerschranken sind einfach möglich analog zu $\Delta_{N,s}$ aus §\ref{sec-3}.
+			Auch verbesserte Abschätzung mittels geeigneten dualen Problems ist möglich.
+		\item Berechnung von $\beta_{LB}$ durch SCM-ähnliche Techniken möglich, siehe [VPP03].
+		\item Falls PDE linear, aber Ausgabe quadratisch nichtlinear, lässt sich ein erweitertes Hilfsproblem formulieren, welche linear, inf-sup-stabil, symmetrisch ist und identische Ausgabe wie Originalproblem mittels geeignetem linearen Ausgabefuntionals liefert.
+			$\Rightarrow$ Techniken aus §\ref{sec-3} und §\ref{sec-4} anwendbar.
+			Damit z.B.\ Fehlerfunktionale $s(\mu) = \int_\Omega (u(\mu)-u_d)^2$ oder Variationen oder Energien in verschiedenen Versionen behandelbar.\\
+			Referenz: [HP07]: ``Reduced basis approximation and a posteriori error estimation for stress intensity factors'', IJNME, 72, 1219-1259, 2007.
+		\item Falls PDE polynomiell in $u$ der Ordnung $p$, lässt sich eine $p+1$ Multilinearform-Formulierung der schwachen Form finden und Techniken aus §\ref{sec-5} analog anwenden.
+			Problem wird für $p \gg 3$ jedoch die Offline-Online-Zerlegung (...???) weil Komponenten-Tensoren der Stufe $p+1$, also sind Offline Datenmengen und Assemblierungskosten $\O(Q_a N^{p+1})$.
+		\item Falls PDE nichtpolynomiell nichtlinear, kann mit Hilfe der EI ein nichtlineares reduziertes Problem formuliert werden.
+			Eine Variante ist die Empirische Operatorinterpolation in
+			\begin{itemize}
+				\item \,[HOR08]: Haasdonk, Ohlberger, Rozza: A Reduced Basis Method for Evolution Schemes with Parameter-Dependent Explicit Operators, ETNA, 32:145-161, 2008.
+				\item \,[DHO12]: Drohmann, Haasdonk, Ohlberger: Reduced Basis Approximation for Nonlinear Parametrized Evolution Equations based on Empirical Operator Interpolation, SJSC, 34:A937-A969, 2012.
+			\end{itemize}
+	\end{itemize}
+\end{bem}

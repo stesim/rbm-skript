@@ -1,0 +1,65 @@
+\section{Zeitabhängige Probleme}
+\label{sec-6}
+
+\subsubsection*{Motivation:}
+Anfangs-Randwertprobleme, z.B.\ Wärmeleitung. Suche $u(x,t)$, $x \in \Omega$, $t \in [0,T]$
+\begin{align*}
+	\partial_t u - \Delta u &= q & & \text{in } \Omega \times (0,T) \\
+	u(x,t) &= g_D(x,t) & & \text{auf } \partial\Omega \times (0,T) \\
+	u(x,0) &= u_0(x) & & \text{in } \Omega
+\end{align*}
+
+\subsubsection*{Numerischer Ansatz:}
+Zeitdiskretisierung: Wähle $K \in \N$, $\Delta t := \frac{T}{K}$
+\[
+	t^k := k \cdot \Delta t, \quad k = 0,\ldots,K
+\]
+Wähle $X \subseteq Y := L^2(\Omega)$ Lösungsraum bezüglich Ortsraum, z.B.\ $X = L^2(\Omega)$ oder $X = H_0^1(\Omega)$ oder $X = \spn(\mathbbm{1}_{e_i})_{i=1}^{H}$ Finite-Volumen-, oder $X = \spn(\psi_i)_{i=1}^H$ Finite-Elemente-Raum, etc.
+
+Suche Lösungssequenz $u = \seq{u^k}_{k=0}^K \in (X)^{K+1}$ mit $u^k(x) \approx u(x,t^k)$.
+
+Referenzen:
+\begin{itemize}
+	\item Für PDE-Diskretisierung siehe NUMPDE14/15.
+	\item Für Folgende RB-Behandlung siehe auf S.\ 8 genanntes Tutorial.
+\end{itemize}
+
+\vspace{10pt}
+
+\begin{bem}
+	Statt variationeller Formulierung betrachte im Folgenden operatorbasierte Formulierung, dies erfasst auch Finite-Differenzen oder Finite-Volumen Diskretisierungen.
+	Alles Folgende könnte auch durch Variationsformulierung ausgedrückt werden.
+\end{bem}
+
+\begin{defn}[Volles Evolutionsproblem $\eprob$]
+	Sei $X$ Hilbertraum, $\mu \in \p$: $u(\mu) = \seq{u^k(\mu)}_{k=0}^K \in (X)^{K+1}$ Lösungen von
+	\begin{align*}
+		\LI^k(\mu) u^{k+1} &= \LE^k(\mu) u^k + b^k(\mu) \\
+		u^0 &:= P_X(u_0)
+	\end{align*}
+	mit $\LI^k$, $\LE^k \in L(X)$, $P_X: Y \to X$ beliebige stetige Projektion.
+\end{defn}
+
+\begin{bem} \beginwithlistbem
+	\begin{itemize}
+		\item Wir verzichten hier wieder auf Ausgabefunktionale.
+		\item Obiges erfasst allgemeine implizite/explizite Zeitdiskretisierung wie impliziter/expliziter Euler oder Crank-Nicolson-Verfahren für parabolische oder hyperbolische DGL.
+		\item $\LI^k$, $\LE^k$, $b^k$ hängen typischerweise von $\Delta t$ ab.
+	\end{itemize}
+\end{bem}
+
+\paragraph{Annahmen an Operatoren:}
+
+\begin{itemize}
+	\item $\LI^k$, $\LE^k$ seien stetig mit Konstanten $\gamma_I^k(\mu)$, $\gamma_E^k(\mu)$ und uniform in $t$, $\mu$, d.h.\ $\gamma_I^k(\mu) \leq \bar\gamma$, $\gamma_E^k(\mu) \leq \bar\gamma_E$.
+	\item $\LI^k$ sei uniform koerziv bzgl.\ $\mu$ und $k$, d.h.\ ex.\ $\bar\alpha_I$, $\alpha_I^k(\mu)$ mit
+		\[
+			0 < \bar\alpha_I \leq \alpha_I^k(\mu) := \inf_v \frac{\dotp{\LI^k v}{v}_X}{\norm{v}^2}
+		\]
+	\item $b^k$ seien uniform beschränkt $\norm{b^k(\mu)} \leq \bar\gamma_b$ $\forall k, m$.
+	\item $\LI^k$, $\LE^k$ seien separierbar parametrisch mit zeitunabhängigen Komponenten
+		\[
+			\LI^k(\mu) = \sum_{q=1}^{Q_I} \Theta_{I,q}^k(\mu) \LL_{I,q}, \quad \LL_{I,q} \in L(X)
+		\]
+		analog für $\LE$, $b^k$, $u_0$.
+\end{itemize}

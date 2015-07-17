@@ -25,6 +25,7 @@
 \geometry{a4paper}
 \usepackage{amssymb}
 \usepackage{amsmath}
+\usepackage{bbm}
 \usepackage{amsthm}
 \usepackage[no-math]{fontspec}
 \defaultfontfeatures{Mapping=tex-text}
@@ -42,6 +43,10 @@
 \usepackage{tabularx}
 \usepackage{cleveref}
 \usepackage{accents}
+\usepackage[parfill]{parskip}
+
+\let\emph\relax % there's no \RedeclareTextFontCommand
+\DeclareTextFontCommand{\emph}{\bfseries\em}
 
 \newcommand{\ubar}[1]{\underaccent{\bar}{#1}}
 %
@@ -85,6 +90,9 @@
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\p}{\mathcal{P}}
 \newcommand{\LM}{\mathcal{M}}
+\newcommand{\LI}{\mathcal{L}_I}
+\newcommand{\LE}{\mathcal{L}_E}
+\newcommand{\LL}{\mathcal{L}}
 \newcommand{\op}{\operatorname}
 \newcommand{\prob}[1][\mu]{\big(P(#1)\big)}
 \newcommand{\rprob}[1][\mu]{\big(P_N(#1)\big)}
@@ -92,6 +100,7 @@
 \newcommand{\dprob}[1][\mu]{\big(P^\du(#1)\big)}
 \newcommand{\pdprob}[1][\mu]{\big(P_N'(#1)\big)}
 \newcommand{\refprob}[1][\mu]{\big(\hat P(#1)\big)}
+\newcommand{\eprob}[1][\mu]{\big(E(#1)\big)}
 \newcommand{\set}[1]{\left\{#1\right\}}
 \newcommand{\spn}{\operatorname{span}}
 \newcommand{\seq}[1]{\left(#1\right)}

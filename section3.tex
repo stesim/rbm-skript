@@ -2446,8 +2446,10 @@ Damit folgt gewünschte Schranke für Ausgabefehler:
 	\item Problem: Zu $\mu \in \p$ sei Gebiet $\Omega(\mu) \in \R^d$ und Lösungsraum $X(\mu) := H_0^1(\Omega(\mu))$ parameterabhängig. Löse $\prob$ nach $u(\mu) \in X(\mu)$.
 	\item Hindernis: Snapshots $u(\mu)$ lassen sich nicht linear kombinieren, Konstruktion eines $X_N$ unklar.
 	\item Idee/Lösung: Wahl eines Referenzparameter $\hat\mu \in \p$, Referenzgeometrie $\hat\Omega := \Omega(\hat\mu)$ und $T(\mu) : \hat\Omega \to \Omega(\mu)$ invertierbare Abbildung. (``Geometrieabbildung'', ``Referenzabbildung'')
-
-		{\large\bf TODO: Skizze Referenzabbildung}
+		\begin{figure}[H]
+			\centering\small
+			\includegraphics[width = 0.75 \textwidth]{Bilder/ref-abb.png}
+		\end{figure}
 	\item Mittels $T(\mu)$ oder $T^{-1}(\mu)$ sind Lösungen vergleichbar:
 		\[
 			x \in \Omega(\mu) \quad \Leftrightarrow \quad T^{-1}(x;\mu) =: \hat x \in \hat\Omega
@@ -2486,8 +2488,10 @@ Damit folgt gewünschte Schranke für Ausgabefehler:
 		\item Unter $T_k$ für $\hat\Omega_k \subseteq \R^2$ ist Bild von Dreieck ein Dreieck, entsprechend Formerhaltung von $n$-Eck, Parallelogramm, Ellipsen.
 			In höheren Dimensionen analog für Simplex, Parallelepiped, Ellipsoid.
 		\item Als $\hat\Omega_k \subseteq \R^2$ werden meist Dreiecke, Rechtecke, Parallelogramme oder allgemeiner ``elliptic triangles'' oder ``curvy triangles''.
-
-			{\large\bf TODO: Skizze Dreieck/Parallelogramm/elliptic triangles...}
+			\begin{figure}[H]
+				\centering\small
+				\includegraphics[width = 0.75 \textwidth]{Bilder/geom-formen.png}
+			\end{figure}
 		\item Um $T_k$ zu bestimmen, reicht es, in $\Omega \subseteq \R^2$ 3 korrespondierende nicht ko-lineare Punkte zu kennen ($3 \times 2$ Gleichungen für $4+2$ Unbekannte), in $\Omega \subseteq \R^3$ entsprechend 4 nicht ko-planare Punkte ($4 \times 3$ Gleichungen für $9+3$ Unbekannte)
 		\item Wir nennen $\{\hat\Omega_k\}_{k=1}^K$ auch ``Makro-Gitter'' der Geometrieparametrisierung.
 			Typischerweise wird FEM-Gitter eine Verfeinerung dieses Gitters sein.
@@ -2506,21 +2510,37 @@ Damit folgt gewünschte Schranke für Ausgabefehler:
 \subsubsection*{Beispiele}
 
 \begin{enumerate}
-	\item {\large\bf TODO: Skizze} Falls $\hat\Omega$, $\Omega(\mu)$, $\Omega_k$ Rechtecke sind, so sind auch $\Omega_k(\mu)$ notwendig Rechtecke, denn für $T_k$ nur achsenparallele Streckung möglich (keine Rotation oder Scherung des mittleren Quadrates).
-	\item {\large\bf TODO: Skizze} Durch Dreiecke sind auch Rotationen / Scherungen des mittleren Quadrats möglich. Man wird meist $T(\mu)$ auch stetig bzgl.\ $\mu$ wählen, z.B.\ $\mu \hat{=}$ Punktkoordinate, Verschiebungsparameter, Rotationswinkel oder Skalierungsfaktor, etc.
+	\item
+		\begin{figure}[H]
+			\centering\small
+			\includegraphics[width = 0.75 \textwidth]{Bilder/affine-trafo.png}
+		\end{figure}
+		Falls $\hat\Omega$, $\Omega(\mu)$, $\Omega_k$ Rechtecke sind, so sind auch $\Omega_k(\mu)$ notwendig Rechtecke, denn für $T_k$ nur achsenparallele Streckung möglich (keine Rotation oder Scherung des mittleren Quadrates).
+	\item
+		\begin{figure}[H]
+			\centering\small
+			\includegraphics[width = 0.75 \textwidth]{Bilder/affine-trafo2.png}
+		\end{figure}
+		Durch Dreiecke sind auch Rotationen / Scherungen des mittleren Quadrats möglich. Man wird meist $T(\mu)$ auch stetig bzgl.\ $\mu$ wählen, z.B.\ $\mu \hat{=}$ Punktkoordinate, Verschiebungsparameter, Rotationswinkel oder Skalierungsfaktor, etc.
 		Das mögliche Intervall für Rotationswinkel des mittleren Quadrats ist durch Regularitätsanforderung der $M_k$ (Nichtdegenerieren der $\Omega_k$) beschränkt, z.B.\ hier keine Drehung um 90° möglich, weil ``mittlere'' Dreiecke an jeder Kante degenerieren.
 	\item Durch genügend feines Makro-Gitter und Verwendung von Zwischenschichten kann Rotationswinkel \emph{beliebig} vergrößert werden:
 
 		Kreisring mit Radien $r_2 < r_1$
 
-		{\large\bf TODO: Skizze}
+		\begin{figure}[H]
+			\centering\small
+			\includegraphics[width = 0.75 \textwidth]{Bilder/affine-trafo3.png}
+		\end{figure}
 
 		$T(\mu)$ Rotation des inneren Kreises um Winkel $\mu \in (-\phi_{min},+\phi_{max})$ mit $\phi_{max}=\phi_{max}(\frac{r_1}{r_2})$ realisierbar, analog $\phi_{min}(\frac{r_1}{r_2})$.
 		Durch genügend viele Punkte auf beiden Kreisen ist stückweise affine Geometrieparametrisierung definierbar, welche Makro-Dreiecksgitter regulär transformiert.
 		Bei Verwendung von $L$ solcher Ringe ist also insgesamt Rotation um $\mu \in (-L\phi_{min},+L\phi_{max})$ für inneres $n$-Eck realisierbar.
 		Durch konforme Fortsetzung der Triangulierung der Scheiben auf Innen- \& Außengebiet ist somit beliebige Rotation in Beispiel ii) möglich.
 
-		{\large\bf TODO: Skizze}
+		\begin{figure}[H]
+			\centering\small
+			\includegraphics[width = 0.75 \textwidth]{Bilder/affine-trafo4.png}
+		\end{figure}
 \end{enumerate}
 
 \subsubsection*{Transformation auf Referenzgebiet}
@@ -2598,9 +2618,12 @@ Damit folgt gewünschte Schranke für Ausgabefehler:
 		\end{itemize}
 		\item ``Zusammenfassen'' von linear abh. Termen kann automatisiert werden durch symbolische Arithmetik $\leadsto$ rbMIT Software-Paket
 		\item Für mögl. kleines $Q_{\hat{a}}$ ist nicht unbedingt kleines $K$ sinnvoll, sondern möglichst identisch transformierte Teilgebiete.
-		\item $K=16$ Zerlegung führt auf kleineres $Q_{\hat{a}}$ als $K=8$ Zerlegung.
-		
-		{\large\bf TODO: Skizze}
+		\item
+			\begin{figure}[H]
+				\centering\small
+				\includegraphics[width = 0.75 \textwidth]{Bilder/affine-trafo-komponenten.png}
+			\end{figure}
+			$K=16$ Zerlegung führt auf kleineres $Q_{\hat{a}}$ als $K=8$ Zerlegung.
 	\end{itemize}
 \end{bem}
 

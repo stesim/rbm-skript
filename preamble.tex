@@ -43,10 +43,12 @@
 \usepackage{tabularx}
 \usepackage{cleveref}
 \usepackage{accents}
-\usepackage[parfill]{parskip}
+%\usepackage[parfill]{parskip}
 
-\let\emph\relax % there's no \RedeclareTextFontCommand
-\DeclareTextFontCommand{\emph}{\bfseries\em}
+\setlength{\parindent}{0em}
+
+%\let\emph\relax % there's no \RedeclareTextFontCommand
+%\DeclareTextFontCommand{\emph}{\bfseries\em}
 
 \newcommand{\ubar}[1]{\underaccent{\bar}{#1}}
 %

@@ -189,7 +189,7 @@ die Lebesgue-Konstante der Interpolation.
 	
 	Dann ist
 \begin{align}	
-	|u(x) - I_M(u)(x)| = |u(x) - \underbrace{\sum\limits_{i=1}^M a_i \zeta_i(x)}_{v(x)} + \underbrace{\sum\limits_{i=1}^M a_i \zeta_i(x)}_{v(x)} - \underbrace{\sum\limits_{i=1}^M u(x_i) \zeta_i(x)}_{I_M(u)(x)}| \notag \\ \leq |u(x) - v(x)| + |\sum\limits_{i=1}^M \zeta_i(x) \cdot (a_i - u(x_i))| \label{eq:4.2}
+	|u(x) - I_M(u)(x)| = |u(x) - \underbrace{\sum\limits_{i=1}^M a_i \zeta_i(x)}_{v(x)} + \underbrace{\sum\limits_{i=1}^M a_i \zeta_i(x)}_{v(x)} - \underbrace{\sum\limits_{i=1}^M u(x_i) \zeta_i(x)}_{I_M(u)(x)}| \notag \\ \leq |u(x) - v(x)| + |\sum\limits_{i=1}^M \zeta_i(x) \cdot (a_i - u(x_i))| \tag{4.2'} \label{eq:4.2'}
 	\end{align}
 	Für letzten Term gilt wegen $\{\zeta_i\}$ nodal
 	\begin{align*}
@@ -197,7 +197,7 @@ die Lebesgue-Konstante der Interpolation.
 	&\leq \sum\limits_{i=1}^M |\zeta_i(x)| |v(x_i) - u(x_i)| \\
 	&\leq \underbrace{(\max\limits_x \sum\limits_{i=1}^M |\zeta_i(x)|)}_{= \Lambda_M} \cdot ||u-v||_{\infty}
 	\end{align*}
-	Also für (\ref{eq:4.2}):
+	Also für \eqref{eq:4.2'}:
 	\[
 		||u-I_M(u)||_{\infty} \leq ||u-v||_{\infty} + \Lambda_M ||u-v||_{\infty} = (1 + \Lambda_M) ||u-v||_{\infty}
 	\]
@@ -352,7 +352,7 @@ Falls $\epsilon_a < \alpha$ so folgt mit Störungsargument eine Schranke für $|
 \]
 Lax-Milgram liefert also mit $r(v,\tilde{u}) = f(v) - \underbrace{\tilde{f}(v) + a(\tilde{u},v)}_{0} - a(\tilde{u},v)$.
 \begin{align} \label{eq:4.2}
- || u- \tilde{u}|| \leq \frac{|||r(\pdot;\tilde{u})||_{X'}}{\alpha} \leq \frac{1}{\alpha} (\epsilon_f + \epsilon_a ||\tilde{u}||)
+ || u- \tilde{u}|| \leq \frac{||r(\pdot;\tilde{u})||_{X'}}{\alpha} \leq \frac{1}{\alpha} (\epsilon_f + \epsilon_a ||\tilde{u}||)
 \end{align}
 Für $||\tilde{u}||$ liefert Lax-Milgram
 \[
@@ -503,15 +503,15 @@ Seien $X_1$, $X_2$ Hilberträume, $a: X_1 \times X_2$ stetige Bilinearform mit $
 und $\sigma = \{\lambda_i\}_{i \in I}$ oder $\sigma = \{\lambda_i\}_{i \in I} \cup \{0\}$
 
 Nach \ref{4.12} ii) $\beta = \inf\limits_{u \neq 0} \frac{||Au||}{||u||} = \inf\limits_{u \neq 0} \sqrt{\frac{||Au||^2}{||u||^2}} = \inf\limits_{||u|| = 1} \sqrt{\dotp{Au}{Au}} = \inf\limits_{||u||=1} \sqrt{\dotp{A^*Au}{A}}$
-\begin{align} \label{eq:4.4}
-\beta^2 = \inf\limits_{||u||=1} \dotp{A^*Au}{u}
+\begin{align} \label{eq:4.4'}
+	\beta^2 = \inf\limits_{||u||=1} \dotp{A^*Au}{u} \tag{4.4'}
 \end{align}
 Falls $0 \in \sigma$ mit EV $\phi^0 \Rightarrow 0 \leq \beta^2 = \dotp{A^*A\phi^0}{\phi^0} = 0 \Rightarrow \beta^2 = 0 = \inf \sigma$.
 
 Falls $0 \not\in \sigma \Rightarrow \{\phi_i\}_{i \in I}$ ist vollständiges ONS von $X_1$
 \begin{align*}
 	&\Rightarrow \forall u \in X_1 \text{ mit } ||u||=1 \text{ ex. } u_i \in \R \text{ mit } u = \sum\limits_{i \in I} u_i \phi_i \, , \, \sum u_i^2 = 1 \\
-	&\overset{(\ref{eq:4.4})}{\Rightarrow} \beta = \inf\limits_{||u||=1} \dotp{A^*Au}{u} = \inf\limits_{||u||=1} \sum \lambda_i u_i^2  \underbrace{\geq}_{\text{Konvexkombination}} \inf \{\lambda_i\} = \inf \sigma
+	&\overset{(\ref{eq:4.4'})}{\Rightarrow} \beta = \inf\limits_{||u||=1} \dotp{A^*Au}{u} = \inf\limits_{||u||=1} \sum \lambda_i u_i^2  \underbrace{\geq}_{\text{Konvexkombination}} \inf \{\lambda_i\} = \inf \sigma
 \end{align*}
 und $\beta^2 = \inf\limits_{||u||=1} \sum \lambda_i u_i^2 \underbrace{\leq}_{u = \phi_j} \sum \lambda_i u_i^2 = \lambda_j \Rightarrow \beta^2 \leq \inf \{\lambda_i\} \Rightarrow \beta^2 = \inf \sigma$
 \item analog zu ii)
@@ -665,10 +665,10 @@ Sei $A(\mu)$ suprimierender Operator aus \ref{4.12}. Falls für alle $v \in X_{N
 		Definiere $\tilde{a}(u,v;\mu) := \dotp{A(\mu)u}{A(\mu)v}_{X_2} \qquad \forall \,\, u,v \in X_1$
 		
 		$\Rightarrow \tilde{a}$ ist bilinear, stetig, symmetrisch. $\tilde{a}$ ist koerziv
-		\[
-			\frac{\tilde{a}(u,u)}{||u||^2} = \frac{\dotp{Au}{Au}}{||u||^2} = \frac{||Au||^2}{||u||^2} \geq \left(\inf\limits_{v \neq 0} \frac{||Av||}{||v||} \right)^2 \overset{\ref{4.12} ii)}{=} (\beta_N(\mu))^2 > 0
-		\]
-		also $\tilde{a} := \beta(\mu)^2$ Koerzivitätskonstante von $\tilde{a}$
+		\begin{equation}
+			\frac{\tilde{a}(u,u)}{||u||^2} = \frac{\dotp{Au}{Au}}{||u||^2} = \frac{||Au||^2}{||u||^2} \geq \left(\inf\limits_{v \neq 0} \frac{||Av||}{||v||} \right)^2 \overset{\ref{4.12} ii)}{=} \underbrace{(\beta(\mu))^2}_{=: \tilde\alpha} > 0 \label{eq:4.7}
+		\end{equation}
+		also $\tilde{\alpha} := \beta(\mu)^2$ Koerzivitätskonstante von $\tilde{a}$.
 		
 		$\tilde{a}$ ist separierbar parametrisch $Q_{\tilde{a}} = (Q_a)^2$ Komp.  $\{\dotp{A^q\pdot}{A^q\pdot}\}_{q,q' =1}^{Q_a}$ und Koeffizienten $\Theta_a^q(\mu), \Theta_a^{q'}(\mu)$.
 		
@@ -703,9 +703,10 @@ Sei $A(\mu)$ suprimierender Operator aus \ref{4.12}. Falls für alle $v \in X_{N
 				\underline{v}_r := K^{-1} \left( \underline{f} - \underline{A} \Phi_N \underline{v} \right)
 			\]
 			also
-			\[
-				\underline{u}_N = \arg\min_{\underline{v} \in \R^N} \underline{v}_r K \underline{v}_r = \arg\min_{\underline{v} \in \R^N} \arg\min_{\underline{v} \in \R^N} \dotp{v_r,v_r} = \arg\min_{v \in X_{N,1}} \norm{f(\pdot;\mu)-a(v,\pdot;\mu)}_{X_2'}^2
-			\]
+			\begin{align*}
+				\underline{u}_N &= \arg\min_{\underline{v} \in \R^N} \underline{v}_r K \underline{v}_r = \arg\min_{\underline{v} \in \R^N} \arg\min_{\underline{v} \in \R^N} \dotp{v_r}{v_r}\\
+				&= \arg\min_{v \in X_{N,1}} \norm{f(\pdot;\mu)-a(v,\pdot;\mu)}_{X_2'}^2
+			\end{align*}
 			also entspricht Wahl von $X_{N,2}$ via Suprimieren einem \emph{Minimum-Residuum Ansatz}.
 		\item Heuristische Vereinfachung: Min-Res Ansatz hat Online-Komplexität $\O(Q_a^2 + Q_a Q_f)$ für Lösen des Systems, also teuer falls $Q_a$, $Q_f$ nicht sehr klein.
 
@@ -720,4 +721,81 @@ Sei $A(\mu)$ suprimierender Operator aus \ref{4.12}. Falls für alle $v \in X_{N
 	\item Wir benötigen untere Schranken $\beta_{LB}(\mu)$ an inf-sup Konstante.
 	\item Wir haben gesehen, dass $\beta(\mu) = \sqrt{\tilde a(\mu)}$ in \eqref{eq:4.7}, es reicht also für allgemeine koerzive Probleme untere Schranke $\alpha_{LB}(\mu)$ an Koerzivitätskonstante berechnen zu können.
 	\item Min-$\mathrm\Theta$-Verfahren aus \ref{3.27} hat leider starke Voraussetzungen, allgemeines Verfahren erforderlich.
-\end{itemize}<++>
+\end{itemize}
+
+Für Details zu Folgendem siehe: [HRSP07] Huynh, Rozza, Sen, Patera: A Successive Constraint Linear Optimization Method for Lower Bounds of Parametric Coercivity and Inf-Sup Stability Constants. C. R. Math. Acad. Sci. Paris, Series I, 345:473-478, 2007.
+
+\begin{defn}[SCM]
+	Sei $a(\pdot,\pdot;\mu)$ gleichmäßig koerziv bzgl.\ $\mu$ und separierbar parametrisch mit $Q := Q_a$.
+	Seien $C, D \subset \p$ endliche Teilmengen und $M_\alpha, M_+ \in \N$.
+	Definiere
+	\[
+		Y := \set{y = (y_1,\ldots,y_Q) \in \R^Q \;\Big|\; \exists u \in X \text{ mit } g_q = \frac{a^q(u,u)}{\norm{u}^2}, 1 \leq q \leq Q}
+	\]
+	Wir definieren eine Zielfunktion $J : \p \times \R^Q \to \R$
+	\[
+		J(\mu,y) := \sum_{q=1}^Q \Theta_a^q(\mu) y_a
+	\]
+	und ein Polytop durch
+	\begin{align*}
+		\sigma_q^- &:= \inf_{u \in X} \frac{a^q(u,u)}{\norm{u}^2}, \quad \sigma_q^+ := \sup_{u \in X} \frac{a^q(u,u)}{\norm{u}^2}\\
+		B_Q &:= \prod_{q=1}^Q [\sigma_q^-,\sigma_q^+] \subset \R^Q
+	\end{align*}
+	Für $M \in \N$, $\mu \in \p$ definiere $\p_M(\mu,C) \subset C$ durch
+	\[
+		\p_M(\mu,C) := \begin{cases}
+			\text{$M$-nächsten Nachbarn von $\mu$ in Menge $C$} & \text{falls } 1 \leq M \leq |C|\\
+			C & \text{falls } |C| \leq M\\
+			\emptyset & \text{falls } M = 0
+		\end{cases}
+	\]
+	Wir definieren hiermit für $\mu \in \p$:
+	\begin{align*}
+		Y_{LB}(\mu) &:= \set{y \in B_Q \big| J(\mu',y) \geq \alpha(\mu') \, \forall \mu' \in \p_{M_\alpha}(\mu,C) \wedge J(\mu',y) \geq 0 \, \forall \mu' \in \p_{M_+}(\mu,D)}\\
+		Y_{UB} &:= \set{y^*(\mu') | \mu' \in C} \quad \text{mit} \quad y^*(\mu') := \arg\min_{y \in Y} J(\mu',y)
+	\end{align*}
+	und hiermit Schranken
+	\[
+		\alpha_{LB}(\mu) := \min_{y \in Y_{LB}(\mu)} J(\mu,y), \quad \alpha_{UB}(\mu) := \min_{y \in Y_{UB}} J(\mu,y)
+	\]
+\end{defn}
+
+\subsubsection*{Illustration:}
+\begin{figure}[H]
+	\centering\small
+	\includegraphics[width = 0.5 \textwidth]{Bilder/scm.png}
+\end{figure}
+
+\begin{satz}[$\alpha$-Approximation mit SCM]
+	Es gilt für alle $\mu \in \p$
+	\[
+		\alpha_{LB}(\mu) \leq \alpha(\mu) \leq \alpha_{UB}(\mu)
+	\]
+
+	\begin{proof}
+		Zunächst sehen wir, dass
+		\[
+			\alpha(\mu) = \inf_{u \in X} \frac{\sum_{q=1}^Q \Theta_a^q(\mu) a^q(u,u)}{\norm{u}^2} = \min_{y \in Y} J(\mu,y)
+		\]
+		Es gilt weiter $Y_{UB} \subset Y \subset Y_{LB}(\mu)$, denn:
+		\begin{align*}
+			y \in Y_{UB} \; &\Rightarrow \; y = y^*(\mu') = \arg\min_{\bar y \in Y} J(\mu',\bar y) \text{ für ein } \mu' \in C \; \Rightarrow \; y \in Y\\
+			y \in Y \; &\Rightarrow \; y \in B_Q \text{ und } \alpha(\mu') = \min_{\bar y \in Y} J(\mu',\bar y) \leq J(\mu',y) \; \forall \mu' \in C
+		\end{align*}
+		analog folgt
+		\[
+			0 < \alpha(\mu') \leq J(\mu',y) \; \forall \mu' \in D \; \Rightarrow \; y \in Y_{LB}(\mu)
+		\]
+		Also
+		\[
+			\underbrace{\min_{y \in Y_{LB}(\mu)} J(\mu,y)}_{= \alpha_{LB}(\mu)} \leq \underbrace{\min_{y \in Y} J(\mu,y)}_{= \alpha(\mu)} \leq \underbrace{\min_{y \in Y_{UB}} J(\mu,y)}_{= \alpha_{UB}(\mu)}
+		\]
+	\end{proof}
+\end{satz}
+
+\begin{bem} \beginwithlistbem
+	\begin{itemize}
+		\item Für festes $\mu$ ist $J$ also insbesondere linear in $y$, also Berechnung von $\alpha_{LB}(\mu)$ ein kleines, schnell lösbares lineares Optimierungsproblem.
+		\item $C$, $D$ sind durch ein Greedy-Verfahren bestimmbar.
+	\end{itemize}
+\end{bem}

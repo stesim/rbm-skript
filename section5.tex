@@ -1,43 +1,333 @@
 \section{Nichtlineare Probleme}
 \label{sec-5}
 
-\begin{satz}
+Wir diskutieren RB-Ansätze für nichtlineare Probleme anhand von ``quadratischen'' Nichtlinearitäten, Kommentare zur Verallgemeinerung folgen am Ende des Kapitels.
+
+\begin{defn}[Nichtlineares volles Problem $\prob$]
+	Sei $X$ Hilbertraum, $\mu \in \p$ gesucht ist $u(\mu) \in X$, $s(\mu) \in \R$ als Lösung von
+	\begin{align*}
+		a(u,u,v;\mu) + b(u,v;\mu) &= f(v;\mu) \quad \forall v \in X\\
+		s(\mu) &= l(u(\mu);\mu)
+	\end{align*}
+	mit $a$, $b$, $f$, $l$ stetige parametrische Tri-/Bi-/Linearformen.
+\end{defn}
+
+\begin{bem}[Wohlgestelltheit] \beginwithlistbem
+	\begin{itemize}
+		\item Existenz und Eindeutigkeit im Allgemeinen unklar: Mehrere oder keine Lösung möglich.
+		\item Lokale Existenz und Eindeutigkeit von $\prob$ wird später a-posteriori nach erfolgreicher RB-Approximation möglich sein.
+	\end{itemize}
+\end{bem}
+
+\subsubsection*{Annahmen:}
+\begin{itemize}
+	\item Seien $a$, $b$, $f$, $l$ stetig mit Stetigkeitskonstanten $\gamma_a(\mu)$, $\gamma_b(\mu)$, $\gamma_f(\mu)$, $\gamma_l(\mu)$ und separierbar parametrisch.
+	\item Seit $a$ symmetrisch bzgl.\ ersten beiden Argumenten: $a(u,v,\pdot;\mu) = a(v,u,\pdot;\mu)$
+	\item Lokale Wohlgestelltheit der Linearisierung:
+
+		Für alle $\mu \in \p$ existiert $\gamma_u \in \R^+ \cup \set{\infty}$, sodass $\forall u \in B(0,\gamma_u) \subset X$ und alle $g \in X'$ die Gleichung
+		\begin{equation}
+			2a(u,h,\pdot;\mu) + b(h,\pdot;\mu) = g(\pdot)
+			\label{eq:5.1}
+		\end{equation}
+		eine eindeutige Lösung $h \in X$ besitzt mit
+		\[
+			\norm{h} \leq \frac{1}{\beta(\mu)} \norm{g}_{X'}
+		\]
+		mit geeignetem Stabilitätsfaktor $\beta(\mu) > 0$.
+\end{itemize}
+
+\subsubsection*{Referenzen:}
+\begin{itemize}
+	\item \,[VPP03]: Veroy, Prud'homme, Patera: Reduced-basis approximation of the viscous Burgers equation: rigorous a posteriori error bounds. C. R. Acad. Sci. Paris, Series I, 337 : 619-624, 2003.
+	\item \,[VPRP03]: Veroy, Prud'homme, Rovas, Patera: A posteriori error bounds for reduced-basis approximation of parametrized noncoercive and nonlinear elliptic partial differential equations. In Proc. 16th AIAA computational fluid dynamics conference, 2003, Paper 2003.3847.
+\end{itemize}
+
+\subsubsection*{Beispiele:}
+\begin{enumerate}[a)]
+	\item Poisson-Gleichung mit nichtlinearem Reaktionsterm: gesucht $u \in H_0^1(\Omega) = X$ mit
+		\begin{align*}
+			-\mu_1 \Delta u + \mu_2 u^2 &= q &\text{in } \Omega,\; \mu_1, \mu_2 > 0\\
+			u &= 0 & \text{auf } \partial\Omega
+		\end{align*}
+		Schwache Form:
+		\[
+			\underbrace{\mu_1 \int_\Omega \nabla u \cdot \nabla v}_{b(u,v;\mu)} + \underbrace{\mu_2 \int_\Omega u^2 v}_{a(u,u,v;\mu)} = \underbrace{\int_\Omega q v}_{f(v;\mu)} \quad \forall v \in X
+		\]
+		Für $\Omega \subset \R$, $q \in L^2(\Omega)$ sind (Multi-)Linearformen stetig (via $H_0^1 \to L^4$ stetig).
+	\item Viskose Burgers-Gleichung
+		\begin{align*}
+			-\mu_1 \Delta u + \nabla(\mu_2 u^2) &= q &\text{in } \Omega\\
+			u &= 0 & \text{auf } \partial\Omega
+		\end{align*}
+		Schwache Form:
+		\[
+			\mu_1 \int_\Omega \nabla u \cdot \nabla v \underbrace{- \mu_2 \int_\Omega u^2 \nabla v}_{a(u,u,v;\mu)} = \int_\Omega q v \quad \forall v \in X
+		\]
+		Quadratische Nichtlinearität ist ähnlich zu inkompressiblen Navier-Stokes-Gleichungen in mehreren Raumdimensionen.
+		Bei Burgers-Gleichung erwartet man also ähnliche Effekte/Probleme wie bei ``echten'' Strömungen.
+\end{enumerate}
+
+\subsection*{Numerische Lösung von $\prob$}
+
+\begin{itemize}
+	\item Mit $F(u;\mu) := a(u,u,\pdot;\mu) + b(u,\pdot;\mu) - f(\pdot;\mu) \in X'$ lautet Bedingung für $u(\mu)$ einfach $F(u(\mu);\mu) = 0$, also Nullstellensuche.
+		Numerische Behandlung mit Newton-Schema möglich.
+	\item Richtungsableitungen: $\forall u,h \in X$ gilt
+		\begin{align*}
+			DF|_u(h) &= \lim_{\delta \to 0} \frac{F(u + \delta h)-F(u)}{\delta}, \quad DF|_u : X \to X'\\
+			F(u+\delta h)-F(u) &= a(u+\delta h, u + \delta h,\pdot) - a(u,u,\pdot)\\
+			&\quad + b(u+\delta h,\pdot)-b(u,\pdot)+f(\pdot)-f(\pdot)\\
+			&= 2 \delta a(u,h,\pdot)+\delta^2 a(h,h,\pdot)+\delta b(h,\pdot)\\
+			\Rightarrow \; DF|_u(h) &= 2a(u,h,\pdot)+b(h,\pdot)
+		\end{align*}
+	\item Newton-Schleife:
+		\begin{itemize}
+			\item Wähle $u^0 \in X$
+			\item Wiederhole:
+
+				\quad Bestimme $h^k$ als Lösung von $DF|_{u^k}(h^k) = -F(u^k)$:
+				\[
+					2a(u^k,h^k,v)+b(h^k,v) = -a(u^k,u^k,v)-b(u^k,v)+f(v) \quad \forall v \in X
+				\]
+				\quad Setze $u^{k+1} := u^k + h^k$
+
+				bis $\norm{u^{k+1}-u^k} < \epsilon_{tol}$
+			\item Falls Newton-Verfahren konvergiert $\Rightarrow$ Existenz einer Lösung.
+		\end{itemize}
+\end{itemize}
+
+\begin{defn}[Reduziertes nichtlineares Problem $\rprob$] \label{5.2}
+	Sei $X_N \subset X$ RB-Raum, $\mu \in \p$. Gesucht ist $u_N(\mu) \in X_N$, $s_N(\mu) \in \R$ mit
+	\begin{align*}
+		a(u_N,u_N,v;\mu)+b(u_N,v;\mu)&=f(v;\mu)\\
+		s_N(\mu)&=l(u_N)
+	\end{align*}
+\end{defn}
+
+\begin{bem} \beginwithlistbem
+	\begin{itemize}
+		\item $\rprob$ ist also äquivalent zu $F_N(u_N(\mu))=0$ für entsprechendes $F_N : X_N \to (X_N)'$ mit $F_N(u):=F(u)|_{X_N}$ $\forall u \in X_N$.
+		\item Newton-Verfahren liefert wieder eine Sequenz $\seq{u_N^k}_k \subset X_N$.
+			Falls diese konvergiert, haben wir (lokale) Lösung von $\rprob$.
+	\end{itemize}
+\end{bem}
+
+\subsubsection*{Offline-Online-Zerlegung:}
+Sei $X_N = \spn\set{\phi_1,\ldots,\phi_N}$
+
+Offline:
+\begin{align*}
+	\ubar f_N^q &:= \seq{f^q(\phi_i)}_{i=1}^N, & \ubar l_N^q &:= \seq{l^q{\phi_i}}_{i=1}^N\\
+	\ubar B_N^q &:= \seq{b^q(\phi_j,\phi_i)}_{i,j=1}^N, & \ubar K_N &:= \seq{\dotp{\phi_i}{\phi_j}}_{i,j=1}^N\\
+	\ubar A_N^q &:= \seq{a^q(\phi_i,\phi_j,\phi_k)}_{i,j,k=1}^N \in \R^{N \times N \times N}
+\end{align*}
+
+Online:
+\begin{itemize}
+	\item Setze $\mu \in \p$
+	\item Setze $\ubar A_N(\mu) := \sum_{q=1}^{Q_a} \Theta_a^q(\mu) \ubar A_N^q$, analog $\ubar f_N(\mu)$, $\ubar l_N(\mu)$, $\ubar B_N(\mu)$
+	\item Wähle $\ubar u_N^0 = \seq{u_{N,i}^0}_{i=1}^N \in \R^N$
+	\item Wiederhole:
+		\begin{itemize}
+			\item Bestimme $\ubar h_N^k \in \R^N$ als Lösung von
+				\[
+					\left( 2\sum_{n=1}^N (\ubar A_N)_{n,:,:} u_{N,n}^k + \ubar B_N \right) \ubar h_N^k = -\sum_{n,m=1}^N (\ubar A_N)_{n,m,:} u_{N,n}^k - \ubar B_N \ubar u_N^k + \ubar f_N
+				\]
+			\item $\ubar u_N^{k+1} := \ubar u_N^k + \ubar h_N^k$
+		\end{itemize}
+	\item Bis $(\ubar u_N^{k+1} - \ubar u_N^k) \ubar K_N (\ubar u_N^{k+1} - \ubar u_N^k) < \epsilon_{tol}^2$
+	\item Setze $\ubar u_N := \ubar u_N^{k+1}$, $s_N(\mu) := \ubar l_N^T \ubar u_N$
+\end{itemize}
+
+\begin{bem}
+	Komplexität $\O(Q_a N^3)$ für Speichern und Linearkombinieren von $A_N(\mu)$ aus Komponenten ist erheblich.
+\end{bem}
+
+\subsubsection*{Lösungstheorie für $\prob$}
+
+\begin{satz}[Inversion gestörter Operator] \label{5.3}
+	Seien $A$, $B \in L(X,Y)$, $A$ invertierbar.
+	Falls $\norm{A^{-1}B}_{X;X} := \sup_{x \neq 0} \frac{\norm{A^{-1}Bx}_X}{\norm{x}_X} < 1$, so ist $A + B$ invertierbar und
+	\[
+		\norm{(A+B)^{-1}}_{Y;X} \leq \frac{1}{1-\norm{A^{-1}B}_{X;X}} \norm{A^{-1}}_{Y;X}
+	\]
+
+	\begin{proof}
+		Identisch zu Störungssatz für Inversion von Matrizen. $\leadsto$ NLA/Numerik 1.
+	\end{proof}
 \end{satz}
 
-\begin{satz}
+\begin{satz}[Lokale Existenz und Eindeutigkeit für Nichtlineare Probleme] \label{5.4}
+	Sei $G: X \to Y$ eine $C^1$-Abbildung (d.h. $DG$ stetig auf $X$).
+	Sei $v \in X$ mit $DG|_v \in L(X,Y)$ Isomorphismus.
+	Definiere
+	\begin{align*}
+		\epsilon &:= \norm{G(v)}_Y\\
+		\gamma &:= \norm{(DG|_v)^{-1}}_{Y;X}\\
+		L(\alpha) &:= \sup_{x \in \bar B(v, \alpha)} \norm{DG|_v - DG|_x}_{X;Y}
+	\end{align*}
+	Falls $2 \gamma L(2 \gamma \epsilon) \leq 1$ $\Rightarrow$ existiert eindeutiges $u \in \bar B(v,2\gamma\epsilon)$ mit
+	\[
+		G(u) = 0
+	\]
+	und $DG|_u$ invertierbar mit
+	\[
+		\norm{(DG|_u)^{-1}}_{Y;X} \leq 2\gamma
+	\]
+	Für alle $x \in \bar B(v,2\gamma\epsilon)$ gilt
+	\[
+		\norm{x-u}_X \leq 2 \gamma \norm{G(x)}_Y
+	\]
 \end{satz}
 
-\begin{satz}
-\end{satz}
+\begin{bem} \beginwithlistbem
+	\begin{itemize}
+		\item Satz und Beweis aus Theorem 2.1 in
 
-\begin{satz} \label{5.4}
-\end{satz}
+			Caloz, Rappaz: Numerical Analysis For Nonlinear And Bifurcation Problems. In P.G. Ciarlet and J.L. Lions, ``Handbook of Numerical Analysis Vol. V'', Elsevier '97.
+		\item Anschauung: Falls $v$ approximative Lösung mit genügend kleinem Residuum und $DG$ lokal invertierbar und $DG$ ändert sich nicht zu start, dann muss Lösung $u$ existieren.
+			\begin{figure}[H]
+				\centering\small
+				\includegraphics[width = 0.5 \textwidth]{Bilder/existenz-lokale-inverse.png}
+			\end{figure}
+	\end{itemize}
+\end{bem}
 
-\begin{satz}
-\end{satz}
+\begin{proof}
+	Definiere $H : X \to X$
+	\[
+		H(x) := x - (DG|_v)^{-1} G(x)
+	\]
+	$u$ Fixpunkt von $H$ $\Leftrightarrow$ $G(u) = 0$.
 
-\begin{satz} \label{5.6}
-\end{satz}
+	Suche also Fixpunkt mit Banach'schem Fixpunktsatz. Sei $x \in \bar B(v,2\gamma\epsilon) =: \bar B$
+	\[
+		H(x) - v = (DG|_v)^{-1} \left[ DG|_v(x-v)-(G(x)-G(v)) \right] - (DG|_v)^{-1}G(v)
+	\]
+	Hauptsatz der Differential- und Integralrechnung:
+	\[
+		G(x)-G(v) = \int_0^1 DG|_{v+t(x-v)}(x-v) \, dt
+	\]
+	\[
+		\Rightarrow \; H(x)-v=(DG|_v)^{-1} \underbrace{\left[ DG|_v(x-v)-\int_0^1 DG|_{v+t(x-v)}(x-v) \, dt \right]}_{\int_0^1 (DG|_v-DG|_{v+t(x-v)})(x-v) \, dt} - (DG|_v)^{-1}G(v)
+	\]
+	\begin{align} \label{eq:5.2}
+		\norm{H(x)-v} &\leq \gamma \int_0^1 \norm{DG|_v - DG|_{v+t(x-v)}}_{X;Y} \, dt \cdot \norm{x-v}_X + \gamma \cdot \epsilon\\
+		&\leq \gamma \cdot \underbrace{L(2\gamma \epsilon) \cdot 2 \gamma}_{\leq 1} \epsilon + \gamma \epsilon \leq 2\gamma \epsilon \notag
+	\end{align}
+	$\Rightarrow$ $H(x) \in \bar B$ also $H(\bar B) \subseteq \bar B$ Selbstabbildung von $\bar B$ auf $\bar B$.
+	Seien $x$, $x' \in \bar B$
+	\begin{align*}
+		H(x)-H(x') &= x-(DG|_v)^{-1}G(x)-x'+(DG|_v)^{-1}G(x')\\
+		&= x-x'-(DG|_v)^{-1}(G(x)-G(x'))\\
+		&= (DG|_v)^{-1} DG|_v(x-x')-(DG|_v)^{-1} \int_0^1 DG|_{x'+t(x-x')}(x-x') \, dt\\
+		&= (DG|_v)^{-1} \int_0^1 (DG|_v-DG|_{x'+t(x-x')})(x-x') \, dt \tag{5.2'} \label{eq:5.2'}
+	\end{align*}
+	\[
+		\Rightarrow \; \norm{H(x)-H(x')} \leq \gamma L(2\gamma\epsilon) \norm{x-x'} \leq \frac{1}{2} \norm{x-x'}
+	\]
+	also $H$ Kontraktion auf $\bar B$.
+	$\stackrel{\text{BFPS}}{\Rightarrow}$ es existiert eindeutiger Fixpunkt $u \in \bar B$.
 
-\begin{align}
-	\label{eq:5.1}
-	a + b = c\\
-	\label{eq:5.2}
-	a + b = c\\
-	\label{eq:5.2'}
-	a + b = c \tag{5.2'}\\
-	\label{eq:5.3}
-	a + b = c\\
-	\label{eq:5.4}
-	a + b = c\\
-\end{align}
+	Mit Störungssatz \ref{5.3} ist $DG|_u$ invertierbar:
+	\[
+		DG|_u = \underbrace{DG|_v}_{''A''} + \underbrace{(DG|_u-DG|_v)}_{''B''}
+	\]
+	und
+	\[
+		\norm{(DG|_v)^{-1}(DG|_u-DG|_v)}_{X;X} \leq \gamma L(2\gamma\epsilon) \leq \frac{1}{2}
+	\]
+	\[
+		\Rightarrow \; \norm{(DG|_u)^{-1}}_{Y;X} \leq \frac{1}{1-\frac{1}{2}}\gamma = 2\gamma
+	\]
+	\begin{align*}
+		u-x &= H(u)-x \\
+		&= u-(DG|_v)^{-1}G(u)-x\\
+		&=(DG|_v)^{-1}(DG|_v)(u-x)-(DG|_v)^{-1}\overbrace{\left( G(x)+\int_0^1 DG|_{x+t(u-x)}(u-x) \, dt \right)}^{= G(u)}\\
+		&=(DG|_v)^{-1} \left[-G(x)-\int_0^1 (DG|_v-DG|_{x+t(u-x)})(u-x) \, dt \right]
+	\end{align*}
+	\[
+		\Rightarrow \; \norm{u-x} \leq \gamma [\norm{G(x)}+L(2\gamma\epsilon)\norm{u-x}]
+	\]
+	\[
+		\Rightarrow \; \underbrace{(1-\overbrace{\gamma L(2\gamma\epsilon)}^{\leq \frac{1}{2}}) \norm{u-x}} \leq \gamma \norm{G(x)} \quad \Rightarrow \quad \norm{u-x} \leq 2 \gamma \norm{G(x)}
+	\]
+\end{proof}
+
+Dieser Satz ist für unser $\prob$ anwendbar wegen der Annahme der Wohlgestelltheit der Linearisierungen \eqref{eq:5.1}:
+
+\begin{kor}[Lokale Existenz und Eindeutigkeit für $\prob$] \label{5.5}
+	Sei $u_N(\mu)$ eine Lösung für $\rprob$.
+	Setze duale Norm des Residuums
+	\begin{equation}
+		\epsilon := \norm{F(u_N)}_{X'} = \norm{a(u_N,u_N,\pdot;\mu)+b(u_N,\pdot)-f(\pdot)}_{X'}
+		\label{eq:5.3}
+	\end{equation}
+	und verallgemeinerte inf-sup Konstante
+	\[
+		\beta_{u_N}(\mu) := \norm{(DF|_{u_N})^{-1}}_{X';X}^{-1} \geq \beta(\mu) > 0
+	\]
+	und $L_{DF} := 2\gamma_a \in \R$ Lipschitz-Konstante von $DF$ bzgl.\ $v$: $\norm{DF|_u-DF|_v} \leq L_{DF} \norm{u-v}$.
+	Falls
+	\[
+		\frac{8\epsilon\gamma_a}{\beta_{u_N}^2(\mu)} \leq 1
+	\]
+	so existiert eindeutige $u \in B(u_N,\frac{2\epsilon}{\beta_{u_N}})$ Lösung von $\prob$.
+
+	\begin{proof}
+		$L_{DF} = 2\gamma_a$ ist tatsächlich Lipschitz-Konstante, denn
+		\begin{align*}
+			(DF|_u-DF|_v)(h)(w) &= |2a(u,h,w)+b(h,w)-2a(v,h,w)-b(h,w)|\\
+			&= |2a(u-v,h,w)| \leq 2\gamma_a \norm{u-v}\norm{h}\norm{w}\\
+			\Rightarrow \; \norm{DF|_u-DF|_v}_{X,X'} &= \sup_{h\in X} \sup_{w\in X} \frac{|(DF|_u-DF|_v)(h)(w)|}{\norm{h}\norm{w}} \leq 2\gamma_a \norm{u-v}
+		\end{align*}
+		Überprüfe Bedingung von Satz \ref{5.4} mit $G=F$, $v=u_N$:
+
+		$F$ ist $C^1$ Abbildung ($DF$ stetig auf $X$)
+
+		$DF|_{u_N} \in L(X,X')$ Isomorphismus nach Annahme.
+		\begin{align*}
+			\epsilon &\;= \norm{F(u_N)}_{X'}\\
+			\gamma &:= \norm{(DF|_{u_N})^{-1}}_{X';X} = \frac{1}{\beta_{u_N}}\\
+			L(\alpha) &:= \sup_{x\in\bar B(u_N,\alpha)} \norm{DF|_{u_N}-DF|_x}_{X;X'}\\
+			&\;\leq \sup_{x\in\bar B(u_N,\alpha)} L_{DF} \norm{u_N-x} = L_{DF} \alpha = 2\gamma_a \alpha\\
+			2\gamma L(2\gamma\epsilon) &\;\leq 2\gamma L_{DF} \cdot 2\gamma\epsilon = \frac{4L_{DF}\epsilon}{\beta_{u_N}^2} = \frac{8\epsilon\gamma_a}{\beta_{u_N}^2} \leq 1
+		\end{align*}
+		$\stackrel{\ref{5.4}}{\Rightarrow}$ existiert eindeutige $u \in \bar B(u_N,2\gamma\epsilon)$ Lösung von $F(u)=0$.
+	\end{proof}
+\end{kor}
+
+\begin{bem}
+	Mit untere Schranke $0 < \beta_{LB}(\mu) \leq \beta_{u_N}(\mu)$ hat man mit obigem also auch Fehlerschätzer $\norm{u-u_N} \leq \frac{2\epsilon}{\beta_{LB}}$.
+	Dies lässt sich jedoch noch wesentlich verbessern und Effektivitäten beweisen:
+\end{bem}
+
+\begin{satz}[A-posteriori Fehlerschätzer und Effektivitätsschranke] \label{5.6}
+	Sei $u_N$ Lösung von $\rprob$ aus Definition \ref{5.2} und $\beta_{LB} \leq \beta_{u_N}$, $\epsilon$ aus \eqref{eq:5.3} duale Norm des Residuums, $\epsilon := \norm{F(u_N;\mu)}_{X'}$.
+	Sei
+	\[
+		\tau := \frac{4\epsilon L_{DF}}{\beta_{LB}^2} = \frac{8 \epsilon\gamma_a}{\beta_{LB}^2} \leq 1
+	\]
+	und $u$ eindeutige Lösung von $\prob$ in $B(u_N,\frac{2\epsilon}{\beta_{u_N}})$ gemäß Korollar \ref{5.5}. Dann gilt
+	\[
+		\norm{u-u_N} \leq \Delta_N := \frac{\beta_{LB}}{2 L_{DF}} (1-\sqrt{1-\tau})
+	\]
+	\[
+		\eta_N := \frac{\Delta_N}{\norm{u-u_N}} \leq 4 \frac{\gamma_{DF}(u_N)}{\beta_{LB}}
+	\]
+	mit $L_{DF} = 2\gamma_a$ und
+	\[
+		\gamma_{DF} := 2\gamma_a \norm{u_N}+\gamma_b \geq \norm{DF|_{u_N}}_{X;X'}
+	\]
+\end{satz}
 
 \begin{bem} \beginwithlistbem
 	\begin{itemize}
 		\item $\beta_{LB}$ im Zähler sieht zunächst seltsam aus. Weil $\tau \in [0,1]$ ist $(1-\sqrt{1-\tau}) \in [0,1]$, also insbesondere $\sqrt{(\pdot)}$ wohldefiniert und
-			\[
+			\begin{equation} \label{eq:5.4}
 				\Delta_N \leq \frac{\beta_{LB}}{2 L_{DF}} \tau = \frac{\beta_{LB}}{2 L_{DF}} \cdot \frac{4 \epsilon L_{DF}}{\beta_{LB}^2} = \frac{2 \epsilon}{\beta_{LB}}
-			\]
+			\end{equation}
 			Also gewohnte Struktur: Residuum durch Stabilitätskonstante, jedoch Faktor 2.
 	\end{itemize}
 \end{bem}

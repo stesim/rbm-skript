@@ -677,7 +677,7 @@ Sei $A(\mu)$ suprimierender Operator aus \ref{4.12}. Falls für alle $v \in X_{N
 		A_N \underline{u}_N = \underline{f}_N \text{ mit } (A_N)_{ij} &= a(\phi_j,\overline{\phi}_i) = a(\phi_j, A(\mu)\phi_i) \\
 		&= \dotp{A\phi_j}{A\phi_i} = \tilde{a} (\phi_j,\phi_i)
 		\end{align*}
-		also RB-?? für $\tilde{a}$. Analog $(\underline{f}_N)_i = f(\overline{\phi}_i;\mu) = f(A\phi_i) = \tilde{f}(\phi;\mu)$ mit $\tilde{f} := f \circ A$
+		also RB-Matrix für $\tilde{a}$. Analog $(\underline{f}_N)_i = f(\overline{\phi}_i;\mu) = f(A\phi_i) = \tilde{f}(\phi;\mu)$ mit $\tilde{f} := f \circ A$
 		\item Darstellung durch FEM-Matrizen: Seien $\underline{A}, K, \underline{\Phi_N}, \underline{f}$ die bekannten FEM-Matrizen/Vektoren aus §\ref{sec-3.3}.
 		
 		$A\phi_j$ ist Riesz-Repräsentant von $a(\phi_j,\pdot)$
@@ -687,5 +687,37 @@ Sei $A(\mu)$ suprimierender Operator aus \ref{4.12}. Falls für alle $v \in X_{N
 		$A_N= (\dotp{A\phi_j}{A\phi_i}_{i,j=1}^N = \underline{\Phi}_N^T \underline{A}^T K^{-1} \underline{A} \, \underline{\Phi}_N$
 		
 		analog $\underline{f}_N = \underline{\Phi}_N^T \underline{A} K^{-1} \underline{f}$
+		\item Überraschung: RB-System entspricht Gauß'schen Normalengleichungen:
+
+			Mit $\underline{\hat A} := K^{-\frac{1}{2}} \underline{A} \, \underline{\Phi}_N \in \R^{H \times N}$ und $\underline{\hat f} := K^{-\frac{1}{2}} \underline{f}(\mu) \in \R^H$ gilt
+			\[
+				A_N \underline{u}_N = \underline{f}_N \quad \Leftrightarrow \quad \underline{\hat A}^T \underline{\hat A} \, \underline{u}_N = \hat A^T \underline{\hat f}
+			\]
+			Aus NLA/Numerik wissen: dies entspricht Ausgleichsproblem:
+			\begin{align*}
+				\underline{u}_N &= \arg \min_{\underline{v} \in \R^N} \norm{\hat A \underline{v} - \hat f}^2 \\
+				&= \arg \min_{\underline{v} \in \R^N} \left( \underline{A} \, \underline{\Phi}_N \underline{v} - \underline{f} \right)^T K^{-1} \left( \underline{A} \, \underline{\Phi}_N \underline{v} - \underline{f} \right)
+			\end{align*}
+			Riesz-Repräsentant des Residuums $v_r \in X_1$ hat FEM-Koeffizienten-Vektor
+			\[
+				\underline{v}_r := K^{-1} \left( \underline{f} - \underline{A} \Phi_N \underline{v} \right)
+			\]
+			also
+			\[
+				\underline{u}_N = \arg\min_{\underline{v} \in \R^N} \underline{v}_r K \underline{v}_r = \arg\min_{\underline{v} \in \R^N} \arg\min_{\underline{v} \in \R^N} \dotp{v_r,v_r} = \arg\min_{v \in X_{N,1}} \norm{f(\pdot;\mu)-a(v,\pdot;\mu)}_{X_2'}^2
+			\]
+			also entspricht Wahl von $X_{N,2}$ via Suprimieren einem \emph{Minimum-Residuum Ansatz}.
+		\item Heuristische Vereinfachung: Min-Res Ansatz hat Online-Komplexität $\O(Q_a^2 + Q_a Q_f)$ für Lösen des Systems, also teuer falls $Q_a$, $Q_f$ nicht sehr klein.
+
+			Alternative: Seien $X_{N,1} = \spn{\phi_1,\ldots,\phi_N} = \spn{\set{u(\mu_i)}_{i=1}^N}$. Wähle $X_{N,2} := \spn\set{A(\mu_i) u(\mu_i)}_{i=1}^N$. Dann ist immerhin für alle $v = u(\mu) \Rightarrow A(\mu) v \in X_{N,2}$ für $\mu = \mu_i$, $i = 1,\ldots,N$. Bedingung in Satz \ref{4.20} gilt also für ein paar $v \in X_{N,1}$, aber leider für übriges $v \in X_{N,1}$ unklar. Aber Online-Komplexität ist $\O(Q_a+Q_f)$, also besser als für Min-Res.
 		\end{itemize}
 \end{bem}
+
+\subsection*{Successive Constraint Method (SCM)}
+
+\subsubsection*{Motivation:}
+\begin{itemize}
+	\item Wir benötigen untere Schranken $\beta_{LB}(\mu)$ an inf-sup Konstante.
+	\item Wir haben gesehen, dass $\beta(\mu) = \sqrt{\tilde a(\mu)}$ in \eqref{eq:4.7}, es reicht also für allgemeine koerzive Probleme untere Schranke $\alpha_{LB}(\mu)$ an Koerzivitätskonstante berechnen zu können.
+	\item Min-$\mathrm\Theta$-Verfahren aus \ref{3.27} hat leider starke Voraussetzungen, allgemeines Verfahren erforderlich.
+\end{itemize}<++>

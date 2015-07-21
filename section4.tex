@@ -14,14 +14,14 @@ Es folgt zunächst eine allgemeine Approximationsmethode für parametrische Funk
 	\item § \ref{sec-3} zeigte Relevanz der separierbaren Parameterabhängigkeit für effiziente Offline/Online-Zerlegung und Glattheit der Lösung $u(\mu)$ bzgl. $\mu$.
 	\item Gesucht: Approximationsverfahren für parametrische Funktion
 	\[
-		g: \Omega \times \mathcal{P} \rightarrow \R
+		g: \Omega \times \p \rightarrow \R
 	\]
 	der Form
 	\[
 		g(x;\mu) \approx I_{\mu} (g(\pdot;\mu))(x) = \sum\limits_{m=1}^M \Theta_g^m(\mu) g^m(x)
 	\]
 	mit skalaren Funktionen $\Theta_g^m(\mu)$ und ``kollaterale reduzierter Basis'' $Q_{\mu} = \{g^m\}_{m=1}^M$
-	\item Statt allg. approx. Räume (z.\,B. FEM-Räume, zu hohe Dimension) oder Taylor-Ansatz (nur lokale Approx.) wird wieder Snapshot-basierter Ansatz gewählt, d.\,h. $Q_M \subset \op{span} \{g(\pdot,\mu)|_{\mu \in S_{train} \subset \mathcal{P}} \}$
+	\item Statt allg. approx. Räume (z.\,B. FEM-Räume, zu hohe Dimension) oder Taylor-Ansatz (nur lokale Approx.) wird wieder Snapshot-basierter Ansatz gewählt, d.\,h. $Q_M \subset \op{span} \{g(\pdot,\mu)|_{\mu \in S_{train} \subset \p} \}$
 	\item Die empirische Interpolation ist eine Mögllichkeit. Details finden sich in
 	\begin{itemize}
 		\item [BMNP04] Barrault, Maday, Nguyen, Patera: An ‘empirical interpolation’ method: application to efficient reduced-basis discretization of partial differential equations
@@ -279,7 +279,7 @@ Nach Konstruktion ist $Q_M \subseteq \op{span}(g)$, also $f(\underline{q}_i) = 0
 Falls eine Koeffizientenfunktion nicht separierbar parametrisch ist, erzeuge mittels EI eine separierbar parametrische Approximation.
 
 \begin{defn}[EI für Funktionale]
-Sie $f(v; \mu) = \int_{\Omega} g(x, \mu) v(x) dx$ parametrisch stetige Linearform, $g(\pdot; \mu) \in C^0 (\bar{\Omega},\R)$. Wähle $S_{train} \subset \mathcal{P}$ endliche Teilmenge, setze $G:= \{ g(\pdot;\mu) | \mu \in S_{train} \}$ Konstruiere EI-Basis $Q_M = \{q^i\}_{i=1}^M$ und EI-Punkte $T_M = \{x_i\}_{i=1}^M$ gemäß Definition \ref{4.1}. Dann ist $g(x;\mu) \approx \sum\limits_{m=1}^M \Theta^m(\mu)q^m(x)$ also
+Sie $f(v; \mu) = \int_{\Omega} g(x, \mu) v(x) dx$ parametrisch stetige Linearform, $g(\pdot; \mu) \in C^0 (\bar{\Omega},\R)$. Wähle $S_{train} \subset \p$ endliche Teilmenge, setze $G:= \{ g(\pdot;\mu) | \mu \in S_{train} \}$ Konstruiere EI-Basis $Q_M = \{q^i\}_{i=1}^M$ und EI-Punkte $T_M = \{x_i\}_{i=1}^M$ gemäß Definition \ref{4.1}. Dann ist $g(x;\mu) \approx \sum\limits_{m=1}^M \Theta^m(\mu)q^m(x)$ also
 \[
 	f(v;\mu) \approx \tilde{f}(v;\mu) := \sum\limits_{m=1}^M \Theta^m (\mu) \underbrace{\int\limits_{\Omega} q^m(x)v(x) dx}_{\tilde{f}^m(v)} =: \sum\limits_{m=1}^M \Theta^m(\mu) \tilde{f}^m(v)
 \] 
@@ -293,15 +293,15 @@ Mit Komponenten $\{\tilde{f}^m\}_{m=1}^M$ und Koeffizienten $(\Theta^1(\mu), \do
 	\begin{itemize}
 		\item Analoge Vorgehensweise bei Ausgabefunktional oder Bilinearform möglich. Anschließend Offline/Online Zerlegung wie in §\ref{sec-3} realisierbar.
 		\item Fehlerschätzer aus §\ref{sec-3} sind mit EI  im Allgemeinen nicht rigoros, da der Interpolationsfehler zusätzlich berücksichtigt werden muss. Falls $g(\pdot;\mu) \in \op{span} (Q_M)$ (starke Annahme) so sind Schätzer weiterhin rigoros.
-		\item Falls Interpolatinosfehler $\neq 0$, aber Fehlerschätzer für EI vorhanden, so kann mittels eines Hilfsproblems (hochdimensionales interpoliertes Problem) $(\tilde{\mathcal{P}}(\mu))$ Fehlerkontrolle für das interpolierte und reduzierte Problem realisiert werden. (wir ignorieren wieder Ausgabe im Folgenden).
+		\item Falls Interpolatinosfehler $\neq 0$, aber Fehlerschätzer für EI vorhanden, so kann mittels eines Hilfsproblems (hochdimensionales interpoliertes Problem) $(\tilde{\p}(\mu))$ Fehlerkontrolle für das interpolierte und reduzierte Problem realisiert werden. (wir ignorieren wieder Ausgabe im Folgenden).
 	\end{itemize}
 \end{bem}
 
 \begin{defn}[Interpolierte Probleme $(\tilde{P}(\mu))$, $(\tilde{P}_N(\mu))$] \label{4.8}
-Sei eine Instanz von $(P(\mu))$ gegeben mit $a(\pdot,\pdot;\mu)$ koerziv. Seien Approximationen $\tilde{a}(\pdot,\pdot;\mu)$ und $\tilde{f}(\pdot;\mu)$ bilinear/linear gegeben mit $\tilde{a}$, $\tilde{f}$ separierbar parametrisch und
+Sei eine Instanz von $\prob$ gegeben mit $a(\pdot,\pdot;\mu)$ koerziv. Seien Approximationen $\tilde{a}(\pdot,\pdot;\mu)$ und $\tilde{f}(\pdot;\mu)$ bilinear/linear gegeben mit $\tilde{a}$, $\tilde{f}$ separierbar parametrisch und
 \begin{align*}
-	| a(u,v;\mu) - \tilde{a}(u,v;\mu) | &\leq \epsilon_a ||u|| ||v|| &\forall u,v \in X, \mu \in \mathcal{P} \\
-	|f(v;\mu) - \tilde{f}(v;\mu) | &\leq \epsilon_f ||v|| &\forall v \in X, \mu \in \mathcal{P}
+	| a(u,v;\mu) - \tilde{a}(u,v;\mu) | &\leq \epsilon_a ||u|| ||v|| &\forall u,v \in X, \mu \in \p \\
+	|f(v;\mu) - \tilde{f}(v;\mu) | &\leq \epsilon_f ||v|| &\forall v \in X, \mu \in \p
 \end{align*} 
 mit möglichen kleinen Approximationsfehlern $\epsilon_a$, $\epsilon_f \geq 0$.
 
@@ -320,7 +320,7 @@ für beliebige gewählten $X_N \subset X$.
 Sie $X=H_0^1(\Omega)$ und $f(v) = \int_{\Omega} q(x) v(x) dx$ mit $q \in L^1(\Omega) \cap C^0(\Omega)$ und $q_M$ EI von $q$, damit $\tilde{f}(v) := \int_{\Omega} q_M(x)v(x) dx$
 \begin{align*}
 & \Rightarrow |f(v) - \tilde{f}(v)| = | \int_{\Omega} (q(x) - q_M(x)) v(x) dx | \overset{CS}{\leq} || q - q_M||_{L^2} \underbrace{||v||_{L^2}}_{\leq ||v||_{H_0^1}} \overset{\ref{4.5}}{\leq} \Delta_{\mu;\mu;2} (q) ||v|| \\
-& \Rightarrow \epsilon_f := \Delta_{\mu;\mu;2} (q) \text{ (bzw. Supremum über } \mathcal{P} \text{ falls } q \text{ parametrisch)}
+& \Rightarrow \epsilon_f := \Delta_{\mu;\mu;2} (q) \text{ (bzw. Supremum über } \p \text{ falls } q \text{ parametrisch)}
 \end{align*}
 Sei z.\,B. $a(u,v) = \int_{\Omega} \kappa(x;\mu) u(x) v(x) dx$ mit $\kappa(x;\mu) \in C^0(\bar{\Omega})$ und $\kappa_{\mu}$ EI von $\kappa$
 \[
@@ -328,7 +328,7 @@ Sei z.\,B. $a(u,v) = \int_{\Omega} \kappa(x;\mu) u(x) v(x) dx$ mit $\kappa(x;\mu
 \]
 \begin{align*}
 	& \Rightarrow |a(u,v) - \tilde{a}(u,v) | \leq || \kappa - \kappa_{\mu}||_{\infty} \underbrace{|\int_{\Omega} u(x) v(x) dx|}_{\leq ||u||_{L^2} ||v||_{L^2}} \leq || u||_{H_0^1} ||v||_{H_0^1} \Delta_{\mu;\mu;\infty} (\kappa) \\
-	& \Rightarrow \epsilon_a := \sup\limits_{\mu \in \mathcal{P}} \Delta_{\mu;\mu;\infty} (\kappa(\pdot;\mu))
+	& \Rightarrow \epsilon_a := \sup\limits_{\mu \in \p} \Delta_{\mu;\mu;\infty} (\kappa(\pdot;\mu))
 \end{align*}
 \end{bem}
 
@@ -366,7 +366,7 @@ Dreiecksungleichung $||u-\tilde{u}_N|| \leq || u - \tilde{u}|| + ||\tilde{u} - \
 \end{bem}
 
 \begin{kor}[EI-RB Fehlerschranke]
-Seien $(P(\mu))$, $(\tilde{P}(\mu))$, $(\tilde{P}_N(\mu))$ wie in Definition \ref{4.8} gegeben und $\epsilon_a < \alpha$ Dann gilt die Fehlerschranke
+Seien $\prob$, $(\tilde{P}(\mu))$, $(\tilde{P}_N(\mu))$ wie in Definition \ref{4.8} gegeben und $\epsilon_a < \alpha$ Dann gilt die Fehlerschranke
 \[
 	||u(\mu) - u_N(\mu) || \leq \Delta_{EI} (\mu) + \Delta_N (\mu)
 \]
@@ -535,8 +535,8 @@ Sei $X_1 = \R^m, X_2 = \R^n, A \in \R^{n \times m}$, $m \leq n$ und $a(u,v) := \
 
 RB-Methode folgt mit \emph{Petrov Galerkin-Projektion}
 
-\begin{defn}[$(P(\mu)), (P_N(\mu))$ für inf-sup stabilen Fall] \label{4.15}
-Sei $a: X_1 \times X_2 \times \mathcal{P} \rightarrow \R$ stetig param. Bilinearform, $a(\pdot,\pdot;\mu)$ inf-sup stabil mit $\beta(\mu)$ inf-sup Konstante $f(\pdot;\mu)$ stetig param. Linearform. Zu $\mu \in \mathcal{P}$ ist $u(ßmu) \in X_1$ Lösung des vollen Problems
+\begin{defn}[$\prob, (P_N(\mu))$ für inf-sup stabilen Fall] \label{4.15}
+Sei $a: X_1 \times X_2 \times \p \rightarrow \R$ stetig param. Bilinearform, $a(\pdot,\pdot;\mu)$ inf-sup stabil mit $\beta(\mu)$ inf-sup Konstante $f(\pdot;\mu)$ stetig param. Linearform. Zu $\mu \in \p$ ist $u(ßmu) \in X_1$ Lösung des vollen Problems
 \[
 	a(u(\mu),v;\mu) = f(v;\mu) \qquad \forall \,\, v \in X_2
 \]

@@ -203,7 +203,47 @@ Subskript wird weggelassen falls keine Verwechslungsgefahr besteht.
 \end{bem}
 
 \begin{bsp}[Thermischer Block] \label{2.10}
-	TODO
+Sei $B_1, B_2 \in N$ und wie in Abbildung \ref{fig:ThermischerBlock} 
+
+\begin{figure}[H]
+  \centering\small
+    \includegraphics[width = 0.4 \textwidth]{Bilder/ThermischerBlock.png}
+  \caption{Skizze des Thermischen Blocks}{(aus dem Online-Skript von Prof. Dr. Haasdonk zu Reduzierte Basen 2015)}
+  \label{fig:ThermischerBlock}
+\end{figure}
+
+\begin{itemize}
+	\item $(0,1)^2=: \Omega$ zerlegt in $B_1 \cdot B_2 =: p$ kongruente Rechtecke
+	\item $\p := [\mu_{min}, \mu_{max}]^p \subset \R^p$ Parameterbereich mit $0 < \mu_{min} < \mu_{max}$
+	\item $\mu = (\mu_1,\dots,\mu_p)^T \in \p$ Vektor aus Wärmeleitungskoeffizienten der Teilgebiete, $\kappa(x;\mu)$ stückweise konstante Wärmeleitfähigkeit
+	\[
+		\kappa(x;\mu) := \sum\limits_{q=1}^p \mu_q \cdot \chi_{\Omega_q}(x)
+	\]
+	\item elliptische PD mit Dirichlet- \& Neumann Randbedingungen:
+	\begin{align*}
+	- \nabla \cdot (\kappa(x;\mu) \nabla u(x;\mu)) &= 0 &\text{ für } x \in \Omega \\
+	u (x;\mu) &= 0 &\text{ für } x \in \Gamma_D \\
+	\kappa(x;\mu) \nabla u(x;\mu) \cdot n(x) &= i &\text{ für } x \in \Gamma_{N,i} \,\, , \, \, i=0,1
+	\end{align*}
+	Anschauung: ``Kühlung'' auf $u=0$ auf $\Gamma_D$, ``Isolierung'' an $\Gamma_{N,0}$ und Einheits-Wärmefluss auf $\Gamma_{N,1}$, keine Wärmequellen.
+	
+	schwache Form: gesucht $u(\mu) \in H^1_{\Gamma_D}(\Omega) := \{u \in H^1(\Omega) | u_{|\Gamma_D}=0\}$ s.\,d.
+	\[
+		\int_{\Omega} \kappa(x;\mu) \nabla u(x;\mu) \cdot \nabla v(x) dx = \int_{\Gamma_{N,1}} v(x) dx \qquad \forall \, v \in H^1_{\Gamma_D}(\Omega)
+	\]
+	\item Ausgabe: Mittlere Temperatur auf $\Gamma_{N,1}$
+	\[
+		s(\mu) := \int_{\Gamma_{N,1}} u(x;\mu) dx
+	\]
+	\item Man kann zeigen, dass dies ein Problem von Typ $\prob$ darstellt. Insbesondere ist $a(\pdot,\pdot;\mu)$ separierbar parametrische stetige Bilinearform, gleichmäßig beschränkt, glm. koerziv und Lipschitz-stetig bzgl. $\mu$. Ebenso ist $f(\pdot;\mu)$ eine separierbar parametrische stetige Linearform, gleichmäßig beschränkt und Lipschitz-stetig bzgl. $\mu$. $\rightarrow$ Übung
+	\item Modell erlaubt einfache aber interessante Einblicke in Struktur von $\LM$:
+	\begin{enumerate}[1.]
+		\item einfache Lösungsstruktur: Falls $B_1 =1$ (oder $B_1>1$ aber identische $\mu_i$ pro Zeile) besitzt die Lösung horizontale Symmetrie. Man kann zeigen: $u(\mu)$ ist stückweise linear und enthalten in einem $B_2$-dimensionalen (also insbesondere endlichdimensionalen) Teilraum von $H^1_{\Gamma_D}(\Omega)$. (Übung)
+		\item komplexe Lösungsstruktur: Falls $B_1>1$ und $\mu \in \p$ beliebig existieren keine Symmetrien, man findet keinen endlichdimensionalen Raum, der alle $u(\mu)$ enthält
+		\item Parameterredundanz: $\LM$ ist invariant bzgl. Skalierung von $\mu$, d.\,h. falls $u(\mu)$ ist Lösung von $\prob$, so ist $u(c\mu) = \frac{1}{c}u(\mu)$ Lösung von $\prob[c\mu]$.
+	\end{enumerate}
+	\textsf{demo\_detailed\_gui.m}: Beispiele für Parametervariation \& Lösungen. 
+\end{itemize}
 \end{bsp}
 
 \begin{bsp}[Matrixgleichung] \beginwithlist

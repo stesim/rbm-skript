@@ -22,7 +22,7 @@ Wir diskutieren RB-Ansätze für nichtlineare Probleme anhand von ``quadratische
 \subsubsection*{Annahmen:}
 \begin{itemize}
 	\item Seien $a$, $b$, $f$, $l$ stetig mit Stetigkeitskonstanten $\gamma_a(\mu)$, $\gamma_b(\mu)$, $\gamma_f(\mu)$, $\gamma_l(\mu)$ und separierbar parametrisch.
-	\item Seit $a$ symmetrisch bzgl.\ ersten beiden Argumenten: $a(u,v,\pdot;\mu) = a(v,u,\pdot;\mu)$
+	\item Sei $a$ symmetrisch bzgl.\ ersten beiden Argumenten: $a(u,v,\pdot;\mu) = a(v,u,\pdot;\mu)$
 	\item Lokale Wohlgestelltheit der Linearisierung:
 
 		Für alle $\mu \in \p$ existiert $\gamma_u \in \R^+ \cup \set{\infty}$, sodass $\forall u \in B(0,\gamma_u) \subset X$ und alle $g \in X'$ die Gleichung
@@ -186,7 +186,7 @@ Online:
 		\item Satz und Beweis aus Theorem 2.1 in
 
 			Caloz, Rappaz: Numerical Analysis For Nonlinear And Bifurcation Problems. In P.G. Ciarlet and J.L. Lions, ``Handbook of Numerical Analysis Vol. V'', Elsevier '97.
-		\item Anschauung: Falls $v$ approximative Lösung mit genügend kleinem Residuum und $DG$ lokal invertierbar und $DG$ ändert sich nicht zu start, dann muss Lösung $u$ existieren.
+		\item Anschauung: Falls $v$ approximative Lösung mit genügend kleinem Residuum und $DG$ lokal invertierbar und $DG$ ändert sich nicht zu stark, dann muss Lösung $u$ existieren.
 			\begin{figure}[H]
 				\centering\small
 				\includegraphics[width = 0.5 \textwidth]{Bilder/existenz-lokale-inverse.png}
@@ -363,7 +363,7 @@ Dieser Satz ist für unser $\prob$ anwendbar wegen der Annahme der Wohlgestellth
 	Für $\alpha \in [\alpha,\hat\alpha]$ ist $H$ Selbstabbildung und Kontraktion.
 	Für kleinstes $\alpha = \alpha_-$ erhalte beste Schranke, also ex.\ $u \in B(u_N,\alpha_-)$ mit
 	\[
-		\norm{u-u_N} \leq u_N = \alpha_-
+		\norm{u-u_N} \leq \Delta_N = \alpha_-
 	\]
 	Für Effektivitätsschranke setze $e := u-u_N$.
 	Sei $v_r \in X$ Riesz-Repräsentant des Residuums

@@ -75,7 +75,7 @@
 	(auch wenn $a$ kein Skalarprodukt)
 \end{bem}
 
-\begin{satz}[Existenz und Eideutigkeit für $\rprob$]
+\begin{satz}[Existenz und Eindeutigkeit für $\rprob$]
 	Zu $\mu \in \p$ ex. eindeutige Lösung $u_N(\mu) \in X_N$ und RB-Ausgabe $s_n(\mu) \in \R$ von $\rprob$.
 	Diese sind beschränkt
 	\begin{align*}
@@ -105,9 +105,9 @@
 	Sei $\Phi_N = \set{\phi_1,\cdots,\phi_N}$ eine reduzierte Basis für $X_N$.
 	Für $\mu \in \p$,
 	\begin{align*}
-		A_N(\mu) &:= \seq{a(\phi_j,\phi_i;\mu)}_{i,j=1}^N & \in \R^{N \times N}\\
-		\ubar l_N(\mu) &:= \seq{l(\phi_i;\mu)}_{i=1}^N & \in \R^N\\
-		\ubar f_N(\mu) &:= \seq{f(\phi_i;\mu)}_{i=1}^N & \in \R^N
+		A_N(\mu) &:= \seq{a(\phi_j,\phi_i;\mu)}_{i,j=1}^N &\in \R^{N \times N}\\
+		\ubar l_N(\mu) &:= \seq{l(\phi_i;\mu)}_{i=1}^N &\in \R^N\\
+		\ubar f_N(\mu) &:= \seq{f(\phi_i;\mu)}_{i=1}^N &\in \R^N
 	\end{align*}
 	und $\ubar u_N = \seq{u_{N,i}}_{i=1}^N \in \R^N$ als Lösung von
 	\begin{equation}
@@ -197,7 +197,7 @@
 \begin{satz}[Céa, Beziehung zur Bestapproximation] \label{3.9}
 	Für alle $\mu \in \p$ gilt
 	\[
-		\norm{u(\mu)-u_N(\mu)} \leq \frac{\gamma(\mu)}{\alpha(\mu)} \inf_{v \in X} \norm{u-v}
+		\norm{u(\mu)-u_N(\mu)} \leq \frac{\gamma(\mu)}{\alpha(\mu)} \inf_{v \in X_N} \norm{u-v}
 	\]
 
 	\begin{proof}
@@ -256,7 +256,7 @@
 				\begin{align*}
 					s(\mu) - s_N(\mu) &= l(u)-l(u_N) \stackrel{f=l}{=} f(u) - f(u_N) = f(u-u_N)\\
 					&= a(u,u-u_N) - \underbrace{a(u_N,u-u_N)}_{=0 \text{ (Gal.-Orth./Symm.)}} = \norm{u-u_N}_\mu^2\\
-					&\stackrel{\ref{3.3}}{=} \inf_{v \in X_N} \norm{u-v}_\mu^2\\
+					&\stackrel{(\ref{3.3})}{=} \inf_{v \in X_N} \norm{u-v}_\mu^2\\
 					&\stackrel{\ref{2.5}}{\leq} \gamma \inf_{v \in X_N} \norm{u-v}^2
 				\end{align*}
 				Also insbesondere $s-s_N = \norm{u-u_N}_\mu^2 \geq 0$.
@@ -498,7 +498,7 @@
 			Falls $a(\pdot,\pdot;\mu)$ symmetrisch, gilt sogar $\eta_N^{en}(\mu) \leq \sqrt{\frac{\gamma_{UB}(\mu)}{\alpha_{LB}(\mu)}}$
 		\item
 			\[
-				\eta_N(\mu) := \frac{\Delta_N(\mu)}{\norm{e}_\mu} \leq \frac{\gamma_{UB}(\mu)}{\alpha_{LB}(\mu)}
+				\eta_N(\mu) := \frac{\Delta_N(\mu)}{\norm{e}} \leq \frac{\gamma_{UB}(\mu)}{\alpha_{LB}(\mu)}
 			\]
 	\end{enumerate}
 
@@ -766,7 +766,7 @@ Online-Phase:
 \label{3.21}
 (Offline:) Nach Konstruktion einer Basis $\Phi_N = \{\phi_1,...,\phi_N\}$ berechne parameter-unabhängige Komponenten-Matrizen \& Vektoren
 \[
-	A_N^q := (a^q(\phi_j,\phi_i))_{i,j = 1}^N \in \R^{N \times N} \, , \qquad q = 1,...,Q_n
+	A_N^q := (a^q(\phi_j,\phi_i))_{i,j = 1}^N \in \R^{N \times N} \, , \qquad q = 1,...,Q_a
 \]
 \[
 	\underbar f_N^q := (f^q(\phi_i))_{i=1}^N \, , \qquad 	\underbar l_N^q := (l^q(\phi_i))_{i=1}^N \in \R^N \, , \qquad q = 1,...,Q_f/Q_l
@@ -795,7 +795,7 @@ Dies liefert genau das diskrete System $A_N(\mu) \underbar u_N = f_N(\mu)$ aus \
 	Dann erhalte reduzierten Komponenten durch Matrix-Multi
 	% Ich musste für die griechischen Buchstaben leider underline verwenden. 
 	\[
-		A_N^q := \underline{\Phi}_N^T A^q \, ; \, \underbar f_N^q := \underline{\Phi}_N^T \underbar f^q \, ; \, \underbar l_N^q := \underline{\Phi}_N^T l^q
+		A_N^q := \underline{\Phi}_N^T A^q \underline{\Phi}_N \, ; \, \underbar f_N^q := \underline{\Phi}_N^T \underbar f^q \, ; \, \underbar l_N^q := \underline{\Phi}_N^T l^q
 	\]
 \end{bem}
 
@@ -886,7 +886,7 @@ Offensichtlich Berechnung von Riesz-Repräsentant notwendig, dies geschieht durc
 \begin{proof}
 	Für jedes $u = \sum_{i=1}^H u_i \, \psi_i \in X$ mit Koeffizientenvektor $\underbar u = (u_i)_{i=1}^H$ erhalten wir
 	\[
-		g(u) = g(\sum u_i \, \psi_i) = \sum u_i \, g(\psi_i) = \underbar u^T \underline{g} \overset{\ref{eq:3.5}}{=} \underbar u^T K \underbar v = \dotp{u}{v_g}
+		g(u) = g(\sum u_i \, \psi_i) = \sum u_i \, g(\psi_i) = \underbar u^T \underline{g} \overset{(\ref{eq:3.5})}{=} \underbar u^T K \underbar v = \dotp{u}{v_g}
 	\] 
 \end{proof}
 
@@ -1050,7 +1050,23 @@ In gewissen Fällen kann eine größere und damit bessere Schranke angegeben wer
 
 \paragraph{demos\_chapter3(4)} Beispiel-Lauf von Reduktionsschritten in RBmatlab.
 
+\subsection{Basisgenerierung}
+\label{sec-3.4}
+
+\subsubsection*{Approximation durch lineare Unterräume}
+
+Motivation für Snapshot-basierte Verfahren:
 \begin{itemize}
+	\item Bestimmung eines möglichst guten $X_N$, welches $\LM$ global approximiert.
+	\item Formulierung durch Optimierungsproblem, z.B.\ minimiere maximalen Fehler in Energienorm
+		\begin{equation}
+			\min_{\stackrel{Y \subset X}{\dim Y = N}} \max_{\mu \in \p} \norm{u(\mu)-u_N(\mu)}_\mu \label{eq:3.7}
+		\end{equation} 
+		oder Minimum des mittleren quadratischen Projektionsfehlers
+		\begin{equation}
+			\min_{\stackrel{Y \subset X}{\dim Y = N}} \int_\p \norm{u(\mu)-P_Y u(\mu)}^2 \,\mathrm{d}\mu  \label{eq:3.8}
+		\end{equation} 
+		oder beliebiges anderes Distanzmaß.
 	\item Vorteilhafte Eigenschaften einer Basis $\Phi_N$: orthogonal für numerische Stabilität, Hierarchie, so dass Basisvektoren nach Relevanz geordnet sind, d.h. $(X_{N'})_{N'=1}^{N}$, $X_{N'} = \op{span}\{\phi_1, \dots, \phi_{N'}\}$ soll Sequenz von ``optimalen'' Räumen sein, damit durch Variation von $N'$ eine Fehlerkontrolle erlaubt.
 	\item Probleme (\ref{eq:3.7}), (\ref{eq:3.8}) stellen schwierige nichtlineare Optimierungsprobleme dar. Um zu praktischer Basisgenerierung zu kommen, werden verschiedene Vereinfachungen gemacht:
 	\begin{itemize}
@@ -1147,25 +1163,6 @@ Damit können viele lineare Operationen auf $\{u_i\}_{i=1}^n$ durch geeignete Op
 \]
 
 \end{bem}
-
-\subsection{Basisgenerierung}
-\label{sec-3.4}
-
-\subsubsection*{Approximation durch lineare Unterräume}
-
-Motivation für Snapshot-basierte Verfahren:
-\begin{itemize}
-	\item Bestimmung eines möglichst guten $X_N$, welches $\LM$ global approximiert.
-	\item Formulierung durch Optimierungsproblem, z.B.\ minimiere maximalen Fehler in Energienorm
-		\begin{equation}
-			\min_{\stackrel{Y \subset X}{\dim Y = N}} \max_{\mu \in \p} \norm{u(\mu)-u_N(\mu)}_\mu \label{eq:3.7}
-		\end{equation} 
-		oder Minimum des mittleren quadratischen Projektionsfehlers
-		\begin{equation}
-			\min_{\stackrel{Y \subset X}{\dim Y = N}} \int_\p \norm{u(\mu)-P_Y u(\mu)}^2 \,\mathrm{d}\mu  \label{eq:3.8}
-		\end{equation} 
-		oder beliebiges anderes Distanzmaß.
-\end{itemize}
 
 Wir haben bereits gesehen, dass in bestimmten Fällen fehlerfreie Approximation durch geeignete RB-Räume möglich ist
 
@@ -1271,7 +1268,7 @@ Die folgende Aussage basiert auf Maday \& Patera \& Turinici: Global a priori co
 	\[
 		\inf_{v\in X_N} \norm{u(\mu)-v} \leq C \cdot e^{\frac{-N-1}{N_0-1}} \quad \forall \mu \in \p, N \geq N_0
 	\]
-	also für Kulmogorov $N$-Weite
+	also für Kolmogorov $N$-Weite
 	\[
 		d_N(\LM) \leq C \cdot e^\frac{-N-1}{N_0-1} \quad \forall N \geq N_0
 	\]
@@ -1693,7 +1690,7 @@ Zu $\{u_i\}_{i=1}^n$ mit $R$ aus \ref{3.45} existiert orthonormierte Menge $\{\p
 \end{align}
 Für $m = 1,\dots,n'$ definieren $\Phi_{POD} := \Phi_{POD,m} := \{\phi_i\}_{i=1}^m$ als \emph{POD-Basis} und $X_{POD} := X_{POD,m} := \op{span} \Phi_{POD,m}$ als POD-Raum.
 \begin{proof}
-	$R$ hat endlich dimensionales Bild, also $\overline{R(B_1(0))}$ abgeschlossen, beschränkt im endlich dimensionalen Raum, also kompakt. $R$ ist selbstadjungiert, denn $\dotp{Ru}{v} = \frac{1}{n} \sum\limits_{i=1}^n \dotp{u_u}{u} \dotp{u}{v} = \dotp{u}{Rv}$. Also existiert nach Spektralsatz \ref{3.46} entsprechend endliches ONS, das (\ref{eq:3.23}) erfüllt. Dies kann insbesondere nicht unendlich sein, wegen endlichem Bild.
+	$R$ hat endlich dimensionales Bild, also $\overline{R(B_1(0))}$ abgeschlossen, beschränkt im endlich dimensionalen Raum, also kompakt. $R$ ist selbstadjungiert, denn $\dotp{Ru}{v} = \frac{1}{n} \sum\limits_{i=1}^n \dotp{u_i}{u} \dotp{u_i}{v} = \dotp{u}{Rv}$. Also existiert nach Spektralsatz \ref{3.46} entsprechend endliches ONS, das (\ref{eq:3.23}) erfüllt. Dies kann insbesondere nicht unendlich sein, wegen endlichem Bild.
 \end{proof}
 \end{satz}
 
@@ -1800,7 +1797,7 @@ Für $m = 1,\dots,n'$ definieren $\Phi_{POD} := \Phi_{POD,m} := \{\phi_i\}_{i=1}
 \end{satz}
 
 \begin{bem}
-	Falls $X$ endlichdimensional $\dim(X) = H$, kann daher POD entweder als teures EWP f ür $R$ in $X$ (Komplexität $\mathcal{O}(H^3))$ oder, meist günstiger, als EWP für $K$ (Komplexität $\mathcal{O}(n^3))$ ermittelt werden.
+	Falls $X$ endlichdimensional $\dim(X) = H$, kann daher POD entweder als teures EWP für $R$ in $X$ (Komplexität $\mathcal{O}(H^3))$ oder, meist günstiger, als EWP für $K$ (Komplexität $\mathcal{O}(n^3))$ ermittelt werden.
 	
 	Bezeichnung für letzteres ist auch ``method of snapshots'' (Sirovich, 1987) oder Kernel-PCA (Schollkopf \& Smola, 2002).
 	POD kann auch über Singulärwertzerlegung der Koeffizientenmatrix  berechnet werden:
@@ -1815,7 +1812,7 @@ Für $m = 1,\dots,n'$ definieren $\Phi_{POD} := \Phi_{POD,m} := \{\phi_i\}_{i=1}
 	
 	Dann ist $\Phi_{POD,n'} = \Phi$.
 	\begin{proof}
-	Sei $\Phi = (\bar{\phi_1},\dots,\bar{\phi_n})$. Nach Definition gilt $Ru = \frac{1}{n} U U^T U \,\,\, \forall u \in \R^H$. Damit ist $\bar{\phi_i}$ EV von $R$ zu $i$-ten Eigenwert $\frac{1}{n} \sigma_i^2$:
+	Sei $\Phi = (\bar{\phi_1},\dots,\bar{\phi_n})$. Nach Definition gilt $Ru = \frac{1}{n} U U^T u \,\,\, \forall u \in \R^H$. Damit ist $\bar{\phi_i}$ EV von $R$ zu $i$-ten Eigenwert $\frac{1}{n} \sigma_i^2$:
 	\begin{align*}
 		R \bar{\phi_i} &= \frac{1}{n} U U^T \bar{\phi_i} = \frac{1}{n} \Phi S \underbrace{V^T V}_{I} S \underbrace{\Phi^T \bar{\phi_i}}_{e_i \in \R^{n'}} \\
 		&= \frac{1}{n} \Phi \underbrace{S^2 e_i}_{\sigma_i^2 e_i} = \frac{1}{n} \sigma_i^2 \bar{\phi_i}
@@ -1861,7 +1858,7 @@ mit $\lambda_i$ EW von $R$.
 \begin{satz}[Bestapproximation durch $X_{POD,m}$]
 	Unter allen Räumen der Dimension $m$ ist $X_{POD,m}$ bzgl. $J$ optimal
 	\[
-		j(X_{POD,m}) = \inf\limits_{\substack{Y \subset X \\ \dim Y = m}} J(Y)
+		J(X_{POD,m}) = \inf\limits_{\substack{Y \subset X \\ \dim Y = m}} J(Y)
 	\]
 	\begin{proof}
 		Übung.
@@ -1923,7 +1920,7 @@ setze schließlich $N:=m$
 		\[
 			\sup\limits_{\mu \in \p} || u(\mu) - u_N(\mu) || >> \sup\limits_{\mu \in S_{train}} || u(\mu) - u_N(\mu) ||
 		\]
-		\item Greedy-Verfahren ist also akkummulatives Verfahren, welches iterativ den ``schlechtest''-aufgelösten Parameter $\mu^{(m+1)}$ wählt, $u(\mu^{(m+1)}$ berechnet, und als neuen Basisvektor hinzufügt. Insofern kann dies als approximative Lösung des Optimierungsproblems
+		\item Greedy-Verfahren ist also akkummulatives Verfahren, welches iterativ den ``schlechtest''-aufgelösten Parameter $\mu^{(m+1)}$ wählt, $u(\mu^{(m+1)})$ berechnet, und als neuen Basisvektor hinzufügt. Insofern kann dies als approximative Lösung des Optimierungsproblems
 		\[
 			\min\limits_{\substack{Y \subset X \\ \dim Y = N}} \max\limits_{\mu \in \p} \Delta (Y,\mu)
 		\]
@@ -1991,7 +1988,7 @@ setze schließlich $N:=m$
 		
 		Vorteile: schnell auswertbar, unabhängig von $H$ denn Offline-Online. Es müssen nur $N$ Snapshots berechnet werden, $|S_{train}|$ kann sehr groß gewählt werden, Terminieren kann garantiert werden.
 		\item Ziel-orientierte Indikatoren: Falls $\Delta(Y,\mu)$ als Ausgabefehler $|s(\mu) - s_N(\mu)|$ oder -Schranke $\Delta_N,s$ gewählt wird, nennt man das Verfahren ``goal-oriented''. Die Basis wird potentiell sehr klein und kann Ausgabe gut approximieren. Die Feldvariable $u$ wird jedoch nicht notwendigerweise gut approximiert.
-		\item Falls $\Delta(Y,\mu)$ als Feldvariablen-Fehler $||u(\mu)-u_N(\mu)||$, PRojektionsfehler oder -schätzer gewählt wird, ist Verfahren nicht goal-oriented, die Basis wird größer sein, aber sowohl $u$ als auch $v$, als auch beliebig andere Funktionale $\tilde{s}$ gut approximiert.
+		\item Falls $\Delta(Y,\mu)$ als Feldvariablen-Fehler $||u(\mu)-u_N(\mu)||$, Projektionsfehler oder -schätzer gewählt wird, ist Verfahren nicht goal-oriented, die Basis wird größer sein, aber sowohl $u$ als auch $v$, als auch beliebig andere Funktionale $\tilde{s}$ gut approximiert.
 	\end{itemize}
 \end{bem}
 
@@ -2006,13 +2003,13 @@ In Terminologie der Statistik/Maschinellen Lernens ist $S_{train}$ eine \emph{Tr
 
 Somit ist kleiner Trainingsfehler nicht hinreichend für gutes Modell. Modelle sollen daher nicht alleine anhand von Trainings-, sondern anhand unabhängiger Testmengen:
 \[
-	\epsilon_{test} = \max\limits_{\mu \in S_{train}} \Delta(X_N,\mu) \qquad \text{, meistens zufällige Parametermenge}
+	\epsilon_{test} = \max\limits_{\mu \in S_{test}} \Delta(X_N,\mu) \qquad \text{, meistens zufällige Parametermenge}
 \]
 \end{bem}
 
 \begin{bem}[Monotonie] \beginwithlistbem
 	\begin{itemize}
-		\item Im Allgemeinen gilt nicht $\Delta(X_N,\mu) \geq \Delta(X_{n+1},\mu)$
+		\item Im Allgemeinen gilt nicht $\Delta(X_N,\mu) \geq \Delta(X_{N+1},\mu)$
 		\item Es kann daher vorkommen, dass $(\epsilon_n)_{n=1}^N$ nichtmonoton ist.
 		\item Falls Beziehung zu Bestapproximation gilt, d.\,h. für ein $C > 0$ unabhängig von $n$ gilt:
 		\[
@@ -2379,7 +2376,7 @@ Damit folgt gewünschte Schranke für Ausgabefehler:
 	\end{proof}
 \end{satz}
 
-\begin{bem} \beginwithlist
+\begin{bem} \beginwithlistbem
 	\begin{itemize}
 		\item Also ``multiplikativer Effekt'' in $\Delta_{N,s}'$ erreicht.
 		\item Dies liefert ein Kriterium zur Wahl von $N$, $N^\du$:
@@ -2554,7 +2551,7 @@ Damit folgt gewünschte Schranke für Ausgabefehler:
 		\end{align*}
 	\item Schwache Form: Zu $\mu \in \p$ suche $u \in H_0^1(\Omega(\mu))$ sodass
 		\[
-			\int_{\Omega(\mu)}(A(\mu)\nabla u) \cdot \nabla v - u( b(\mu) \cdot v) + c(\mu) u v = \int_\Omega q v \quad \forall v \in H_0^1(\Omega(\mu))
+			\int_{\Omega(\mu)}(A(\mu)\nabla u) \cdot \nabla v - u( b(\mu) \cdot \nabla v) + c(\mu) u v = \int_\Omega q v \quad \forall v \in H_0^1(\Omega(\mu))
 		\]
 		\[
 			\Leftrightarrow \underbrace{\int_{\Omega(\mu)} (\nabla u^T, u) \underbrace{\begin{pmatrix} A(\mu) & 0 \\ b(\mu)^T & c \end{pmatrix}}_{B(\mu)} \begin{pmatrix}\nabla v \\ v\end{pmatrix}}_{a(u,v;\mu)} = \underbrace{\int_\Omega q v}_{f(v;\mu)} \quad \forall v \in H_0^1(\Omega(\mu))
@@ -2586,7 +2583,7 @@ Damit folgt gewünschte Schranke für Ausgabefehler:
 	\]
 	genau dann, wenn $\hat u(\hat x; \mu) := u(T(\hat x;\mu);\mu)$ löst
 	\[
-		\hat a(\hat u(\mu), \hat v; \mu) = \sum_{k=1}^{K} \int_{\hat \Omega_k} (\nabla \hat u^T, \hat u) \hat B^k(\mu) \begin{pmatrix} \nabla \hat v \\ \hat v \end{pmatrix} = \sum_{k=1}^K \int_{\Omega_k} \hat q^k(\mu) \hat v =: \hat f(\hat v; \mu) \quad \forall \hat v \in \hat X
+		\hat a(\hat u(\mu), \hat v; \mu) = \sum_{k=1}^{K} \int_{\hat \Omega_k} (\nabla \hat u^T, \hat u) \hat B^k(\mu) \begin{pmatrix} \nabla \hat v \\ \hat v \end{pmatrix} = \sum_{k=1}^K \int_{\hat \Omega_k} \hat q^k(\mu) \hat v =: \hat f(\hat v; \mu) \quad \forall \hat v \in \hat X
 	\]
 	mit
 	\[
